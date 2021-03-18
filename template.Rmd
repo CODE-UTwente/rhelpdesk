@@ -1,0 +1,154 @@
+---
+title: "Template Page"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+A short explanation on what the information on this page will help you with, so people can see if this page contains the information they are looking for
+
+## Explanation
+
+Explanation about how to do the thing, using both videos and text. In the text functions and other parts of codes are reffered to like_this(). For bigger parts of code, that will look
+``` code
+Like this
+```
+```
+And code results look like this
+```
+
+To get the code to look nice, you can add it to a RMarkdown HTML document, and copy the HTML directly from there
+
+<iframe src="https://www.youtube-nocookie.com/embed/videoseries?playlist=au6IwOKJ4Yo,KErEm6rmbBA&amp;modestbranding=1&amp;rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen="" width="500" height="281"></iframe>
+
+When multiple videos belong together, these are put in a playlist, rather then shown next to each other. For the embed the domain www.youtube-nocookie.com is used instead of the normal www.youtube.com domain, because everyone hates it when youtube suddenly recommends them videos about statistics after they've watched videos for uni. A sandbox is added and modest branding and related videos are blocked, to avoid people just ending up browsing YT.
+
+### Subheadings
+
+For longer explanations, it is advisable to use subheadings, with descriptive id's so they can easily be [linked to](#subheadings)
+
+## Examples {.tabset}
+
+### Example 1.R
+
+<a href="#" class="btn btn-primary" style="float:right;"><i class="fas fa-download"></i> Download</a>
+
+An example of code can be used including its results. The filename of the example should be descriptive of what it does. For every example, there is also a downloadable file, which also includes some extra code for the importing/installing for libraries, so the whole code can be run instantly without any modifications.
+
+Short explanation of what the goal is of the code below
+
+```{r eval=F}
+prediction_wc <- predict(model, newdata = wc_test, type = "response")
+prediction_wc <- prediction_wc > .5
+
+tibble(predicted = prediction_wc, truth = wc_test$is_me) %>% 
+tabyl(predicted, truth) %>% 
+adorn_title("combined")
+```
+```
+##  predicted/truth  0  1
+##            FALSE 39 30
+##             TRUE  1  4
+```
+
+### Example 2.R
+
+<a href="#" class="btn btn-primary" style="float:right;"><i class="fas fa-download"></i> Download</a>
+
+Another example
+
+```{r eval=F}
+corpus_a <- corpus_a %>%
+  tm_map(stemDocument)
+
+# Check first document
+writeLines(as.character(corpus_a[[1]]))
+```
+```
+## Wednesday the 28th I'm available, so I'm total okay with that
+```
+
+### Dataset.csv
+
+<a href="#" class="btn btn-primary" style="float:right;"><i class="fas fa-download"></i> Download</a>
+
+The (first few lines of the) dataset that is used in the examples. Preferably, the same dataset is used in all examples, but different parts of it are used.
+
+```{r, echo=F, message=F}
+library(tidyverse)
+data(starwars)
+starwars
+```
+
+## Packages
+
+A short overview of the packages used in this page, and what they are used for, with a link to their official documentation
+
+* [Package](https://www.rdocumentation.org/packages/tidyverse/)   
+What the Package in question exactly does
+* [Package](https://www.rdocumentation.org/packages/tidyverse/)   
+What the Package in question exactly does
+* [Package](https://www.rdocumentation.org/packages/tidyverse/)   
+What the Package in question exactly does
+
+## Functions
+
+A short overview of the functions used in this page, and what they are used for, with a link to their official documentation
+
+* [Function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3/topics/ggplot)   
+What the Function in question exactly does
+* [Function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3/topics/ggplot)   
+What the Function in question exactly does
+* [Function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3/topics/ggplot)   
+What the Function in question exactly does
+
+## FAQ
+::: {#FAQ-descriptive-name}
+**This is a question a student asked?**   
+This is the answer to that question
+:::
+
+::: {#FAQ-another-question}
+**This is another question**   
+All questions have descriptive ids, so they can easily be [linked to](#FAQ-another-question) from anther page 
+:::
+
+## Resources
+* [Name of resource](#)   
+Explanation of what you can find on said resource
+* [Name of resource](#)   
+Explanation of what you can find on said resource
+* [Name of resource](#)   
+Explanation of what you can find on said resource
+
+## Practice
+A question students should know the answer to based on the material above
+<details>
+  <summary>Hint 1</summary>
+  
+  A hint for if the students can't think of the answer themselves to get them into the right direction
+</details>
+<details>
+  <summary>Hint 2</summary>
+  
+  Another hint
+</details>
+<details>
+  <summary>Answer</summary>
+  
+  <a href="#" class="btn btn-primary" style="float:right;"><i class="fas fa-download"></i> Download</a>
+  
+  The answer with full explanation which can be downloaded
+  
+  ```{r eval=F}
+  corpus_a <- corpus_a %>%
+    tm_map(stemDocument)
+  
+  # Check first document
+  writeLines(as.character(corpus_a[[1]]))
+  ```
+  ```
+  ## Wednesday the 28th I'm available, so I'm total okay with that
+  ```
+</details>

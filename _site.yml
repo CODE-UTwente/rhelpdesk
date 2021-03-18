@@ -1,0 +1,28 @@
+name: "R-Helpdesk"
+output_dir: "public"
+
+navbar:
+  title: "R-Helpdesk"
+  type: inverse
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Template"
+      href: template.html
+    - text: "Advantages"
+      href: advantages.html
+  right:
+    - icon: fab fa-gitlab
+      href: https://git.snt.utwente.nl/rhelpdesk
+
+output:
+  html_document:
+    theme: yeti
+    highlight: textmate
+    toc: true
+    df_print: paged
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    includes:
+      after_body: ace.html
