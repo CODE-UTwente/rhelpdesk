@@ -1,0 +1,10 @@
+image: rocker/verse:4.0.4
+
+pages:
+  script:
+    - R -e "rmarkdown::render_site(encoding = 'UTF-8')"
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
