@@ -14,15 +14,18 @@ navbar:
   right:
     - icon: fab fa-gitlab
       href: https://git.snt.utwente.nl/rhelpdesk
-
 output:
   html_document:
-    theme: yeti
+    theme: default
+    css: style.css
     highlight: textmate
     toc: true
     df_print: paged
     toc_depth: 3
     toc_float:
-      collapsed: false
+      collapsed: true
+      smooth_scroll: true
     includes:
-      after_body: ace.html
+      in_header: header.html
+      before_body: doc_prefix.html
+      after_body: [doc_suffix.html, ace.html]

@@ -85,22 +85,22 @@ starwars
 
 A short overview of the packages used in this page, and what they are used for, with a link to their official documentation
 
-* [Package](https://www.rdocumentation.org/packages/tidyverse/)   
+* [Package](https://www.rdocumentation.org/packages/base/)   
 What the Package in question exactly does
-* [Package](https://www.rdocumentation.org/packages/tidyverse/)   
+* [Package](https://www.rdocumentation.org/packages/base/)   
 What the Package in question exactly does
-* [Package](https://www.rdocumentation.org/packages/tidyverse/)   
+* [Package](https://www.rdocumentation.org/packages/base/)   
 What the Package in question exactly does
 
 ## Functions
 
 A short overview of the functions used in this page, and what they are used for, with a link to their official documentation
 
-* [Function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3/topics/ggplot)   
+* [Function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/function)   
 What the Function in question exactly does
-* [Function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3/topics/ggplot)   
+* [Function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/function)   
 What the Function in question exactly does
-* [Function](https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3/topics/ggplot)   
+* [Function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/function)   
 What the Function in question exactly does
 
 ## FAQ
