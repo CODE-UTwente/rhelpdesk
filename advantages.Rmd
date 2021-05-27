@@ -95,7 +95,7 @@ starwars
 ## Datacamp integration
 You can even add your own datacamp excersizes. You can program when an answer is correct, add hints and all that stuff.
 
-<script type="text/javascript" src="//cdn.datacamp.com/dcl-react.js.gz"></script>
+<script type="text/javascript" src="https://cdn.datacamp.com/dcl-react.js.gz"></script>
 ```{=html}
 <div data-datacamp-exercise data-lang="r">
 	<code data-type="pre-exercise-code">
