@@ -1,0 +1,133 @@
+---
+title: "Psychometric analyses"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+On this page, you can find out how to run a factor analysis in R and how to run Classical Test Theory analyses and Item Response Theory models in R.  
+
+### Explanation
+For psychometric analyses, we use the packages: `psych`, `CTT`, `Lambda4` and `mirt`.
+
+### Factor analysis
+```{r factoranalysis, echo=T, eval=F, message=F, warning = F, tidy = TRUE}
+
+library(psych)
+
+## Before running a factor analyses, explore your data and check the following:
+
+data_new %>% KMO()              # Kaiser-Meyer-Olkin measure
+  
+data_new %>% cortest.bartlett() # Barlett’s sphericity test
+
+data_new %>% cor()              # correlation matrix
+
+## Next, determine the number of factors. 
+## For this, you need to run a Principal Component Analysis
+
+# eigenvalues for Kiaser's criterion  
+
+pca <- data_new %>% 
+  cor() %>% 
+  eigen()
+
+eigenvalues <-  pca$values
+  
+# screeplot based on principal component analysis
+
+# using a ggplot:
+tibble(component = 1:length(eigenvalues), eigenvalues) %>%
+  ggplot(aes(x = component, y = eigenvalues)) +
+  geom_line() +
+  scale_x_continuous( breaks = 1:length(eigenvalues))
+
+# OR using:
+data_new %>%
+  scree(, factors = FALSE)
+
+## to run a factor analysis with two factors:
+model_2f <- factanal(data_new, factors = 2, rotation = "varimax")
+
+```
+
+Running the previous code on a real data set, will not show you the results of the factor analysis. You need to type in `model_2f` in the R console to see the results.
+
+Please note that in the output of a factor analysis, a Chi square statistic is shown. This Chi square statistic belongs to a test for the model fit. The null hypothesis for this test is: the model that is used (in the example: a model with two factors) fits. A non-significant result is thus preferable, as we do not reject the null hypothesis then. But, large sample sizes easily give significant results. Because of that, we would like you to ignore this part of the output completely and focus on the interpretation of the factors instead.
+
+
+### Classical Test Theory analyses
+
+```{r eval = F}
+
+library(CTT)
+library(Lambda4)
+
+# analyze the data
+results <- dataset %>% 
+  as.matrix() %>% 
+  itemAnalysis()
+
+# show Cronbach's alpha 
+results$alpha
+
+# show Cronbach's alpha if item removed (deleted),
+# p-values (=ItemMean), and item rest correlations (=pBis)
+results$itemReport
+
+# Compute lambda 2
+dataset %>% guttman() # lambda 3 = Cronbach's alpha
+
+```
+
+### Item Response Theory models
+```{r mirt, echo=T, eval=F, message=F, warning = F}
+
+library(mirt)
+
+# a 1-dimensional model with 2 parameters per item
+out2 <- dataset %>%
+  mirt(., model = 1, itemtype = "2PL")
+
+out2 # to see Akaike’s Information Criterion 
+
+# a 1-dimensional model with 1 parameter per item
+out1 <- dataset %>% 
+  mirt(., model = 1, itemtype = "Rasch")
+
+# to extract the estimated parameters of a model:
+par2 <- out2 %>% 
+  coef(, IRTpars=T, simplify=T)
+
+par2$items #to see the parameters
+
+# information plots
+out2 %>% 
+  itemplot(, item = 1, type = "info") #item information plot for item 1
+
+out2 %>%
+  plot(, type = "info")               #test information plot
+
+# assessing the item fit
+out2 %>% 
+  itemfit()                           #for all items
+
+out2 %>% 
+  itemfit(,empirical.plot = 6)        #plot for item 6
+
+```
+
+## Examples {.tabset}
+
+*No examples available yet*
+
+## Functions
+
+*No function overview yet*
+
+## FAQ
+*No Frequently Asked Questions yet*
+
+## Resources
+*No resources yet*

@@ -7,13 +7,27 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "Template"
-      href: template.html
-    - text: "Advantages"
-      href: advantages.html
+    - text: "Chapters"
+      menu:
+      - text: "1. Introduction"
+        href: "1-introduction.html"
+      - text: "2. Handling data files"
+        href: "2-handling-data-files.html"
+      - text: "3. Univariate data analysis"
+        href: "3-univariate-data-analysis-and-data-visualization.html"
+      - text: "4. Bivariate data analysis"
+        href: "4-bivariate-data-analysis-and-bivariate-data-vizualisation.html"
+      - text: "5. Multivariate data analysis"
+        href: "5-multivariate-data-analysis.html"
+      - text: "6. Psychometric analyses"
+        href: "6-psychometric-analyses.html"
+    - text: "Discussions"
+      href: https://canvas.utwente.nl/courses/8022/discussion_topics
   right:
     - icon: fab fa-gitlab
       href: https://git.snt.utwente.nl/rhelpdesk
+    - icon: fas fa-globe
+      href: https://canvas.utwente.nl/enroll/7C868F
 output:
   html_document:
     theme: default

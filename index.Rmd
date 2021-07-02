@@ -8,3 +8,12 @@ output:
 Hello everyone!
 
 Welcome to the R-helpdesk! How can I help you?
+
+This document website how bachelor students in BMS programs will use the program language R in the courses for Research Methods and Statistics (and beyond). The document will be available at all time when making assignments and when making exams in which R is used. The document will be updated when the staff discovers problems in the way students deal with R.
+
+
+## How to use this website?
+
+There is no need to learn everything 'by heart'. It is mainly a reference guide. Read until "Installing R and RStudio on your laptop" once before doing anything else with R. Then install R and Rstudio. After that read the rest of "1. Introducing R and RStudio" once.
+After this make some of the assignments we created. Use the materials in this reference guide, in case you get stuck. After doing three of four R assignments, read the first chapter again, and skim through the remainder of the website.
+Before you start using R in other courses, read through everything again, to re-familiarize yourself with R.
