@@ -58,9 +58,5 @@ Before you start using R in other courses, read through the document again, to r
 
 \newpage
 # 6. Psychometric analyses
-<<<<<<< HEAD
 ```{r child="chapter6.Rmd", echo=FALSE}
-=======
-```{r child="chapter5.Rmd", echo=FALSE}
->>>>>>> 83c5080d8e3ae2a91818a3d631736c843af2ef9d
 ```
