@@ -1,0 +1,62 @@
+---
+title: "Intro R for BMS Bachelor programs"
+author: "OMD staff"
+date: "version 25/05/2020"
+output:
+  pdf_document
+---
+
+\newpage
+\tableofcontents
+\newpage
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80),echo = TRUE, fig.align = "left")
+library(tidyverse)
+library(formatR) #in combination with tidy = TRUE in specific codes chuncks this wraps the text.
+
+```
+
+\newpage
+# Introduction
+
+This document describes how bachelor students in BMS programs will use the program language R in the courses for Research Methods and Statistics (and beyond). The document will be available at all time when making assignments and when making exams in which R is used. The document will be updated when the staff discovers problems in the way students deal with R (check the version date on top of this document).
+
+
+## How to use this document?
+
+There is no need to learn this document 'by heart'. It is mainly a reference guide. Read until "Installing R and RStudio on your laptop" once before doing anything else with R. Then install R and Rstudio. After that read the rest of "1. Introducing R and RStudio" once.
+After this make some of the assignments we created. Use the materials in this reference guide, in case you get stuck. After doing three of four R assignments, read the first chapter again, and skim through the remainder of the document.
+Before you start using R in other courses, read through the document again, to re-familiarize yourself with R.
+
+\newpage
+
+# 1. Introducing R and RStudio
+```{r child="chapter1.Rmd", echo=FALSE}
+```
+
+\newpage
+# 2. Handling data files
+```{r child="chapter2.Rmd", echo=FALSE}
+```
+
+
+\newpage
+# 3. Univariate data analysis and data visualization
+```{r child="chapter3.Rmd", echo=FALSE}
+```
+
+\newpage
+# 4. Bivariate data analysis and bivariate data vizualisation
+```{r child="chapter4.Rmd", echo=FALSE}
+```
+
+\newpage
+# 5. Multivariate data analysis
+```{r child="chapter5.Rmd", echo=FALSE}
+```
+
+\newpage
+# 6. Psychometric analyses
+```{r child="chapter5.Rmd", echo=FALSE}
+```

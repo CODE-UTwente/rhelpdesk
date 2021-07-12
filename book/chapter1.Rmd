@@ -1,0 +1,288 @@
+---
+title: "Introducing R and RStudio"
+output: html_fragment
+---
+
+## What is R?
+
+R is a software environment in which you can analyze data by typing instructions (programming). In the field of behavioral and social sciences, researchers and teachers are increasingly working with R instead of programs like STATA, SAS, SPSS and EXCEL, because R has some advantages compared to these programs:
+
+- it is free, so you can also use it after you finished your studies;
+- it is open-source and researchers all over the world write code that is transparent and which can be used for free;
+- data analysis and data visualization possibilities in R are almost endless;
+- the language is extremely flexible.
+
+R allows you to manage data sets, to change data in order to facilitate analysis, to analyze data and to visualize data. R also allows you to integrate data in text files, which reduces the amount of 'copy-pasting' and reduces the number of mistakes made in this process, thus improving the reproducibility of research.
+
+
+## What is RStudio?
+<iframe src="https://www.youtube-nocookie.com/embed/riONFzJdXcs?modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen="" width="500" height="281"></iframe>
+
+RStudio is a 'shell' designed to help you to be more productive with R. RStudio is an Integrated Development Environment (IDE) that helps you develop programs (and scripts) in R. RStudio has a set of integrated tools that are helpful when analyzing and visualizing your data. More information about RStudio can be found here: https://rstudio.com/products/rstudio/features/. You will probably only encounter R via RStudio.
+
+
+## Why R and RStudio at BMS?
+
+At BMS we think students in the behavioral and social sciences should have a clear understanding of 'data' and using R and RStudio will give you both a clear understanding of data and a flexible and transparent way to handle these data. R also allows us to teach statistics in a flexible way, adding new ideas (like 'big data analysis') to our curriculum more easily.
+
+
+## Installing R and RStudio on your laptop
+<iframe src="https://www.youtube-nocookie.com/embed/cX532N_XLIs?modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen="" width="500" height="281"></iframe>
+
+For most purposes, installing R and RStudio on your laptop is straightforward. For R go to
+
+- https://cran.uni-muenster.de
+
+For R studio go to:
+
+- https://www.rstudio.com/products/rstudio/download/
+
+and select the free version.
+
+
+## How to learn R?
+
+Although we will offer you a lot of materials to learn the R basics, keep in mind that for learning R even better you need to find your way on the web to learn additional procedures and to practice even more. How?
+
+Some suggestions:
+
+- use a search engine (like Google) to ask questions like "how do I enter data into R?";
+- use stackoverflow (https://stackoverflow.com) to check out answers to similar questions;
+- find your own pet project (data with your running times, for example, or gpx files, or COVID-19 data);
+- read blogs in which data scientists show what can be done with R.
+
+A nice feature in R is the help function. If you need help on a function, just type a ? in front of a function. If you type ?? in front of the function, you will even get help from all over the web.
+```{r getting help, eval = F, width = 60}
+?tidyverse
+??tidyverse
+```
+The answer to this question can be found in the right side lower corner of the RStudio panel. 
+
+
+## Terminology: working directory, console, script and more
+<iframe src="https://www.youtube-nocookie.com/embed/UYclmg1_KLk?modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen="" width="500" height="281"></iframe>
+
+Learning R includes learning a lot of new words like 'working directory', 'script' and 'console'. In this section some of the most commonly used terms will be introduced. Although it might be hard to understand the terms completely by reading the explanations below while not yet working in R, you will see that in a few weeks you will understand exactly what is meant with the terms. Reread this document a few times after starting working with R.
+
+The *working directory* on your laptop or pc is the folder where all kinds of data, output (including pictures), and scripts are stored (as files), so you can quickly find them back later. It is wise to create a working directory for each separate course or data project and to tell R you will use that directory for this specific project. 
+
+```{r setwd, eval = F, width = 60, tidy = TRUE}
+setwd("[...]")
+
+# The [...] has to be replaced by something applicable to your computer.
+
+setwd("/Volumes/myname/Userdata/My Documents/Documenten/Research/2020_Local_elections")
+
+# The current working directory (in case you forget) can be found with the command
+
+getwd()
+
+```
+
+Make sure you can find the path of a working directory in your mac or pc:
+- on Mac, in Finder, the small 'radar' on top allows you to copy the location as 'pathname'
+- in Windows, in the File Explorer, select View in the toolbar, -> Options, select Change folder and search options, to open the Folder Options dialogue box, Click View to open the View tab. In Advanced settings, add a check mark for Display the full path in the title bar, Click Apply, Click OK to close the dialogue box.
+
+A *script* is a set of commands. A command meaning 'read in my data' or 'create a nice a frequency table'. Commands are preferably combined with some *# comments* explaining what happens in the command lines. In order to distinguish between command lines and comments, comments are preceded by the # sign.
+
+Use - - - - - to break up your script into easily readable chunks.
+
+If you want to run a line of the script, you move the cursor to the respective line and you use ctrl+enter (cmd+enter on a Mac). The instruction will then then automatically move to the R Console and the cursor in the script automatically jumps to the next line.
+
+The *console* panel (at the bottom in RStudio, with the prompt ">" ) can be used to directly type commands. For example, when using R as a simple calculator you can just type in the numbers in the console.
+
+```{r console as calculator, eval = F, width = 60}
+# adding 1 + 1
+> 1 + 1
+[1] 2
+```
+
+*Objects*, including imported data, are stored in the *global environment*. When you create new objects, these objects are stored in the global environment too. For example, if you create a frequency table, you can store the table (the object) in the global environment. The object can always be called back later in the analysis. The global environment can be saved separately and called later, although for many practical purposes it is sufficient to create a global environment anew, by using the *script* (the set of commands and comments) which created that environment in the first place. The global environment can be found on the right upper side of RStudio.
+
+Data sets, numbers, and output can be stored as *objects* in the global environment, using the *(left) assignment operator* "<-".^[To be fair, also "=" will work, but most people now use the "<-" assignment operator] An object can be a lot of things. For example, if you use R to create a boxplot, the picture of the boxplot can be stored as an object, to be called later when needed.
+
+When naming *objects*, use only lowercase letters, numbers, and \_. Use underscores (_) to separate words within a name. For example, only use names like 'data_dpes_2021', of 'freq_tab_001'.
+
+
+```{r creating objects, echo=T, tidy = TRUE}
+ # for example, to use the 10 cases throughout a script, you can define the object 'n' to '10'
+n <- 10
+
+# or to create a simple vector of numbers, you can write ...
+dataset1 <- c(3,2,1,4,9,6,7,100)
+
+# calling this object in a script or in the console gives the contents of the thus created object.
+dataset1
+
+# this give the following output in the console:
+```
+
+
+*Functions* in R are 'commands' telling R what to do: they are 'do this' statements. R has a lot of those, and users are adding more every day. Functions end with parentheses: "()".^[The `magrittr` package (included in the `tidyverse` package) allows you to omit parentheses () on functions that don’t have arguments. Avoid this feature, because it may be confusing. Be consistent in that functions always have parentheses, objects don't.] For example:
+
+```{r introducing functions, echo=T, eval=F, linewidth = 60, tidy = TRUE}
+# The command head() is "Show me the first part (the head) of a data set".
+# In this example the called data set is an object called dataset1.
+
+head(dataset1) 
+
+# After installing the 'tidyverse' package (a package we will use at the UT, the word **package** will be explained below) and the associated pipe command ( %>% ), use ...
+
+dataset1 %>% 
+  head()  
+```
+
+
+## Data frames and data types
+
+*Data frames* in R are matrices (numbers and words stored in rows and columns) in which the columns are variables and the rows are units of observation (observations). Sometimes this data frame is called a *data matrix*, but in the R language a data matrix is a data frame with only numbers, not with strings (text) or other types of variables. 
+One single column (or: a variable) with numbers or with strings is called a *vector*.^[A *vector* can contain numbers (1, 1.5, 3.333 etc.), or strings (words), or factors (to be explained later), or integers (1,2,3,4,5), etc. A single vector cannot have *different* types of data.] Sometimes objects are not just data frames, but a data frame and something more. These objects are called *lists*.
+
+For reasons beyond the scope of this short introduction, some functions only work with data frames (even if they contain only numbers), not with matrices. In these cases you have to explicitly tell R your matrix is a data frame.
+
+Variables in a data frame have a name (like 'x' or 'gender'). These can be be called directly using the '\$' sign. So 'data\$gender' refers to the column/variable gender in the data frame. More generally, the '\$' sign refers to a 'component' of an object. If you store output as an object to the global environment, you can call a specific element of that output using the '\$' sign.
+
+There are different types of variables in a vector/data frame. The most important are a variable containing:
+
+- logical values (True or False) (used for some dummy variables);
+- a factor consisting of a limited set of attributes ('low', 'middle' and 'high' for example) (used for nominal and ordinal variables). A factor can also be stored as an 'ordered factor' and is than not merely 'nominal' but 'ordinal'.
+- integer values (-1, 0, 1, 2, 3 etc) (mainly used for ordinal variables and for count variables);
+- real values (1.001, 1.002, 10000) (used for interval and ratio variables);
+- characters/ words ('male', 'female') (if these variables are used for dummies (like in 'male' / 'female') and for nominal variables, you have to change them to (ordered) 'factor' variables).
+
+
+## Operators in R
+
+The most frequently used operators used in R, beyond the well bnown - (Minus), + (Plus), * (Multiplication), 
+/ (Division) and <- (the Left assignment operator), are:
+
+|operator|meaning|
+|:-----|:---------|
+| ^ | Exponentiation |
+| ! | Not |
+| > | Greater than |
+| == | Equal to *not simply '='* |
+| >= | Greater than or equal to, binary |
+| <= | Less than or equal to, binary |
+| : | Sequence (in model formulae: interaction) |
+| $ | List subset, including a column in a data frame |
+
+
+## Some notes on writing readable scripts
+<iframe src="https://www.youtube-nocookie.com/embed/qqz_D1vzS5M?modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen="" width="500" height="281"></iframe>
+
+Commands can all be put in the console (the one at the bottom-left of RStudio, starting with the ">"). But since you often want to redo the same thing (trying and tweaking), we urge you to store the commands in a *script*. Open a new script in RStudio (file -> new file -> R script). This will appear in the upper-left pane. Type all commands in the script. This script can be stored (extension is .R) and is basically a .txt file.
+
+When writing a script, start with a title, preceded with the #, because it is not a command, on top, for example:
+
+```{r readable script, echo=T, eval=F, tidy = TRUE}
+
+# This script is for computing the mean maximum temperature for several days
+
+# This vector includes the highest temperatures recorded on several days
+temperature <- c(19, 17, 20, 20, 13, 13, 15, 17)
+
+temperature %>% 
+  mean() # to compute the mean maximum temperature
+
+```
+
+When writing commands in the script, always put a space after a comma, and never before a comma, just like in regular English.
+Never put spaces inside or outside parentheses for regular function calls. Most infix operators (==, +, -, <-, etc.) should always be surrounded by spaces. The pipe operator that was used in the example above, is explained later in this document. For now, it is important to know that when indenting after a pipe >%> operator, you need to use two spaces (you can automatically set this in RStudio's preferences (RStudio / Preferences / Code/ Insert spaces for tab / tab width = 2). Use " for quoting text. Only use ' when the text already contains double quotes and no single quotes. If the arguments to a function don’t all fit on one line (of max 80 characters), put each argument on its own line and indent with two spaces.
+
+## Downloading and activating R Packages
+<iframe src="https://www.youtube-nocookie.com/embed/3RWb5U3X-T8?modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen="" width="500" height="281"></iframe>
+
+R and RStudio can be used more efficiently, by 'add ons' called *packages*. These packages simplify programming in R as they include new functions that you can use. Below, you will find a list of packages to be downloaded for the various courses at BMS. After downloading (= installing) the package, there is no need to do that every time you are using R, although it may be wise to sometimes check for updates. After installing and opening R and RStudio, you can install packages using a command in either the console or in a script.
+
+```{r install, eval = F, tidy = TRUE}
+# Installing the packages "haven" and "tidyverse" (both to be introduced later) is done with the following command in R:
+
+install.packages("haven", "tidyverse")
+
+```
+
+Downloading (= installing) a package is not the same as 'calling' that package for usage in R: packages are not automatically opened when you are using R and RStudio. And that is a good thing: packages can use conflicting short cuts (using functions with the same name, but with very different outcomes). Therefore, each time you are using a specific *package* you have to load that package into the library (aka 'activate'). A *script* therefore often starts with 'calling' the relevant packages for that script.
+
+```{r eval = F, tidy = TRUE}
+# Loading the packages into the library is done with commands like these:
+
+library(haven)
+library(tidyverse)
+
+```
+
+
+
+## R packages to be used at BMS
+
+A lot of statistical analyses can be done by using 'base R' and its associated functions, but for some more specialized analyses we will use specialized packages.
+
+Since the number of packages is huge^[ [click here to see all available packages](https://cran.r-project.org/web/packages/available_packages_by_name.html)], we have decided to use only a limited number of packages at BMS. The use of R at BMS will be based on the *tidyverse*^[ [click here to see the tidyverse style guide](https://style.tidyverse.org/)]. We will therefore mainly use packages belonging to the *tidyverse* (that are installed and loaded when installing and loading the *tidyverse* package).^[What is a bit confusing, is that the tidyverse is both a *set* of packages, and a 'programming philosophy'. There are many more packages adhering to that tidyverse philosophy and they work well with the tidyverse core. When installing the 'tidyverse' you only install the core tidyverse packages.] We will also use some other packages.
+
+Here is an overview of the packages you will be using:
+
+- `ggplot2` to visualize your data (part of the tidyverse core); 
+- `dplyr` and `tidyr` to change data, and to make sure that each variable is in a column, each observation is a row and each value is a cell (both part of the tidyverse core);
+- `readr` to import .csv data (part of the tidyverse core);
+- `readxl` to import .xls and .xlsx sheets; 
+- `haven` to import SPSS, Stata, and SAS data;
+- `magrittr` to provide the pipe %>% operator, used throughout the tidyverse. The pipe operator is, however, also contained in the tidyverse core. The pipe operator will be explained later;
+- `janitor` to create frequency tables and cross tabulations (not part of the tidyverse, but aligned);
+- `lme4` for the linear mixed model;
+- `psych` for psychometric analysis, including scale construction and factor analysis;
+- `lmerTest` to approximate *p*-values;
+- `broom` to use a `tidy()` function, which may come handy when doing statistical analysis;
+- `modelr` to make plots with the residuals and/or the predicted values (this package will soon be replacd by a new set of packages called 'tidymodels').
+
+At the beginning of a meeting or course we will tell you which packages to download and call.
+
+
+## Datasets in R-packages
+
+Apart from a set of commands, most packages also contain data sets, to enable easy illustrations of what packages can do.
+
+```{r eval = F, tidy = TRUE}
+
+# to see which datasets are available in the packages loaded in the library, use:
+
+data()
+
+# to see all 'available' data in installed packages on your computer, use:
+
+data(package = .packages(all.available = TRUE))
+
+# sometimes it makes sense to put a data set in the Global Environment:
+
+gss_cat <- gss_cat # loaded in the package forcats, which is part of the core tidyverse (see below)
+
+```
+
+
+## The 'pipe' operator
+<iframe src="https://www.youtube-nocookie.com/embed/9yjhxvu-pDg?modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen="" width="500" height="281"></iframe>
+
+Some packages add additional operators to the set of base R operators. The 'pipe' operator is the most important one.^[This is one of the pipe operators which are part of the `magrittr` package (which is part of tidyverse, but not part of the core), it is so important that this pipe operator is also contained in other tidyverse packages. You can use it, once the tidyverse package is 'called'.] We urge you to use the 'pipe' function as much as possible. An example will show why.
+
+Suppose we wanted to create a new object with some (only some) gss_cat data from 2000 after we imported these data as an object into R. In this data set all rows are observations. In this case individuals: each row is an individual in a specific year. Religion and partyid are variables in this dataset. Suppose we want to select *only* **data** from 2000, and focus *only* on age and religion, and we want to store these data in a new (smaller) object called 'gss_cat_small'. We could use:
+
+```{r select, echo=T, eval=F, tidy = TRUE, tidy = TRUE}
+gss_cat <- gss_cat # storing the dataset in the globval environment
+gss_cat_small <- filter(select(gss_cat, year, age, relig), year == 2000) # filtering variables and selecting cases
+```
+
+This is called a *nested command* (with the functions 'filter' and 'select'). A nested command is often difficult to understand. Much simpler is:
+
+```{r pipe, echo=T, eval=F}
+gss_cat_small <- gss_cat %>%
+  select(gss_cat, year, age, relig) %>%
+  filter(year == 2000)
+```
+
+This command means: you have a big data frame (gss_cat, which is an easily called object in the package), you select some variables from this data frame, and then you filter those cases (from a specific year).
+
+When writing code, use the pipe `%>%` operator as much as possible. There is special hotkey in RStudio for the pipe operator: Ctrl+Shift+M (Windows & Linux), Cmd+Shift+M (Mac).
+
+The rest of the document will be made available as a reference for what we expect you to know in various phases of your study program. Especially this second half of the document will be updated regularly. *We want to stick to about 20 to 25 pages.* Suggestions for improvement are welcome.
+
+Please note: some commands below work without additional packages (in 'base R'), however throughout the remainder of this document we assume you have installed the (core) tidyverse packages. For additional commands we will tell which R-packages you need.
