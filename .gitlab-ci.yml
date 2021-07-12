@@ -2,7 +2,7 @@ image: rocker/verse:4.0.4
 
 pages:
   script:
-    - R "init.R"
+    - R -e "source('init.R')"
   artifacts:
     paths:
       - public
