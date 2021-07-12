@@ -17,3 +17,7 @@ This document website how bachelor students in BMS programs will use the program
 There is no need to learn everything 'by heart'. It is mainly a reference guide. Read until "Installing R and RStudio on your laptop" once before doing anything else with R. Then install R and Rstudio. After that read the rest of "1. Introducing R and RStudio" once.
 After this make some of the assignments we created. Use the materials in this reference guide, in case you get stuck. After doing three of four R assignments, read the first chapter again, and skim through the remainder of the website.
 Before you start using R in other courses, read through everything again, to re-familiarize yourself with R.
+
+## Download
+Do you rather work offline? Just download this whole website as a PDF:
+<a href="book/Intro-R-for-RM-DS.pdf" class="btn btn-primary" style="float:right;"><i class="fas fa-download"></i> Download</a>

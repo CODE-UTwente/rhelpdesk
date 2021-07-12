@@ -1,0 +1,194 @@
+---
+title: "Multivariate data analysis"
+output: html_fragment
+---
+
+## 3-way contingency tables with tabyl
+
+Use the `tabyl()` function from the `janitor` package. With several adorning functions you can adjust the table to your liking. You can force the table displaying the values 'none', 'some' and 'many' in the correct order, by making sure the variable is stored as an 'ordered factor'.
+
+```{r tabyl 3-way, echo=T, eval=F}
+
+library(janitor)
+mtcars %>% 
+  tabyl(am, gear, cyl, show_na = FALSE) %>% 
+  adorn_title("combined") %>% #both var names in the title
+  adorn_totals("col") %>% #column totals
+  adorn_totals("row") %>% #row totals
+  adorn_percentages("col") %>% #columnwise, rowwise (row), or total percentages (all)
+  adorn_pct_formatting(digits = 1) %>%
+  adorn_ns() #show the numbers of cases
+
+```
+
+
+## Linear models
+
+For the ordinary linear model, we use `lm()`. For a clear presentation of the regression table, we use the `tidy()` function from the `broom` package. 
+
+```{r lm, echo=T, eval=F}
+
+library(broom)
+
+# multiple linear regression model (no interaction)
+# y = qsec, x1 = wt, x2 = cyl
+# data set: mtcars
+
+model <- mtcars %>% 
+  lm(qsec ~ wt + cyl, data = .) 
+
+# the regression table  
+model %>% 
+  tidy()
+
+```
+
+For an ANOVA table, we also use the `tidy()` function.
+
+```{r anova, echo=T, eval=F}
+
+model %>% 
+  anova() %>% 
+  tidy()
+
+```
+
+To obtain the R-squared, we can use the `summary()` function.
+
+```{r r_squared, echo=T, eval=F, message=F}
+
+out <- mtcars %>% 
+  lm(qsec ~ wt + cyl, data = .) %>% 
+  summary() 
+
+out$r.squared
+out$adj.r.squared
+
+```
+
+To make plots with the residuals and/or the predicted values we can use the `modelr` package to paste residuals and predicted values to the data frame:
+
+```{r residual_plots, echo=T, eval=F}
+
+library(modelr)
+
+model <- mtcars %>% 
+  lm(qsec ~ wt + cyl, data = .)  
+
+mtcars %>% 
+  add_predictions(model) %>% 
+  add_residuals(model) %>% 
+  ggplot(aes(x = pred, y = resid)) + 
+  geom_point()
+
+```
+
+## linear mixed models
+
+For the linear mixed model, we use the `lmer()` function from the `lme4` package. Note that the output doesn't show *p*-values, nor residual degrees of freedom for fixed effects. This is for a good [reason](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html). 
+
+```{r lmer, echo=T, eval=F, message=F}
+
+library(lme4)
+
+mtcars %>% 
+  lmer(qsec ~ wt + (1|gear), data = .) %>% 
+  tidy()
+
+# When we have factors as fixed variables:
+mtcars %>% 
+  lmer(qsec ~ wt + factor(cyl) + (1|gear), data = .) %>% 
+  anova() %>% 
+  tidy()
+
+```
+
+If you want approximate *p*-values, you can use Satterthwaite's degrees of freedom method, implemented in the `lmerTest` package. The same method is used in SPSS. 
+
+```{r, eval=F}
+
+library(lmerTest)
+mtcars %>% 
+  lmer(qsec ~ wt + (1|gear), data = .) %>% 
+  summary()
+
+```
+
+For a residual plot, we can use similar syntax as for the linear model:
+
+```{r lmer_plot, echo=T, eval=F}
+
+model <- mtcars %>% 
+  lmer(qsec ~ wt + (1|gear), data = .)  
+
+mtcars %>% 
+  add_predictions(model) %>% 
+  add_residuals(model) %>% 
+  ggplot(aes(x = pred, y = resid)) +
+  geom_point()
+
+```
+
+## logistic regression
+
+For a logistic regression model, we use the `glm()` function. 
+
+```{r logistic, echo=T, eval=F}
+
+mtcars %>% 
+  glm(am ~ wt, family = binomial, data = .) %>% 
+  tidy()
+
+```
+
+Similarly for a Poisson regression. 
+
+```{r poisson, echo=T, eval=F}
+
+mtcars %>% 
+  glm(carb ~ wt, family = poisson, data = .) %>% 
+  tidy()
+
+```
+
+
+## Nonparametric tests
+
+For a non-parametric test for comparing two or more groups, we use
+
+```{r kruskallwallis, echo=T, eval=F}
+
+airquality %>% 
+  kruskal.test(Ozone ~ Month, data = .)
+
+```
+
+For a non-parametric test for repeated measures, we use 
+
+```{r friedman, echo=T, eval=F}
+
+iris %>% 
+  select(Sepal.Length, Petal.Length) %>% 
+  as.matrix() %>%
+  friedman.test()
+
+```
+
+For Kendall's tau, we use 
+
+```{r kendall, echo=T, eval=F, message=F}
+
+library(VGAM)
+kendall.tau(mtcars$mpg, mtcars$gear)
+
+```
+
+For Spearman's rho, we use 
+
+```{r spearman, echo=T, eval=F, message=F}
+
+library(Hmisc) 
+
+rcorr(mtcars$mpg, mtcars$disp, type = "spearman")
+
+```

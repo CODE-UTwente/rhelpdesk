@@ -1,0 +1,89 @@
+---
+title: "Bivariate data analysis and bivariate data vizualisation"
+output: html_fragment
+---
+
+## Contingency tables (a.k.a. crosstabs) with tabyl
+
+Use the `tabyl()` function from the `janitor` package. The first line creates the table. The rest formats the table (giving it a title, adding totals etc...).
+
+```{r tabyl, echo=T, eval=F}
+
+library(janitor)
+mtcars %>% 
+  tabyl(am, gear, show_na = FALSE) %>% 
+  adorn_title("combined") %>% #both var names in the title
+  adorn_totals("col") %>% #column totals
+  adorn_totals("row") %>% #row totals
+  adorn_percentages("col") %>% #columnwise, rowwise (row), or total percentages (all)
+  adorn_pct_formatting(digits = 1) %>%
+  adorn_ns() #show the numbers of cases
+
+```
+
+
+## Box plots for different groups using ggplot
+
+For a boxplot use `geom_boxplot()`:
+
+```{r geomboxplot2, echo=T, eval=F}
+
+# A boxplot comparing different species is having two variables in the aesthetics
+
+iris %>% 
+  ggplot(aes(x = Species, y = Petal.Width)) +
+  geom_boxplot()
+
+``` 
+
+
+## Scatterplots with ggplot
+
+A scatter plot in the ggplot package will be done with the geom `geom_point()`. Notice that the aesthetics in the first layer now contain two variables.
+
+```{r scatter, echo=T, eval=F}
+
+mtcars %>% 
+  ggplot(aes(x = cyl, y = mpg)) + 
+  geom_point()
+
+```
+
+If you want to add a linear regression line, add an extra 'geom' (geom_smooth).
+
+```{r scatter_lm, echo=T, eval=F}
+
+mtcars %>% 
+  ggplot(aes(x = cyl, y = mpg)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = F)
+
+```
+
+If you want to visualize different groups in the scatterplot, you can add extra variables to the aesthetics. In addition to x and y, you can use color (the “outside” color of points), fill (the “inside” color of the points), shape (of points) and size.
+
+```{r scatter with extra layers, echo=T, eval=F}
+
+mtcars %>% 
+  ggplot(aes(x = cyl, 
+             y = mpg, 
+             color = factor(gear)
+             )
+         ) + 
+  geom_point()
+
+```
+
+
+## Faceting
+
+For different subplots, use the layer `facet_wrap(~ )` as default. This is another way to introduce a third variable.
+
+```{r faceting, echo=T, eval=F}
+
+mpg %>% 
+  ggplot(aes(x = factor(cyl), y = hwy)) +
+  geom_boxplot() + 
+  facet_wrap(~ year)
+
+```

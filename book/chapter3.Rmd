@@ -1,0 +1,111 @@
+---
+title: "Univariate data analysis and data visualization"
+output: html_fragment
+---
+
+A variable can be described with statistics like the mode, mean, median, variance and standard deviation. Also, it is interesting to visualize a variable using a plot.
+
+## Summarizing numerical variables: mean, median, variation and standard deviation
+
+Below you will see several examples of obtaining descriptive statistics for items in a data set called `data_new`.
+
+```{r eval = F, tidy = TRUE}
+
+# To summarise some main characteristics of one numerical item (called Item1):
+data_new %>% 
+  summarise(mean = mean(Item1),
+            sd = sd(Item1),
+            var = var(Item1),
+            minimum = min(Item1),
+            maximum = max(Item1)
+            )
+# You can also ask for only one of the statistics.
+
+# To summarize the main characteristics (mean, median, minimum, maximum, Q1, Q3 and number of missings) of multiple variables (in this example: the first 10 variables) in the data set:
+data_new %>% 
+  select(1:10) %>%
+  summary()           
+
+# To compute a certain statistic for the first 10 variables in the data set, you can also use the map() function:
+
+data_new %>%
+  select(1:10) %>%
+  map(var)
+
+# instead of var, you can also use mean, sd, or other functions
+
+```
+
+
+## Frequency tables with janitor: tabyl
+
+The tabyl() function from the `janitor` package is a way to get frequency tables. tabyl() is tidyverse-aligned and is primarily built upon the dplyr and tidyr packages.
+
+```{r eval = F, tidy = TRUE}
+
+# Make sure 'janitor' in loaded into the library
+
+# Create a frequency table
+gss_cat %>%
+  tabyl(race)
+
+# Create frequency tables for all variables of a data set:
+gss_cat %>%
+  map(tabyl)
+
+# If the values are in alphabetical, rather than in a meaningful order, make sure the variable is stored as an 'ordered factor' (see above).
+
+# The frequency table can be made nicer using the adorn commands, for example:
+gss_cat %>%
+  tabyl(marital) %>%
+  adorn_totals("row") %>%
+  adorn_pct_formatting()
+
+```
+
+## Univariate graphs: creating bar charts, box plots and histograms using ggplot
+
+We will use the package `ggplot2` (part of the core tidyverse) for creating visualizations. The function **ggplot** is extremely flexible and there is an almost infinite number of ways to display your data.
+
+The basic idea of ggplot commands is that you 
+(1) have a data frame, pipe (%>%) that into a 
+(2) ggplot(), add a
+(3) geom_...() to select the type of display you want to have, and
+(4) use aesthetics (aes()) to select the variable(s) you will use from that data frame.
+
+There are more 'layers' in a ggplot, but these are the most important.
+
+For example, you can use a bar chart to visualize a categorical (= nominal) variable. 
+
+```{r, creating barcharts, boxplots and histograms, eval = F}
+
+# creating a basic bar chart with the nominal variable item 1
+gss_cat %>% 
+  ggplot() +
+  geom_bar(aes(x = marital))
+
+# to create a box plot for the ratio variable tvhours in gss_cat 
+# (please note that x = and y = in the aesthetics tilt the picture)
+
+gss_cat %>% 
+  ggplot() +
+  geom_boxplot(aes(y = tvhours))
+
+# to create a histogram for the ratio variable tvhours in gss_cat
+gss_cat %>% 
+  ggplot() +
+  geom_histogram(aes(x = tvhours))
+
+# there are many more geom's to use, but we will focus on these in univariate analysis. But this is definitely a topic you can explore further. Think for example about changing the colors of the bars in a barchart, adding better titles or adding annotations.
+
+# Note 1: although we generally recommend using the pipe operator like this, if you start visualizing data from different objects in one plot, it may be wise to put the data inside the ggplot:
+
+ggplot(gss_cat) +
+  geom_histogram(aes(x = tvhours))
+
+# Note 2: the aesthetics are put in the geom. However, if you combine different geom's (scatter and line) displaying the same variables, it is more efficient, to but the aesthetics in the general ggplot command too:
+
+ggplot(gss_cat, aes(x = tvhours)) +
+  geom_histogram()
+
+```

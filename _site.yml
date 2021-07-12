@@ -35,11 +35,7 @@ output:
     highlight: textmate
     toc: true
     df_print: paged
-    toc_depth: 3
+    toc_depth: 2
     toc_float:
       collapsed: true
       smooth_scroll: true
-    includes:
-      in_header: header.html
-      before_body: doc_prefix.html
-      after_body: [doc_suffix.html, ace.html]
