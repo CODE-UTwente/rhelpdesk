@@ -2,9 +2,7 @@ image: rocker/verse:4.0.4
 
 pages:
   script:
-    - R -e "install.packages('formatR', repos = 'http://cran.rstudio.com', dependencies = TRUE)"
-    - R -e "rmarkdown::render('book/Intro R for RM&DS.Rmd')"
-    - R -e "rmarkdown::render_site(encoding = 'UTF-8')"
+    - R "init.R"
   artifacts:
     paths:
       - public

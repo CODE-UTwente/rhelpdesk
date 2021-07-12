@@ -1,6 +1,7 @@
 name: "R-Helpdesk"
 output_dir: "public"
-
+include: ["files/*"]
+exclude: ["book"]
 navbar:
   title: "R-Helpdesk"
   type: inverse

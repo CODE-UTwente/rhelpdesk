@@ -19,5 +19,5 @@ After this make some of the assignments we created. Use the materials in this re
 Before you start using R in other courses, read through everything again, to re-familiarize yourself with R.
 
 ## Download
-Do you rather work offline? Just download this whole website as a PDF:
-<a href="book/Intro-R-for-RM-DS.pdf" class="btn btn-primary" style="float:right;"><i class="fas fa-download"></i> Download</a>
+Do you rather work offline? Just download this whole website as a PDF:  
+<a href="Intro-R-for-RM-DS.pdf" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>
