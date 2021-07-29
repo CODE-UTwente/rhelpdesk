@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 On this page, you can find out how to run a factor analysis in R and how to run Classical Test Theory analyses and Item Response Theory models in R.  
 
 # Explanation
-```{r child="book/chapter5.Rmd", echo=FALSE}
+```{r child="book/chapter6.Rmd"}
 ```
 
 # Examples {.tabset}

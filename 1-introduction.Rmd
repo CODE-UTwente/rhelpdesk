@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 This page contains information on how to install R and RStudio, what it is used for and some basic termonogoly and commands, like installing packages.
 
 # Explanation
-```{r child="book/chapter1.Rmd", echo=FALSE}
+```{r child="book/chapter1.Rmd"}
 ```
 
 # Examples {.tabset}

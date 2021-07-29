@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 This page will show you how you can analyze and visualize single variables using R.
 
 # Explanation
-```{r child="book/chapter3.Rmd", echo=FALSE}
+```{r child="book/chapter3.Rmd"}
 ```
 
 # Examples {.tabset}
