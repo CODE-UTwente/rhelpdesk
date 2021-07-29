@@ -1,7 +1,5 @@
 ---
 title: "Instructions for Editors"
-author: "Wouter Stoter"
-date: "7/29/2021"
 output: html_document
 ---
 
