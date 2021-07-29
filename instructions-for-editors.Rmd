@@ -10,10 +10,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 This page describes how to make changes to the R manual
 
-# Explanation
+# Changing the Website
 
 ## Method 1: In the Web Browser
-Go the the [rhelpdesk.github.io GitLab Page](https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io) and click the button *Web IDE*. Click on the folder *book* to find the book chapters, and make the changes there you would like to make. Once you're done making changes, press *Commit...*. You will see an overview of the changes you made. Please add a description of the changes you made under *Commit Message*. If you have the option, you can pick *Commit to `master` branch* for the change to have effect immediately. If you do not have that option, pick *Create a new branch*. Make sure to tick the *Start a new merge request*. This way a request will be made for your changes to be applied. Someone with more permissions can then approve your change to be applied on the website. Lastly, press the *Commit* button at the bottom. It can take several minutes for changes to take effect on the website.
+Go the the [rhelpdesk.github.io GitLab Page](https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io) and click the button *Web IDE*. Click on the folder *book* to find the book chapters, and make the changes there you would like to make. Once you're done making changes, press *Commit...*. You will see an overview of the changes you made. Please add a description of the changes you made under *Commit Message*. If you have the option, you can pick *Commit to `master` branch* for the change to have effect immediately. If you do not have that option or would like your changes to be checked, pick *Create a new branch*. Make sure to tick the *Start a new merge request*. This way a request will be made for your changes to be applied. Someone with more permissions can then approve your change to be applied on the website. Lastly, press the *Commit* button at the bottom. It can take several minutes for changes to take effect on the website.
 
 ## Method 2: Using R-Studio
 ### Set up
@@ -21,4 +21,183 @@ You need to set a few things up to be able to change the website using RStudio. 
 First, make sure git is installed. Please follow the instructions at [http://r-bio.github.io/git-installation/](http://r-bio.github.io/git-installation/). Once this is done, you can open RStudio, and click *File -> New Project...*. Pick the *Version Control* option, and then pick *Git*. Under *Repository URL:* fill in `https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io.git` and as *Project directory name* pick `rhelpdesk.utwente.io`. Under *Create project as subdirectory of:* you can pick a directory in which you want to save all the files.
 
 ### Making changes
-To start making changes, open the `rhelpdesk.utwente.io.Rproj` file. In the window in the top-right, go to the *Git* tab. Before making changes, press *Pull*, to update all the files to their most recent versions. After that, you can navigate to the *book* folder in the *Files* tab in the window on the bottom-right, and make the changes there you would like to make, and save the files. Once you're done making changes, press *Commit* in the *Git* tab. Tick the boxes in front of all the files that you have updated. Please add a description of the changes you made under *Commit Message*.
+To start making changes, open the `rhelpdesk.utwente.io.Rproj` file. In the window in the top-right, go to the *Git* tab. Before making changes, press *Pull*, to update all the files to their most recent versions. After that, you can navigate to the *book* folder in the *Files* tab in the window on the bottom-right, and make the changes there you would like to make, and save the files. To see how your changes would look on the website, you can press the *Knit* button to preview the specific page you were working on, or press *Build website* under the *Build* tab to preview the entire website.  
+Once you're done making changes, press *Commit* in the *Git* tab. Tick the boxes in front of all the files that you have updated. Please add a description of the changes you made under *Commit Message* and press *Commit*.  
+These changes are now only made locally. To put these changes on the online website, press *Push*. It can take several minutes for changes to take effect on the website.
+
+# Changing the PDF
+When making changes to the website, the PDF on the website that can be found [here](https://rhelpdesk.utwente.io/Intro-R-for-RM-DS.pdf) will automatically be updated as well. No extra steps are required.
+
+# Changing the Canvas Page
+First make sure the changes you would like to make are applied to the website page. Copy the URL of the website page, paste it below, and press *Convert*
+```{=html}
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js" integrity="sha512-GoORoNnxst42zE3rYPj4bNBm0Q6ZRXKNH2D9nEmNvVF/z24ywVnijAWVi/09iBiVDQVf3UlZHpzhAJIdd9BXqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-html.min.js" integrity="sha512-qyse7v2aBOxbbQxKhaDcI+XKKBDL3CPR5xsipXPUX3GwzE6lcteLkFsTS7emYQcDtTqY/nsq99FztWBXzmfFAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/theme-textmate.min.js" integrity="sha512-EfT0yrRqRKdVeJXcphL/4lzFc33WZJv6xAe34FMpICOAMJQmlfsTn/Bt/+eUarjewh1UMJQcdoFulncymeLUgw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div style="display:flex;margin-bottom:10px;">
+<input type="text" id="url" name="url" class="form-control" placeholder="https://rhelpdesk.utwente.io/..."/>
+<button class="btn btn-primary" id="convert" style="margin-left:10px;">Convert</button>
+</div>
+<div id="converted" style="border: 1px solid #ccc; border-radius: 4px; margin-bottom:10px;">&lt;html&gt;
+    &lt;!-- The HTML of the page to paste in canvas will appear here --&gt;
+&lt;/html&gt;</div>
+<script>
+document.querySelector("button#convert").onclick = function() {
+  var url = document.querySelector("input#url").value;
+  
+  fetch(url)
+  .then(a => a.text())
+  .then(p => {
+    var d = document.implementation.createHTMLDocument();
+    d.documentElement.innerHTML = p;
+    var canD = document.createElement("div");
+    canD.innerHTML = d.querySelector(".toc-content").innerHTML;
+    var mobileview = document.createElement("iframe");
+    mobileview.src = url;
+    mobileview.setAttribute("id","mobileview");
+    canD.insertBefore(mobileview,canD.firstChild);
+    var style = document.createElement("style");
+    style.innerHTML = `
+      #mobileview {
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        border:none;
+      }
+      .user_content #mobileview {
+        display:none;
+        width:0;
+        height:0;
+      }
+      .section h2 {
+          font-size: 20px;
+          color: white;
+          background: #008cba;
+          padding: 5px 10px !important;
+          border-radius: 5px;
+          margin: 20px 0 10px 0 !important;
+      }
+      .section h3 {
+          font-size: 15px;
+          border: 1px solid #008cba;
+          color: #008cba;
+          font-weight: 100;
+          padding: 5px 10px !important;
+          border-radius: 5px;
+          margin: 20px 0 10px 0 !important;
+      }
+      .user_content iframe {
+        max-width:100%;
+        border: 1px solid #ccc;
+        border-radius:4px;
+      }
+      .hljs-literal {
+        color: rgb(88, 72, 246);
+      }
+
+      .hljs-number {
+        color: rgb(0, 0, 205);
+      }
+
+      .hljs-comment {
+        color: rgb(76, 136, 107);
+      }
+
+      .hljs-keyword {
+        color: rgb(0, 0, 255);
+      }
+
+      .hljs-string {
+        color: rgb(3, 106, 7);
+      }
+      .ic-Table--condensed {
+        max-height: 300px;
+        overflow: auto;
+        display: block;
+        max-width: 100%;
+        white-space: nowrap;
+      }
+      pre:not([class]) {
+        background-color:white;
+      }
+    `;
+    canD.insertBefore(style,canD.firstChild);
+    while (t = canD.querySelector(".tabset")) {
+      t.classList.remove("tabset");
+      t.firstElementChild.classList.remove("tabset");
+      var div = document.createElement("div");
+      div.setAttribute("class", "enhanceable_content tabs");
+      var ul = document.createElement("ul");
+      div.appendChild(ul);
+      while (s = t.querySelector(".section")) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = "#" + s.id;
+        li.appendChild(a);
+        var span = document.createElement("span");
+        span.innerHTML = s.firstElementChild.innerHTML;
+        s.removeChild(s.firstElementChild);
+        a.appendChild(span);
+        ul.appendChild(li);
+        div.appendChild(s);
+      }
+      t.appendChild(div);
+    }
+    canD.querySelectorAll('pre.r code').forEach((el) => {
+      hljs.highlightElement(el, {language: 'r'});
+    });
+    while (t = canD.querySelector("[data-pagedtable]")) {
+      console.log(t)
+      var data = JSON.parse(t.querySelector("[data-pagedtable-source]").innerHTML);
+      var table = document.createElement("table");
+      table.setAttribute("class","ic-Table ic-Table--striped ic-Table--condensed")
+      var tr = document.createElement("tr");
+      var columns = [];
+      for (c = 0; c < data.columns.length; ++c) {
+        var th = document.createElement("th");
+        th.innerText = data.columns[c].label[0];
+        columns.push(data.columns[c].name[0]);
+        tr.appendChild(th);
+      }
+      table.appendChild(document.createElement("thead")).appendChild(tr);
+      var tbody = table.appendChild(document.createElement("tbody"))
+      for (r = 0; r < data.data.length; ++r) {
+        var tr = document.createElement("tr");
+        for (c = 0; c < columns.length; ++c) {
+          var td = document.createElement("td");
+          td.innerText = data.data[r][columns[c]];
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+      t.parentElement.insertBefore(table,t);
+      t.parentElement.removeChild(t)
+    }
+    while (t = canD.querySelector("table:not(.ic-Table)")) {
+      t.classList.add("ic-Table")
+    }
+    while (b = canD.querySelector(".btn > .fa-download")) {
+      b.parentElement.classList.add("icon-download");
+      b.parentElement.removeChild(b);
+    }
+    canD.querySelectorAll("div.navbar, div#header, div.tocify-extend-page, script").forEach(a => a.parentElement.removeChild(a));
+    editor.setValue(canD.innerHTML);
+  })
+  .error(alert);
+}
+
+
+var editor = ace.edit("converted");
+editor.setTheme("ace/theme/textmate");
+editor.session.setMode("ace/mode/html");
+editor.setOptions({
+  selectionStyle: "text",
+  readOnly: true,
+  maxLines: 10
+});
+</script>
+```
+On Canvas, go to the page you would like to edit, and press *Edit* or create a new page. In the editing window, press the `</>` button, and paste the text in the box above in the field. Afterwards, press *Save* or *Save & Publish*.
