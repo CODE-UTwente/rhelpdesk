@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 This page will show you how you van import different types of datasets in R and how you can process its data.
 
 # Explanation
-```{r child="book/chapter2.Rmd", echo=FALSE}
+```{r child="book/chapter2.Rmd"}
 ```
 
 # Examples {.tabset}

@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 This page will show you how you can analyze more variables and their relationships using R.
 
 # Explanation
-```{r child="book/chapter5.Rmd", echo=FALSE}
+```{r child="book/chapter5.Rmd"}
 ```
 
 # Examples {.tabset}
