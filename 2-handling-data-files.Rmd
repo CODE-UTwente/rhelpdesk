@@ -115,7 +115,17 @@ _package: utils (base)_
 Shows a dataframe as a table in RStudio
 
 # FAQ
-*No Frequently Asked Questions yet*
+::: {#faq-file-not-found}
+**When trying to open a dataset I get the message `Error : no such file or directory`**  
+When loading a file, R will only search for that file in one directory: The working directory. You can find out what the working directory is by using the command `getwd()`. If that is not the folder where your file is in, you need to change it. You can do that using `setwd()`. When typing the path of this directory, you can't use the default backslash (\\) that is normally used in paths. Therefore, you need to change it to either a forward slash (/) or a double backslash (\\\\). So if your file is in the folder "C:\\Users\\username\\Downloads", you type `setwd("C:\\Users\\username\\Downloads")`. If you do not know the full path of the folder, you can type `rstudioapi::selectDirectory()` in your console. This will allow you to pick a folder by hand, and will give you the full path you need to use in your command with the slashes already changed.
+
+If the file still cannot be found, check for any typo's in the folder path or filename. When typing the filename, make sure to include the file extension. This is for example `.csv` or `.sav`. File extensions may be hidden in your file explorer, making them difficult to know. To see file extensions on Windows, open file explorer, go to the *View* tab, and under *Show/Hide* check the box *File name extensions*. On Mac, select a file, then choose *File > Get Info*. Click the arrow next to *Name & Extension* and deselect *Hide extension*
+:::
+::: {#faq-open-sav}
+**My computer can’t open .sav files. I don’t have the right program installed.**  
+You don’t need to open .sav files directly with your computer. You only have to import the sav files into R. You can do that using the `foreign` library and the `read.spss()` command. 
+:::
 
 # Resources
-*No resources yet*
+* [Data transformation cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf)  
+An overview of all the functions you can use to find and manipulate data in your dataframe.

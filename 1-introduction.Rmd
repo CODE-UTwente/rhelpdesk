@@ -43,7 +43,43 @@ _package: dplyr (tidyverse)_
 Get a specific column or columns from a dataset
 
 # FAQ
-*No Frequently Asked Questions yet*
+::: {#faq-masked}
+**After loading a new package, R tells me that a certain object is masked from another package. What does this mean?**  
+Some objects are included in several packages. For example, the function alpha() is included in both 'ggplot2' and 'psych'. The functions are not the same though. Loading 'psych' after loading 'ggplot' will give you the warning that alpha is masked from the ggplot2 package. In this case, if you are using the function alpha(), you will use the function from the psych package (as the one from the ggplot2 package is masked).
+:::
+::: {#faq-rtools}
+**When trying to install a package I get the message that I need to install Rtools. How do I do that?**  
+R-Tools is a program that is required to program and make packages yourself. Since you will not be doing that, you should not need R-Tools for any of the things you will be doing. However, sometimes RStudio still gives the message that R-Tools is required when installing a package, even when the installation of the package is going successfully. Therefore, when you try to install a package, your console might look something like this: (I will install the library "tidyverse" in this example, but it will look similar with other libraries)
+```
+> install.packages("tidyverse")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Installing package into ‘C:/Users/username/Documents/R/win-library/4.0’
+(as ‘lib’ is unspecified)
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/tidyverse_1.3.0.zip'
+Content type 'application/zip' length 440017 bytes (429 KB)
+downloaded 429 KB
+
+package ‘tidyverse’ successfully unpacked and MD5 sums checked
+The downloaded binary packages are in
+C:\Users\username\AppData\Local\Temp\RtmpM9Rqjf\downloaded_packages
+```
+This may look like the installation failed and that you need to install Rtools, however, at the end it says that in fact the installation was successful. Usually, the package is successfully installed, despite the message saying that you need to install Rtools. You can test if the package is in fact installed properly, by calling:
+```
+> library(tidyverse)
+```
+
+Change "tidyverse" here of course in the name of the library you need. If you still keep having problems, you can try to install Rtools anyway (even though you probably don't need it). You can download Rtools for Windows from here: https://cran.uni-muenster.de/bin/windows/Rtools/.
+:::
+::: {#faq-function-not-found}
+**When using a command I get the message `Error : could not find function`**
+Not all functions you need to use are always available. Many functions are part of packages. That means you need to first install and load the package before the function can be used. For example, the `mutate()` function is part of the `tidyverse`. Therefore, if the function mutate can't be found, you need to load the tidyverse package with `library(tidyverse)`. You can find which library a function belongs to in the [function list](#Functions) of the relevant chapter, or by looking up the function on [rdocumentation.org](https://www.rdocumentation.org/).
+:::
+::: {#faq-package-not-found}
+**When loading a package, I get the message `Error : there is no package called ‘...’`**
+Before being able to load a package, it first needs to be installed. You can install a package using the function `packages.install()`. You only need to install the package once, after that it will be available for use in all your projects.
+:::
 
 # Resources
 * [RStudio website](https://www.rstudio.com/products/rstudio/)   
@@ -52,3 +88,5 @@ More explanation about RStudio
 A list of all existing packages that can be loaded into R
 * [Tidyverse Style Guide](https://style.tidyverse.org/)   
 Describes the style used throughout the tidyverse
+* [RStudio IDE cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/rstudio-ide.pdf)  
+An overview of the interface of RStudio and how to use it.

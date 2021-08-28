@@ -13,15 +13,64 @@ This page will show you how you can analyze and visualize single variables using
 ```
 
 # Examples {.tabset}
-
 *No examples available yet*
 
 # Functions
-
-*No function overview yet*
+* [`adorn_pct_formatting()`](https://www.rdocumentation.org/packages/janitor/topics/adorn_totals)  
+_package: janitor_   
+Change numeric columns to percentages in a frequency table (tabyl).
+* [`adorn_totals()`](https://www.rdocumentation.org/packages/janitor/topics/adorn_totals)  
+_package: janitor_   
+Add a row or column with totals to a frequency table (tabyl).
+* [`aes()`](https://www.rdocumentation.org/packages/ggplot2/topics/aes)  
+_package: ggplot2 (tidyverse)_   
+Create an aestetic map, which explains which visual properties (aesthetics) are linked (mapped) to which variables in the dataframe.
+* [`ggplot()`](https://www.rdocumentation.org/packages/ggplot2/topics/ggplot)  
+_package: ggplot2 (tidyverse)_   
+Initialize any type of graph.
+* [`geom_bar()`](https://www.rdocumentation.org/packages/ggplot2/topics/geom_bar)  
+_package: ggplot2 (tidyverse)_   
+Create a bar chart using the initialized ggplot.
+* [`geom_boxplot()`](https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot)  
+_package: ggplot2 (tidyverse)_   
+Create a boxplot using the initialized ggplot.
+* [`geom_histogram()`](https://www.rdocumentation.org/packages/ggplot2/topics/geom_histogram)  
+_package: ggplot2 (tidyverse)_   
+Create a histogram using the initialized ggplot.
+* [`map()`](https://www.rdocumentation.org/packages/purrr/topics/map)  
+_package: purrr (tidyverse)_   
+Apply a transformation to every variable in the dataframe.
+* [`max()`](https://www.rdocumentation.org/packages/base/topics/max)  
+_package: base_   
+Find the highest number from a list of numbers.
+* [`mean()`](https://www.rdocumentation.org/packages/base/topics/mean)  
+_package: utils (base)_   
+Find the mean of a list of numbers.
+* [`median()`](https://www.rdocumentation.org/packages/stats/topics/median)  
+_package: stats (base)_   
+Find the median of a list of numbers.
+* [`min()`](https://www.rdocumentation.org/packages/base/topics/min)  
+_package: base_   
+Find the lowest number from a list of numbers.
+* [`sd()`](https://www.rdocumentation.org/packages/stats/topics/sd)  
+_package: stats (base)_   
+Find the standard deviation of a list of numbers.
+* [`summarise()`](https://www.rdocumentation.org/packages/dplyr/topics/summarise)  
+_package: dplyr (tidyverse)_   
+Create a new dataframe summarizing the values in another dataframe.
+* [`tabyl()`](https://www.rdocumentation.org/packages/janitor/topics/tabyl)  
+_package: janitor_   
+Generate a frequency table.
+* [`var()`](https://www.rdocumentation.org/packages/stats/topics/var)  
+_package: stats (base)_   
+Find the variation of a list of numbers.
 
 # FAQ
-*No Frequently Asked Questions yet*
+::: {#faq-pipe-for-plus}
+*When creating a graph, i get the message `Did you use %>% instead of +?`*
+When using the `ggplot()` command together with another command like `geom_bar()` or `geom_boxplot()` you don't use the pipe (`%>%`) between them, but instead you use the `+`. That is because these two commands need to be executed together, and instead of that the result of one needs to be used in the next.
+:::
 
 # Resources
-*No resources yet*
+* [Data visualisation cheatsheet with ggplot2](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization.pdf)  
+An overview of all the different graph types and how to make them using the `ggplot()` function.
