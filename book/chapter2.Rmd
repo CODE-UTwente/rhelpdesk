@@ -5,16 +5,16 @@ output: html_fragment
 
 ## Importing data: from .csv, .sav and other formats to R data frames
 
-To import a data set, you first need to activate the correct package (these are `haven`, `readr` or `readxl`, depending on the type of data you want to import). Next to that, you need to know the location of the data set on your computer. Suppose the location of your data file called 'dataset2' is: "C:/My Documents". The data set can be loaded into the *global environment* with the following command:
+To import a data set, you first need to activate the correct package (these are `foreign` (for SPSS files), `haven`, `readr` or `readxl` (for excel files), depending on the type of data you want to import). Next to that, you need to know the location of the data set on your computer. Suppose the location of your data file called 'dataset2' is: "C:/My Documents". The data set can be loaded into the *global environment* with the following command:
 
 ```{r eval = F, tidy = TRUE}
 #set working directory to the correct folder and put all files to be imported in that folder
-install.packages("tidyverse", "haven", "readr", "readxl") # you do this only once
-library("tidyverse", "haven", "readr", "readxl") #you only need to call packages you will actually use
+install.packages("tidyverse", "foreign", "haven", "readr", "readxl") # you do this only once
+library("tidyverse", foreign", "haven", "readr", "readxl") #you only need to call packages you will actually use, but you need to do that every time after (re)starting R
 
 setwd("C:/My Documents") # setting the working directory
 
-dataset2 <- read_spss("dataset2.sav") # load an spss file with the package "haven" 
+dataset2 <- read.spss("dataset2.sav") # load an spss file with the package "foreign" 
 
 #OR, if the file is a csv file ...
 
