@@ -196,9 +196,9 @@ Never put spaces inside or outside parentheses for regular function calls. Most 
 R and RStudio can be used more efficiently, by 'add ons' called *packages*. These packages simplify programming in R as they include new functions that you can use. Below, you will find a list of packages to be downloaded for the various courses at BMS. After downloading (= installing) the package, there is no need to do that every time you are using R, although it may be wise to sometimes check for updates. After installing and opening R and RStudio, you can install packages using a command in either the console or in a script.
 
 ```{r install, eval = F, tidy = TRUE}
-# Installing the packages "foreign", "haven" and "tidyverse" (both to be introduced later) is done with the following command in R:
+# Installing the packages "foreign" and "tidyverse" (both to be introduced later) is done with the following command in R:
 
-install.packages("foreign", "haven", "tidyverse")
+install.packages("foreign", "tidyverse")
 
 ```
 
@@ -208,7 +208,6 @@ Downloading (= installing) a package is not the same as 'calling' that package f
 # Loading the packages into the library is done with commands like these:
 
 library(foreign)
-library(haven)
 library(tidyverse)
 
 ```
@@ -227,7 +226,7 @@ Here is an overview of the packages you will be using:
 - `dplyr` and `tidyr` to change data, and to make sure that each variable is in a column, each observation is a row and each value is a cell (both part of the tidyverse core);
 - `readr` to import .csv data (part of the tidyverse core);
 - `readxl` to import .xls and .xlsx sheets; 
-- `foreign` (sometimes maybe `haven`) to import SPSS, Stata, and SAS data;
+- `foreign` to import SPSS, Stata, and SAS data;
 - `magrittr` to provide the pipe %>% operator, used throughout the tidyverse. The pipe operator is, however, also contained in the tidyverse core. The pipe operator will be explained later;
 - `janitor` to create frequency tables and cross tabulations (not part of the tidyverse, but aligned);
 - `lme4` for the linear mixed model;
