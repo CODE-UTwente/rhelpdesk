@@ -32,31 +32,31 @@ Before you start using R in other courses, read through the document again, to r
 \newpage
 
 # 1. Introducing R and RStudio
-```{r child="chapter1.Rmd", echo=FALSE}
+```{r child="chapter1.Rmd"}
 ```
 
 \newpage
 # 2. Handling data files
-```{r child="chapter2.Rmd", echo=FALSE}
+```{r child="chapter2.Rmd"}
 ```
 
 
 \newpage
 # 3. Univariate data analysis and data visualization
-```{r child="chapter3.Rmd", echo=FALSE}
+```{r child="chapter3.Rmd"}
 ```
 
 \newpage
 # 4. Bivariate data analysis and bivariate data vizualisation
-```{r child="chapter4.Rmd", echo=FALSE}
+```{r child="chapter4.Rmd"}
 ```
 
 \newpage
 # 5. Multivariate data analysis
-```{r child="chapter5.Rmd", echo=FALSE}
+```{r child="chapter5.Rmd"}
 ```
 
 \newpage
 # 6. Psychometric analyses
-```{r child="chapter6.Rmd", echo=FALSE}
+```{r child="chapter6.Rmd"}
 ```
