@@ -8,8 +8,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 This page describes how to make changes to the R manual
 
-Small test to see if this automatically updates on the website
-
 # Changing the Website
 
 ## Method 1: In the Web Browser
