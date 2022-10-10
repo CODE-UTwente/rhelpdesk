@@ -1,5 +1,5 @@
 name: "R-Helpdesk"
-output_dir: "public"
+output_dir: "docs"
 include: ["files/*"]
 exclude: ["book"]
 navbar:

@@ -5,6 +5,6 @@ pages:
     - R -e "source('init.R')"
   artifacts:
     paths:
-      - public
+      - docs
   only:
     - master
