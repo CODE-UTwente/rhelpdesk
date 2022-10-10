@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Wouter Stoter" />
+
+
+<title>Instructions for Editors</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R-Helpdesk</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Chapters
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1-introduction.html">1. Introduction</a>
+    </li>
+    <li>
+      <a href="2-handling-data-files.html">2. Handling data files</a>
+    </li>
+    <li>
+      <a href="3-univariate-data-analysis-and-data-visualization.html">3. Univariate data analysis</a>
+    </li>
+    <li>
+      <a href="4-bivariate-data-analysis-and-bivariate-data-vizualisation.html">4. Bivariate data analysis</a>
+    </li>
+    <li>
+      <a href="5-multivariate-data-analysis.html">5. Multivariate data analysis</a>
+    </li>
+    <li>
+      <a href="6-psychometric-analyses.html">6. Psychometric analyses</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://canvas.utwente.nl/courses/8022/discussion_topics">Discussions</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://git.snt.utwente.nl/rhelpdesk">
+    <span class="fab fa-gitlab"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://canvas.utwente.nl/enroll/7C868F">
+    <span class="fas fa-globe"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Instructions for Editors</h1>
+<h4 class="author">Wouter Stoter</h4>
+<h4 class="date">7/29/2021</h4>
+
+</div>
+
+
+<p>This page describes how to make changes to the R manual</p>
+<div id="changing-the-website" class="section level1">
+<h1>Changing the Website</h1>
+<div id="method-1-in-the-web-browser" class="section level2">
+<h2>Method 1: In the Web Browser</h2>
+<p>Go the the <a href="https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io">rhelpdesk.github.io GitLab Page</a> and click the button <em>Web IDE</em>. Click on the folder <em>book</em> to find the book chapters, and make the changes there you would like to make. Once you’re done making changes, press <em>Commit…</em>. You will see an overview of the changes you made. Please add a description of the changes you made under <em>Commit Message</em>. If you have the option, you can pick <em>Commit to <code>master</code> branch</em> for the change to have effect immediately. If you do not have that option or would like your changes to be checked, pick <em>Create a new branch</em>. Make sure to tick the <em>Start a new merge request</em>. This way a request will be made for your changes to be applied. Someone with more permissions can then approve your change to be applied on the website. Lastly, press the <em>Commit</em> button at the bottom. It can take several minutes for changes to take effect on the website.</p>
+</div>
+<div id="method-2-using-r-studio" class="section level2">
+<h2>Method 2: Using R-Studio</h2>
+<div id="set-up" class="section level3">
+<h3>Set up</h3>
+<p>You need to set a few things up to be able to change the website using RStudio. This setup only has to be done once.<br />
+First, make sure git is installed. Please follow the instructions at <a href="http://r-bio.github.io/git-installation/">http://r-bio.github.io/git-installation/</a>. Once this is done, you can open RStudio, and click <em>File -&gt; New Project…</em>. Pick the <em>Version Control</em> option, and then pick <em>Git</em>. Under <em>Repository URL:</em> fill in <code>https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io.git</code> and as <em>Project directory name</em> pick <code>rhelpdesk.utwente.io</code>. Under <em>Create project as subdirectory of:</em> you can pick a directory in which you want to save all the files.</p>
+</div>
+<div id="making-changes" class="section level3">
+<h3>Making changes</h3>
+<p>To start making changes, open the <code>rhelpdesk.utwente.io.Rproj</code> file. In the window in the top-right, go to the <em>Git</em> tab. Before making changes, press <em>Pull</em>, to update all the files to their most recent versions. After that, you can navigate to the <em>book</em> folder in the <em>Files</em> tab in the window on the bottom-right, and make the changes there you would like to make, and save the files. To see how your changes would look on the website, you can press the <em>Knit</em> button to preview the specific page you were working on, or press <em>Build website</em> under the <em>Build</em> tab to preview the entire website.<br />
+Once you’re done making changes, press <em>Commit</em> in the <em>Git</em> tab. Tick the boxes in front of all the files that you have updated. Please add a description of the changes you made under <em>Commit Message</em> and press <em>Commit</em>.<br />
+These changes are now only made locally. To put these changes on the online website, press <em>Push</em>. It can take several minutes for changes to take effect on the website.</p>
+</div>
+</div>
+</div>
+<div id="changing-the-pdf" class="section level1">
+<h1>Changing the PDF</h1>
+<p>When making changes to the website, the PDF on the website that can be found <a href="https://rhelpdesk.utwente.io/Intro-R-for-RM-DS.pdf">here</a> will automatically be updated as well. No extra steps are required.</p>
+</div>
+<div id="changing-the-canvas-page" class="section level1">
+<h1>Changing the Canvas Page</h1>
+<p>First make sure the changes you would like to make are applied to the website page. Copy the URL of the website page, paste it below, and press <em>Convert</em></p>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js" integrity="sha512-GoORoNnxst42zE3rYPj4bNBm0Q6ZRXKNH2D9nEmNvVF/z24ywVnijAWVi/09iBiVDQVf3UlZHpzhAJIdd9BXqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-html.min.js" integrity="sha512-qyse7v2aBOxbbQxKhaDcI+XKKBDL3CPR5xsipXPUX3GwzE6lcteLkFsTS7emYQcDtTqY/nsq99FztWBXzmfFAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/theme-textmate.min.js" integrity="sha512-EfT0yrRqRKdVeJXcphL/4lzFc33WZJv6xAe34FMpICOAMJQmlfsTn/Bt/+eUarjewh1UMJQcdoFulncymeLUgw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div style="display:flex;margin-bottom:10px;">
+<input type="text" id="url" name="url" class="form-control" placeholder="https://rhelpdesk.utwente.io/..."/>
+<button class="btn btn-primary" id="convert" style="margin-left:10px;">Convert</button>
+</div>
+<div id="converted" style="border: 1px solid #ccc; border-radius: 4px; margin-bottom:10px;">&lt;html&gt;
+    &lt;!-- The HTML of the page to paste in canvas will appear here --&gt;
+&lt;/html&gt;</div>
+<script>
+document.querySelector("button#convert").onclick = function() {
+  var url = document.querySelector("input#url").value;
+  
+  fetch(url)
+  .then(a => a.text())
+  .then(p => {
+    var d = document.implementation.createHTMLDocument();
+    d.documentElement.innerHTML = p;
+    var canD = document.createElement("div");
+    canD.innerHTML = d.querySelector(".toc-content").innerHTML;
+    var mobileview = document.createElement("iframe");
+    mobileview.src = url;
+    mobileview.setAttribute("id","mobileview");
+    canD.insertBefore(mobileview,canD.firstChild);
+    var style = document.createElement("style");
+    style.innerHTML = `
+      #mobileview {
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        border:none;
+      }
+      .user_content #mobileview {
+        display:none;
+        width:0;
+        height:0;
+      }
+      .section h2 {
+          font-size: 20px;
+          color: white;
+          background: #008cba;
+          padding: 5px 10px !important;
+          border-radius: 5px;
+          margin: 20px 0 10px 0 !important;
+      }
+      .section h3 {
+          font-size: 15px;
+          border: 1px solid #008cba;
+          color: #008cba;
+          font-weight: 100;
+          padding: 5px 10px !important;
+          border-radius: 5px;
+          margin: 20px 0 10px 0 !important;
+      }
+      .user_content iframe {
+        max-width:100%;
+        border: 1px solid #ccc;
+        border-radius:4px;
+      }
+      .hljs-literal {
+        color: rgb(88, 72, 246);
+      }
+
+      .hljs-number {
+        color: rgb(0, 0, 205);
+      }
+
+      .hljs-comment {
+        color: rgb(76, 136, 107);
+      }
+
+      .hljs-keyword {
+        color: rgb(0, 0, 255);
+      }
+
+      .hljs-string {
+        color: rgb(3, 106, 7);
+      }
+      .ic-Table--condensed {
+        max-height: 300px;
+        overflow: auto;
+        display: block;
+        max-width: 100%;
+        white-space: nowrap;
+      }
+      pre:not([class]) {
+        background-color:white;
+      }
+    `;
+    canD.insertBefore(style,canD.firstChild);
+    while (t = canD.querySelector(".tabset")) {
+      t.classList.remove("tabset");
+      t.firstElementChild.classList.remove("tabset");
+      var div = document.createElement("div");
+      div.setAttribute("class", "enhanceable_content tabs");
+      var ul = document.createElement("ul");
+      div.appendChild(ul);
+      while (s = t.querySelector(".section")) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = "#" + s.id;
+        li.appendChild(a);
+        var span = document.createElement("span");
+        span.innerHTML = s.firstElementChild.innerHTML;
+        s.removeChild(s.firstElementChild);
+        a.appendChild(span);
+        ul.appendChild(li);
+        div.appendChild(s);
+      }
+      t.appendChild(div);
+    }
+    canD.querySelectorAll('pre.r code').forEach((el) => {
+      hljs.highlightElement(el, {language: 'r'});
+    });
+    while (t = canD.querySelector("[data-pagedtable]")) {
+      console.log(t)
+      var data = JSON.parse(t.querySelector("[data-pagedtable-source]").innerHTML);
+      var table = document.createElement("table");
+      table.setAttribute("class","ic-Table ic-Table--striped ic-Table--condensed")
+      var tr = document.createElement("tr");
+      var columns = [];
+      for (c = 0; c < data.columns.length; ++c) {
+        var th = document.createElement("th");
+        th.innerText = data.columns[c].label[0];
+        columns.push(data.columns[c].name[0]);
+        tr.appendChild(th);
+      }
+      table.appendChild(document.createElement("thead")).appendChild(tr);
+      var tbody = table.appendChild(document.createElement("tbody"))
+      for (r = 0; r < data.data.length; ++r) {
+        var tr = document.createElement("tr");
+        for (c = 0; c < columns.length; ++c) {
+          var td = document.createElement("td");
+          td.innerText = data.data[r][columns[c]];
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+      t.parentElement.insertBefore(table,t);
+      t.parentElement.removeChild(t)
+    }
+    while (t = canD.querySelector("table:not(.ic-Table)")) {
+      t.classList.add("ic-Table")
+    }
+    while (b = canD.querySelector(".btn > .fa-download")) {
+      b.parentElement.classList.add("icon-download");
+      b.parentElement.removeChild(b);
+    }
+    canD.querySelectorAll("div.navbar, div#header, div.tocify-extend-page, script").forEach(a => a.parentElement.removeChild(a));
+    editor.setValue(canD.innerHTML);
+  })
+  .error(alert);
+}
+
+
+var editor = ace.edit("converted");
+editor.setTheme("ace/theme/textmate");
+editor.session.setMode("ace/mode/html");
+editor.setOptions({
+  selectionStyle: "text",
+  readOnly: true,
+  maxLines: 10
+});
+</script>
+<p>On Canvas, go to the page you would like to edit, and press <em>Edit</em> or create a new page. In the editing window, press the <code>&lt;/&gt;</code> button, and paste the text in the box above in the field. Afterwards, press <em>Save</em> or <em>Save &amp; Publish</em>.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

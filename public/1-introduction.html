@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introducing R and RStudio</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R-Helpdesk</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Chapters
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="1-introduction.html">1. Introduction</a>
+    </li>
+    <li>
+      <a href="2-handling-data-files.html">2. Handling data files</a>
+    </li>
+    <li>
+      <a href="3-univariate-data-analysis-and-data-visualization.html">3. Univariate data analysis</a>
+    </li>
+    <li>
+      <a href="4-bivariate-data-analysis-and-bivariate-data-vizualisation.html">4. Bivariate data analysis</a>
+    </li>
+    <li>
+      <a href="5-multivariate-data-analysis.html">5. Multivariate data analysis</a>
+    </li>
+    <li>
+      <a href="6-psychometric-analyses.html">6. Psychometric analyses</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://canvas.utwente.nl/courses/8022/discussion_topics">Discussions</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://git.snt.utwente.nl/rhelpdesk">
+    <span class="fab fa-gitlab"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://canvas.utwente.nl/enroll/7C868F">
+    <span class="fas fa-globe"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Introducing R and RStudio</h1>
+
+</div>
+
+
+<p>This page contains information on how to install R and RStudio, what it is used for and some basic termonogoly and commands, like installing packages.</p>
+<div id="explanation" class="section level1">
+<h1>Explanation</h1>
+<div id="what-is-r" class="section level2">
+<h2>What is R?</h2>
+<p>R is a software environment in which you can analyze data by typing instructions (programming). In the field of behavioral and social sciences, researchers and teachers are increasingly working with R instead of programs like STATA, SAS, SPSS and EXCEL, because R has some advantages compared to these programs:</p>
+<ul>
+<li>it is free, so you can also use it after you finished your studies;</li>
+<li>it is open-source and researchers all over the world write code that is transparent and which can be used for free;</li>
+<li>data analysis and data visualization possibilities in R are almost endless;</li>
+<li>the language is extremely flexible.</li>
+</ul>
+<p>R allows you to manage data sets, to change data in order to facilitate analysis, to analyze data and to visualize data. R also allows you to integrate data in text files, which reduces the amount of ‘copy-pasting’ and reduces the number of mistakes made in this process, thus improving the reproducibility of research.</p>
+</div>
+<div id="what-is-rstudio" class="section level2">
+<h2>What is RStudio?</h2>
+<iframe src="https://www.youtube-nocookie.com/embed/riONFzJdXcs?modestbranding=1&amp;rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen width="500" height="281">
+</iframe>
+<p>RStudio is a ‘shell’ designed to help you to be more productive with R. RStudio is an Integrated Development Environment (IDE) that helps you develop programs (and scripts) in R. RStudio has a set of integrated tools that are helpful when analyzing and visualizing your data. More information about RStudio can be found here: <a href="https://rstudio.com/products/rstudio/features/" class="uri">https://rstudio.com/products/rstudio/features/</a>. You will probably only encounter R via RStudio.</p>
+</div>
+<div id="why-r-and-rstudio-at-bms" class="section level2">
+<h2>Why R and RStudio at BMS?</h2>
+<p>At BMS we think students in the behavioral and social sciences should have a clear understanding of ‘data’ and using R and RStudio will give you both a clear understanding of data and a flexible and transparent way to handle these data. R also allows us to teach statistics in a flexible way, adding new ideas (like ‘big data analysis’) to our curriculum more easily.</p>
+</div>
+<div id="installing-r-and-rstudio-on-your-laptop" class="section level2">
+<h2>Installing R and RStudio on your laptop</h2>
+<iframe src="https://www.youtube-nocookie.com/embed/cX532N_XLIs?modestbranding=1&amp;rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen width="500" height="281">
+</iframe>
+<p>For most purposes, installing R and RStudio on your laptop is straightforward. For R go to</p>
+<ul>
+<li><a href="https://cran.uni-muenster.de" class="uri">https://cran.uni-muenster.de</a></li>
+</ul>
+<p>For R studio go to:</p>
+<ul>
+<li><a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a></li>
+</ul>
+<p>and select the free version.</p>
+</div>
+<div id="how-to-learn-r" class="section level2">
+<h2>How to learn R?</h2>
+<p>Although we will offer you a lot of materials to learn the R basics, keep in mind that for learning R even better you need to find your way on the web to learn additional procedures and to practice even more. How?</p>
+<p>Some suggestions:</p>
+<ul>
+<li>use a search engine (like Google) to ask questions like “how do I enter data into R?”;</li>
+<li>use stackoverflow (<a href="https://stackoverflow.com" class="uri">https://stackoverflow.com</a>) to check out answers to similar questions;</li>
+<li>find your own pet project (data with your running times, for example, or gpx files, or COVID-19 data);</li>
+<li>read blogs in which data scientists show what can be done with R.</li>
+</ul>
+<p>A nice feature in R is the help function. If you need help on a function, just type a ? in front of a function. If you type ?? in front of the function, you will even get help from all over the web.</p>
+<pre class="r"><code>?tidyverse
+??tidyverse</code></pre>
+<p>The answer to this question can be found in the right side lower corner of the RStudio panel.</p>
+</div>
+<div id="terminology-working-directory-console-script-and-more" class="section level2">
+<h2>Terminology: working directory, console, script and more</h2>
+<iframe src="https://www.youtube-nocookie.com/embed/UYclmg1_KLk?modestbranding=1&amp;rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen width="500" height="281">
+</iframe>
+<p>Learning R includes learning a lot of new words like ‘working directory’, ‘script’ and ‘console’. In this section some of the most commonly used terms will be introduced. Although it might be hard to understand the terms completely by reading the explanations below while not yet working in R, you will see that in a few weeks you will understand exactly what is meant with the terms. Reread this document a few times after starting working with R.</p>
+<p>The <em>working directory</em> on your laptop or pc is the folder where all kinds of data, output (including pictures), and scripts are stored (as files), so you can quickly find them back later. It is wise to create a working directory for each separate course or data project and to tell R you will use that directory for this specific project.</p>
+<pre class="r"><code>setwd(&quot;[...]&quot;)
+
+# The [...] has to be replaced by something applicable to your computer.
+
+setwd(&quot;/Volumes/myname/Userdata/My Documents/Documenten/Research/2020_Local_elections&quot;)
+
+# The current working directory (in case you forget) can be found with the
+# command
+
+getwd()</code></pre>
+<p>Make sure you can find the path of a working directory in your mac or pc: - on Mac, in Finder, the small ‘radar’ on top allows you to copy the location as ‘pathname’ - in Windows, in the File Explorer, select View in the toolbar, -&gt; Options, select Change folder and search options, to open the Folder Options dialogue box, Click View to open the View tab. In Advanced settings, add a check mark for Display the full path in the title bar, Click Apply, Click OK to close the dialogue box.</p>
+<p>A <em>script</em> is a set of commands. A command meaning ‘read in my data’ or ‘create a nice a frequency table’. Commands are preferably combined with some <em># comments</em> explaining what happens in the command lines. In order to distinguish between command lines and comments, comments are preceded by the # sign.</p>
+<p>Use - - - - - to break up your script into easily readable chunks.</p>
+<p>If you want to run a line of the script, you move the cursor to the respective line and you use ctrl+enter (cmd+enter on a Mac). The instruction will then then automatically move to the R Console and the cursor in the script automatically jumps to the next line.</p>
+<p>The <em>console</em> panel (at the bottom in RStudio, with the prompt “&gt;” ) can be used to directly type commands. For example, when using R as a simple calculator you can just type in the numbers in the console.</p>
+<pre class="r"><code># adding 1 + 1
+&gt; 1 + 1
+[1] 2</code></pre>
+<p><em>Objects</em>, including imported data, are stored in the <em>global environment</em>. When you create new objects, these objects are stored in the global environment too. For example, if you create a frequency table, you can store the table (the object) in the global environment. The object can always be called back later in the analysis. The global environment can be saved separately and called later, although for many practical purposes it is sufficient to create a global environment anew, by using the <em>script</em> (the set of commands and comments) which created that environment in the first place. The global environment can be found on the right upper side of RStudio.</p>
+<p>Data sets, numbers, and output can be stored as <em>objects</em> in the global environment, using the <em>(left) assignment operator</em> “&lt;-”.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> An object can be a lot of things. For example, if you use R to create a boxplot, the picture of the boxplot can be stored as an object, to be called later when needed.</p>
+<p>When naming <em>objects</em>, use only lowercase letters, numbers, and _. Use underscores (_) to separate words within a name. For example, only use names like ‘data_dpes_2021’, of ‘freq_tab_001’.</p>
+<pre class="r"><code># for example, to use the 10 cases throughout a script, you can define the
+# object &#39;n&#39; to &#39;10&#39;
+n &lt;- 10
+
+# or to create a simple vector of numbers, you can write ...
+dataset1 &lt;- c(3, 2, 1, 4, 9, 6, 7, 100)
+
+# calling this object in a script or in the console gives the contents of the
+# thus created object.
+dataset1</code></pre>
+<pre><code>## [1]   3   2   1   4   9   6   7 100</code></pre>
+<pre class="r"><code># this give the following output in the console:</code></pre>
+<p><em>Functions</em> in R are ‘commands’ telling R what to do: they are ‘do this’ statements. R has a lot of those, and users are adding more every day. Functions end with parentheses: “()”.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> For example:</p>
+<pre class="r"><code># The command head() is &#39;Show me the first part (the head) of a data set&#39;.  In
+# this example the called data set is an object called dataset1.
+
+head(dataset1)
+
+# After installing the &#39;tidyverse&#39; package (a package we will use at the UT,
+# the word **package** will be explained below) and the associated pipe command
+# ( %&gt;% ), use ...
+
+dataset1 %&gt;%
+    head()</code></pre>
+</div>
+<div id="data-frames-and-data-types" class="section level2">
+<h2>Data frames and data types</h2>
+<p><em>Data frames</em> in R are matrices (numbers and words stored in rows and columns) in which the columns are variables and the rows are units of observation (observations). Sometimes this data frame is called a <em>data matrix</em>, but in the R language a data matrix is a data frame with only numbers, not with strings (text) or other types of variables. One single column (or: a variable) with numbers or with strings is called a <em>vector</em>.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Sometimes objects are not just data frames, but a data frame and something more. These objects are called <em>lists</em>.</p>
+<p>For reasons beyond the scope of this short introduction, some functions only work with data frames (even if they contain only numbers), not with matrices. In these cases you have to explicitly tell R your matrix is a data frame.</p>
+<p>Variables in a data frame have a name (like ‘x’ or ‘gender’). These can be be called directly using the ‘$’ sign. So ‘data$gender’ refers to the column/variable gender in the data frame. More generally, the ‘$’ sign refers to a ‘component’ of an object. If you store output as an object to the global environment, you can call a specific element of that output using the ‘$’ sign.</p>
+<p>There are different types of variables in a vector/data frame. The most important are a variable containing:</p>
+<ul>
+<li>logical values (True or False) (used for some dummy variables);</li>
+<li>a factor consisting of a limited set of attributes (‘low’, ‘middle’ and ‘high’ for example) (used for nominal and ordinal variables). A factor can also be stored as an ‘ordered factor’ and is than not merely ‘nominal’ but ‘ordinal’.</li>
+<li>integer values (-1, 0, 1, 2, 3 etc) (mainly used for ordinal variables and for count variables);</li>
+<li>real values (1.001, 1.002, 10000) (used for interval and ratio variables);</li>
+<li>characters/ words (‘male’, ‘female’) (if these variables are used for dummies (like in ‘male’ / ‘female’) and for nominal variables, you have to change them to (ordered) ‘factor’ variables).</li>
+</ul>
+</div>
+<div id="operators-in-r" class="section level2">
+<h2>Operators in R</h2>
+<p>The most frequently used operators used in R, beyond the well bnown - (Minus), + (Plus), * (Multiplication), / (Division) and &lt;- (the Left assignment operator), are:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">operator</th>
+<th align="left">meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">^</td>
+<td align="left">Exponentiation</td>
+</tr>
+<tr class="even">
+<td align="left">!</td>
+<td align="left">Not</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;</td>
+<td align="left">Greater than</td>
+</tr>
+<tr class="even">
+<td align="left">==</td>
+<td align="left">Equal to <em>not simply ‘=’</em></td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;=</td>
+<td align="left">Greater than or equal to, binary</td>
+</tr>
+<tr class="even">
+<td align="left">&lt;=</td>
+<td align="left">Less than or equal to, binary</td>
+</tr>
+<tr class="odd">
+<td align="left">:</td>
+<td align="left">Sequence (in model formulae: interaction)</td>
+</tr>
+<tr class="even">
+<td align="left">$</td>
+<td align="left">List subset, including a column in a data frame</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="some-notes-on-writing-readable-scripts" class="section level2">
+<h2>Some notes on writing readable scripts</h2>
+<iframe src="https://www.youtube-nocookie.com/embed/qqz_D1vzS5M?modestbranding=1&amp;rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen width="500" height="281">
+</iframe>
+<p>Commands can all be put in the console (the one at the bottom-left of RStudio, starting with the “&gt;”). But since you often want to redo the same thing (trying and tweaking), we urge you to store the commands in a <em>script</em>. Open a new script in RStudio (file -&gt; new file -&gt; R script). This will appear in the upper-left pane. Type all commands in the script. This script can be stored (extension is .R) and is basically a .txt file.</p>
+<p>When writing a script, start with a title, preceded with the #, because it is not a command, on top, for example:</p>
+<pre class="r"><code># This script is for computing the mean maximum temperature for several days
+
+# This vector includes the highest temperatures recorded on several days
+temperature &lt;- c(19, 17, 20, 20, 13, 13, 15, 17)
+
+temperature %&gt;%
+    mean()  # to compute the mean maximum temperature</code></pre>
+<p>When writing commands in the script, always put a space after a comma, and never before a comma, just like in regular English. Never put spaces inside or outside parentheses for regular function calls. Most infix operators (==, +, -, &lt;-, etc.) should always be surrounded by spaces. The pipe operator that was used in the example above, is explained later in this document. For now, it is important to know that when indenting after a pipe &gt;%&gt; operator, you need to use two spaces (you can automatically set this in RStudio’s preferences (RStudio / Preferences / Code/ Insert spaces for tab / tab width = 2). Use " for quoting text. Only use ’ when the text already contains double quotes and no single quotes. If the arguments to a function don’t all fit on one line (of max 80 characters), put each argument on its own line and indent with two spaces.</p>
+</div>
+<div id="downloading-and-activating-r-packages" class="section level2">
+<h2>Downloading and activating R Packages</h2>
+<iframe src="https://www.youtube-nocookie.com/embed/3RWb5U3X-T8?modestbranding=1&amp;rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen width="500" height="281">
+</iframe>
+<p>R and RStudio can be used more efficiently, by ‘add ons’ called <em>packages</em>. These packages simplify programming in R as they include new functions that you can use. Below, you will find a list of packages to be downloaded for the various courses at BMS. After downloading (= installing) the package, there is no need to do that every time you are using R, although it may be wise to sometimes check for updates. After installing and opening R and RStudio, you can install packages using a command in either the console or in a script.</p>
+<pre class="r"><code># Installing the packages &#39;haven&#39; and &#39;tidyverse&#39; (both to be introduced later)
+# is done with the following command in R:
+
+install.packages(&quot;haven&quot;, &quot;tidyverse&quot;)</code></pre>
+<p>Downloading (= installing) a package is not the same as ‘calling’ that package for usage in R: packages are not automatically opened when you are using R and RStudio. And that is a good thing: packages can use conflicting short cuts (using functions with the same name, but with very different outcomes). Therefore, each time you are using a specific <em>package</em> you have to load that package into the library (aka ‘activate’). A <em>script</em> therefore often starts with ‘calling’ the relevant packages for that script.</p>
+<pre class="r"><code># Loading the packages into the library is done with commands like these:
+
+library(haven)
+library(tidyverse)</code></pre>
+</div>
+<div id="r-packages-to-be-used-at-bms" class="section level2">
+<h2>R packages to be used at BMS</h2>
+<p>A lot of statistical analyses can be done by using ‘base R’ and its associated functions, but for some more specialized analyses we will use specialized packages.</p>
+<p>Since the number of packages is huge<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>, we have decided to use only a limited number of packages at BMS. The use of R at BMS will be based on the <em>tidyverse</em><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. We will therefore mainly use packages belonging to the <em>tidyverse</em> (that are installed and loaded when installing and loading the <em>tidyverse</em> package).<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> We will also use some other packages.</p>
+<p>Here is an overview of the packages you will be using:</p>
+<ul>
+<li><code>ggplot2</code> to visualize your data (part of the tidyverse core);</li>
+<li><code>dplyr</code> and <code>tidyr</code> to change data, and to make sure that each variable is in a column, each observation is a row and each value is a cell (both part of the tidyverse core);</li>
+<li><code>readr</code> to import .csv data (part of the tidyverse core);</li>
+<li><code>readxl</code> to import .xls and .xlsx sheets;</li>
+<li><code>haven</code> to import SPSS, Stata, and SAS data;</li>
+<li><code>magrittr</code> to provide the pipe %&gt;% operator, used throughout the tidyverse. The pipe operator is, however, also contained in the tidyverse core. The pipe operator will be explained later;</li>
+<li><code>janitor</code> to create frequency tables and cross tabulations (not part of the tidyverse, but aligned);</li>
+<li><code>lme4</code> for the linear mixed model;</li>
+<li><code>psych</code> for psychometric analysis, including scale construction and factor analysis;</li>
+<li><code>lmerTest</code> to approximate <em>p</em>-values;</li>
+<li><code>broom</code> to use a <code>tidy()</code> function, which may come handy when doing statistical analysis;</li>
+<li><code>modelr</code> to make plots with the residuals and/or the predicted values (this package will soon be replacd by a new set of packages called ‘tidymodels’).</li>
+</ul>
+<p>At the beginning of a meeting or course we will tell you which packages to download and call.</p>
+</div>
+<div id="datasets-in-r-packages" class="section level2">
+<h2>Datasets in R-packages</h2>
+<p>Apart from a set of commands, most packages also contain data sets, to enable easy illustrations of what packages can do.</p>
+<pre class="r"><code># to see which datasets are available in the packages loaded in the library,
+# use:
+
+data()
+
+# to see all &#39;available&#39; data in installed packages on your computer, use:
+
+data(package = .packages(all.available = TRUE))
+
+# sometimes it makes sense to put a data set in the Global Environment:
+
+gss_cat &lt;- gss_cat  # loaded in the package forcats, which is part of the core tidyverse (see below)</code></pre>
+</div>
+<div id="the-pipe-operator" class="section level2">
+<h2>The ‘pipe’ operator</h2>
+<iframe src="https://www.youtube-nocookie.com/embed/9yjhxvu-pDg?modestbranding=1&amp;rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen width="500" height="281">
+</iframe>
+<p>Some packages add additional operators to the set of base R operators. The ‘pipe’ operator is the most important one.<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> We urge you to use the ‘pipe’ function as much as possible. An example will show why.</p>
+<p>Suppose we wanted to create a new object with some (only some) gss_cat data from 2000 after we imported these data as an object into R. In this data set all rows are observations. In this case individuals: each row is an individual in a specific year. Religion and partyid are variables in this dataset. Suppose we want to select <em>only</em> <strong>data</strong> from 2000, and focus <em>only</em> on age and religion, and we want to store these data in a new (smaller) object called ‘gss_cat_small’. We could use:</p>
+<pre class="r"><code>gss_cat &lt;- gss_cat  # storing the dataset in the globval environment
+gss_cat_small &lt;- filter(select(gss_cat, year, age, relig), year == 2000)  # filtering variables and selecting cases</code></pre>
+<p>This is called a <em>nested command</em> (with the functions ‘filter’ and ‘select’). A nested command is often difficult to understand. Much simpler is:</p>
+<pre class="r"><code>gss_cat_small &lt;- gss_cat %&gt;%
+  select(gss_cat, year, age, relig) %&gt;%
+  filter(year == 2000)</code></pre>
+<p>This command means: you have a big data frame (gss_cat, which is an easily called object in the package), you select some variables from this data frame, and then you filter those cases (from a specific year).</p>
+<p>When writing code, use the pipe <code>%&gt;%</code> operator as much as possible. There is special hotkey in RStudio for the pipe operator: Ctrl+Shift+M (Windows &amp; Linux), Cmd+Shift+M (Mac).</p>
+<p>The rest of the document will be made available as a reference for what we expect you to know in various phases of your study program. Especially this second half of the document will be updated regularly. <em>We want to stick to about 20 to 25 pages.</em> Suggestions for improvement are welcome.</p>
+<p>Please note: some commands below work without additional packages (in ‘base R’), however throughout the remainder of this document we assume you have installed the (core) tidyverse packages. For additional commands we will tell which R-packages you need.</p>
+</div>
+</div>
+<div id="examples" class="section level1 tabset">
+<h1>Examples</h1>
+<p><em>No examples available yet</em></p>
+</div>
+<div id="functions" class="section level1">
+<h1>Functions</h1>
+<p>A short overview of the functions used in this page, which package they are in, and what they are used for, with a link to their official documentation</p>
+<ul>
+<li><a href="https://www.rdocumentation.org/packages/base/topics/c"><code>c()</code></a><br />
+<em>package: utils (base)</em><br />
+Combine Values into a Vector or List.</li>
+<li><a href="https://www.rdocumentation.org/packages/utils/topics/data"><code>data()</code></a><br />
+<em>package: utils (base)</em><br />
+Loads specified data sets, or list the available data sets.</li>
+<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/filter"><code>filter()</code></a><br />
+<em>package: dplyr (tidyverse)</em><br />
+Find rows where conditions are true</li>
+<li><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages"><code>install.packages()</code></a><br />
+<em>package: utils (base)</em><br />
+Download and install packages from the internet on your computer</li>
+<li><a href="https://www.rdocumentation.org/packages/base/topics/library"><code>libray()</code></a><br />
+<em>package: base</em><br />
+Loads a package into a specific project</li>
+<li><a href="https://www.rdocumentation.org/packages/base/topics/mean"><code>mean()</code></a><br />
+<em>package: utils (base)</em><br />
+Find the mean of a list of numbers.</li>
+<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/select"><code>select()</code></a><br />
+<em>package: dplyr (tidyverse)</em><br />
+Get a specific column or columns from a dataset</li>
+</ul>
+</div>
+<div id="faq" class="section level1">
+<h1>FAQ</h1>
+<div id="faq-masked">
+<p><strong>After loading a new package, R tells me that a certain object is masked from another package. What does this mean?</strong> Some objects are included in several packages. For example, the function alpha() is included in both ‘ggplot2’ and ‘psych’. The functions are not the same though. Loading ‘psych’ after loading ‘ggplot’ will give you the warning that alpha is masked from the ggplot2 package. In this case, if you are using the function alpha(), you will use the function from the psych package (as the one from the ggplot2 package is masked).</p>
+</div>
+<div id="faq-rtools">
+<p><strong>When trying to install a package I get the message that I need to install Rtools. How do I do that?</strong> R-Tools is a program that is required to program and make packages yourself. Since you will not be doing that, you should not need R-Tools for any of the things you will be doing. However, sometimes RStudio still gives the message that R-Tools is required when installing a package, even when the installation of the package is going successfully. Therefore, when you try to install a package, your console might look something like this: (I will install the library “tidyverse” in this example, but it will look similar with other libraries)</p>
+<pre><code>&gt; install.packages(&quot;tidyverse&quot;)
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Installing package into ‘C:/Users/username/Documents/R/win-library/4.0’
+(as ‘lib’ is unspecified)
+trying URL &#39;https://cran.rstudio.com/bin/windows/contrib/4.0/tidyverse_1.3.0.zip&#39;
+Content type &#39;application/zip&#39; length 440017 bytes (429 KB)
+downloaded 429 KB
+
+package ‘tidyverse’ successfully unpacked and MD5 sums checked
+The downloaded binary packages are in
+C:\Users\username\AppData\Local\Temp\RtmpM9Rqjf\downloaded_packages</code></pre>
+<p>This may look like the installation failed and that you need to install Rtools, however, at the end it says that in fact the installation was successful. Usually, the package is successfully installed, despite the message saying that you need to install Rtools. You can test if the package is in fact installed properly, by calling:</p>
+<pre><code>&gt; library(tidyverse)</code></pre>
+<p>Change “tidyverse” here of course in the name of the library you need. If you still keep having problems, you can try to install Rtools anyway (even though you probably don’t need it). You can download Rtools for Windows from here: <a href="https://cran.uni-muenster.de/bin/windows/Rtools/" class="uri">https://cran.uni-muenster.de/bin/windows/Rtools/</a>.</p>
+</div>
+</div>
+<div id="resources" class="section level1">
+<h1>Resources</h1>
+<ul>
+<li><a href="https://www.rstudio.com/products/rstudio/">RStudio website</a><br />
+More explanation about RStudio</li>
+<li><a href="https://cran.r-project.org/web/packages/available_packages_by_name.html">Available CRAN Packages By Name</a><br />
+A list of all existing packages that can be loaded into R</li>
+<li><a href="https://style.tidyverse.org/">Tidyverse Style Guide</a><br />
+Describes the style used throughout the tidyverse</li>
+</ul>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To be fair, also “=” will work, but most people now use the “&lt;-” assignment operator<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>The <code>magrittr</code> package (included in the <code>tidyverse</code> package) allows you to omit parentheses () on functions that don’t have arguments. Avoid this feature, because it may be confusing. Be consistent in that functions always have parentheses, objects don’t.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>A <em>vector</em> can contain numbers (1, 1.5, 3.333 etc.), or strings (words), or factors (to be explained later), or integers (1,2,3,4,5), etc. A single vector cannot have <em>different</em> types of data.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p> <a href="https://cran.r-project.org/web/packages/available_packages_by_name.html">click here to see all available packages</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p> <a href="https://style.tidyverse.org/">click here to see the tidyverse style guide</a><a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>What is a bit confusing, is that the tidyverse is both a <em>set</em> of packages, and a ‘programming philosophy’. There are many more packages adhering to that tidyverse philosophy and they work well with the tidyverse core. When installing the ‘tidyverse’ you only install the core tidyverse packages.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>This is one of the pipe operators which are part of the <code>magrittr</code> package (which is part of tidyverse, but not part of the core), it is so important that this pipe operator is also contained in other tidyverse packages. You can use it, once the tidyverse package is ‘called’.<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
