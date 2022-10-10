@@ -25,8 +25,8 @@ navbar:
     - text: "Discussions"
       href: https://canvas.utwente.nl/courses/8022/discussion_topics
   right:
-    - icon: fab fa-gitlab
-      href: https://git.snt.utwente.nl/rhelpdesk
+    - icon: fab fa-github
+      href: https://github.com/CODE-UTwente/rhelpdesk/
     - icon: fas fa-globe
       href: https://canvas.utwente.nl/enroll/7C868F
 output:
