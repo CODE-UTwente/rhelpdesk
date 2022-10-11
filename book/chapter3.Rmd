@@ -107,5 +107,27 @@ ggplot(gss_cat) +
 
 ggplot(gss_cat, aes(x = tvhours)) +
   geom_histogram()
+  
+```
+  
+## Univariate inferential statistics
+
+Confidence intervals and tests for one variable can be constructed for dichotomies (proportions), nominal variables (goodness of fit) and interval/ratio variables (means testing).
+
+```{r, confidence intervals and tests for one variable, eval = F}
+
+# For a proportion, use
+
+n_total <- 1000 # total number of cases
+n_pos <- 690 # number of positives
+prop.test(n_pos, n_total, p = 0.05, alternative = "two.sided") # for confidence interval and test
+
+# For a goodness of fit test, use
+
+#...
+
+# For means testing use
+
+# ...
 
 ```
