@@ -32,7 +32,7 @@ Find rows where conditions are true
 * [`install.packages()`](https://www.rdocumentation.org/packages/utils/topics/install.packages)   
 _package: utils (base)_   
 Download and install packages from the internet on your computer
-* [`libray()`](https://www.rdocumentation.org/packages/base/topics/library)   
+* [`library()`](https://www.rdocumentation.org/packages/base/topics/library)   
 _package: base_   
 Loads a package into a specific project
 * [`mean()`](https://www.rdocumentation.org/packages/base/topics/mean)  
