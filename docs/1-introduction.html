@@ -357,8 +357,8 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://git.snt.utwente.nl/rhelpdesk">
-    <span class="fab fa-gitlab"></span>
+  <a href="https://github.com/CODE-UTwente/rhelpdesk/">
+    <span class="fab fa-github"></span>
      
   </a>
 </li>
@@ -481,8 +481,8 @@ dataset1</code></pre>
 head(dataset1)
 
 # After installing the &#39;tidyverse&#39; package (a package we will use at the UT,
-# the word **package** will be explained below) and the associated pipe command
-# ( %&gt;% ), use ...
+# the word **package** will be explained below) and the associated pipe
+# command ( %&gt;% ), use ...
 
 dataset1 %&gt;%
     head()</code></pre>
@@ -567,14 +567,14 @@ temperature %&gt;%
 <iframe src="https://www.youtube-nocookie.com/embed/3RWb5U3X-T8?modestbranding=1&amp;rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen width="500" height="281">
 </iframe>
 <p>R and RStudio can be used more efficiently, by ‘add ons’ called <em>packages</em>. These packages simplify programming in R as they include new functions that you can use. Below, you will find a list of packages to be downloaded for the various courses at BMS. After downloading (= installing) the package, there is no need to do that every time you are using R, although it may be wise to sometimes check for updates. After installing and opening R and RStudio, you can install packages using a command in either the console or in a script.</p>
-<pre class="r"><code># Installing the packages &#39;haven&#39; and &#39;tidyverse&#39; (both to be introduced later)
-# is done with the following command in R:
+<pre class="r"><code># Installing the packages &#39;foreign&#39; and &#39;tidyverse&#39; (both to be introduced
+# later) is done with the following command in R:
 
-install.packages(&quot;haven&quot;, &quot;tidyverse&quot;)</code></pre>
+install.packages(&quot;foreign&quot;, &quot;tidyverse&quot;)</code></pre>
 <p>Downloading (= installing) a package is not the same as ‘calling’ that package for usage in R: packages are not automatically opened when you are using R and RStudio. And that is a good thing: packages can use conflicting short cuts (using functions with the same name, but with very different outcomes). Therefore, each time you are using a specific <em>package</em> you have to load that package into the library (aka ‘activate’). A <em>script</em> therefore often starts with ‘calling’ the relevant packages for that script.</p>
 <pre class="r"><code># Loading the packages into the library is done with commands like these:
 
-library(haven)
+library(foreign)
 library(tidyverse)</code></pre>
 </div>
 <div id="r-packages-to-be-used-at-bms" class="section level2">
@@ -587,14 +587,14 @@ library(tidyverse)</code></pre>
 <li><code>dplyr</code> and <code>tidyr</code> to change data, and to make sure that each variable is in a column, each observation is a row and each value is a cell (both part of the tidyverse core);</li>
 <li><code>readr</code> to import .csv data (part of the tidyverse core);</li>
 <li><code>readxl</code> to import .xls and .xlsx sheets;</li>
-<li><code>haven</code> to import SPSS, Stata, and SAS data;</li>
+<li><code>foreign</code> to import SPSS, Stata, and SAS data;</li>
 <li><code>magrittr</code> to provide the pipe %&gt;% operator, used throughout the tidyverse. The pipe operator is, however, also contained in the tidyverse core. The pipe operator will be explained later;</li>
 <li><code>janitor</code> to create frequency tables and cross tabulations (not part of the tidyverse, but aligned);</li>
 <li><code>lme4</code> for the linear mixed model;</li>
 <li><code>psych</code> for psychometric analysis, including scale construction and factor analysis;</li>
 <li><code>lmerTest</code> to approximate <em>p</em>-values;</li>
 <li><code>broom</code> to use a <code>tidy()</code> function, which may come handy when doing statistical analysis;</li>
-<li><code>modelr</code> to make plots with the residuals and/or the predicted values (this package will soon be replacd by a new set of packages called ‘tidymodels’).</li>
+<li><code>modelr</code> to make plots with the residuals and/or the predicted values (this package will soon be replaced by a new set of packages called ‘tidymodels’).</li>
 </ul>
 <p>At the beginning of a meeting or course we will tell you which packages to download and call.</p>
 </div>
@@ -652,7 +652,7 @@ Find rows where conditions are true</li>
 <li><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages"><code>install.packages()</code></a><br />
 <em>package: utils (base)</em><br />
 Download and install packages from the internet on your computer</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/library"><code>libray()</code></a><br />
+<li><a href="https://www.rdocumentation.org/packages/base/topics/library"><code>library()</code></a><br />
 <em>package: base</em><br />
 Loads a package into a specific project</li>
 <li><a href="https://www.rdocumentation.org/packages/base/topics/mean"><code>mean()</code></a><br />
@@ -666,10 +666,12 @@ Get a specific column or columns from a dataset</li>
 <div id="faq" class="section level1">
 <h1>FAQ</h1>
 <div id="faq-masked">
-<p><strong>After loading a new package, R tells me that a certain object is masked from another package. What does this mean?</strong> Some objects are included in several packages. For example, the function alpha() is included in both ‘ggplot2’ and ‘psych’. The functions are not the same though. Loading ‘psych’ after loading ‘ggplot’ will give you the warning that alpha is masked from the ggplot2 package. In this case, if you are using the function alpha(), you will use the function from the psych package (as the one from the ggplot2 package is masked).</p>
+<p><strong>After loading a new package, R tells me that a certain object is masked from another package. What does this mean?</strong><br />
+Some objects are included in several packages. For example, the function alpha() is included in both ‘ggplot2’ and ‘psych’. The functions are not the same though. Loading ‘psych’ after loading ‘ggplot’ will give you the warning that alpha is masked from the ggplot2 package. In this case, if you are using the function alpha(), you will use the function from the psych package (as the one from the ggplot2 package is masked).</p>
 </div>
 <div id="faq-rtools">
-<p><strong>When trying to install a package I get the message that I need to install Rtools. How do I do that?</strong> R-Tools is a program that is required to program and make packages yourself. Since you will not be doing that, you should not need R-Tools for any of the things you will be doing. However, sometimes RStudio still gives the message that R-Tools is required when installing a package, even when the installation of the package is going successfully. Therefore, when you try to install a package, your console might look something like this: (I will install the library “tidyverse” in this example, but it will look similar with other libraries)</p>
+<p><strong>When trying to install a package I get the message that I need to install Rtools. How do I do that?</strong><br />
+R-Tools is a program that is required to program and make packages yourself. Since you will not be doing that, you should not need R-Tools for any of the things you will be doing. However, sometimes RStudio still gives the message that R-Tools is required when installing a package, even when the installation of the package is going successfully. Therefore, when you try to install a package, your console might look something like this: (I will install the library “tidyverse” in this example, but it will look similar with other libraries)</p>
 <pre><code>&gt; install.packages(&quot;tidyverse&quot;)
 WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
 
@@ -687,6 +689,12 @@ C:\Users\username\AppData\Local\Temp\RtmpM9Rqjf\downloaded_packages</code></pre>
 <pre><code>&gt; library(tidyverse)</code></pre>
 <p>Change “tidyverse” here of course in the name of the library you need. If you still keep having problems, you can try to install Rtools anyway (even though you probably don’t need it). You can download Rtools for Windows from here: <a href="https://cran.uni-muenster.de/bin/windows/Rtools/" class="uri">https://cran.uni-muenster.de/bin/windows/Rtools/</a>.</p>
 </div>
+<div id="faq-function-not-found">
+<p><strong>When using a command I get the message <code>Error : could not find function</code></strong> Not all functions you need to use are always available. Many functions are part of packages. That means you need to first install and load the package before the function can be used. For example, the <code>mutate()</code> function is part of the <code>tidyverse</code>. Therefore, if the function mutate can’t be found, you need to load the tidyverse package with <code>library(tidyverse)</code>. You can find which library a function belongs to in the <a href="#Functions">function list</a> of the relevant chapter, or by looking up the function on <a href="https://www.rdocumentation.org/">rdocumentation.org</a>.</p>
+</div>
+<div id="faq-package-not-found">
+<p><strong>When loading a package, I get the message <code>Error : there is no package called ‘...’</code></strong> Before being able to load a package, it first needs to be installed. You can install a package using the function <code>packages.install()</code>. You only need to install the package once, after that it will be available for use in all your projects.</p>
+</div>
 </div>
 <div id="resources" class="section level1">
 <h1>Resources</h1>
@@ -697,6 +705,8 @@ More explanation about RStudio</li>
 A list of all existing packages that can be loaded into R</li>
 <li><a href="https://style.tidyverse.org/">Tidyverse Style Guide</a><br />
 Describes the style used throughout the tidyverse</li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/rstudio-ide.pdf">RStudio IDE cheatsheet</a><br />
+An overview of the interface of RStudio and how to use it.</li>
 </ul>
 </div>
 <div class="footnotes">

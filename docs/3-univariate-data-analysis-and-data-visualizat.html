@@ -357,8 +357,8 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://git.snt.utwente.nl/rhelpdesk">
-    <span class="fab fa-gitlab"></span>
+  <a href="https://github.com/CODE-UTwente/rhelpdesk/">
+    <span class="fab fa-github"></span>
      
   </a>
 </li>
@@ -389,10 +389,49 @@ div.tocify {
 <div id="summarizing-numerical-variables-mean-median-variation-and-standard-deviation" class="section level2">
 <h2>Summarizing numerical variables: mean, median, variation and standard deviation</h2>
 <p>Below you will see several examples of obtaining descriptive statistics for items in a data set called <code>data_new</code>.</p>
+<pre class="r"><code># To summarise some main characteristics of one numerical item (called Item1):
+data_new %&gt;%
+    summarise(mean = mean(Item1), sd = sd(Item1), var = var(Item1), minimum = min(Item1),
+        maximum = max(Item1))
+# You can also ask for only one of the statistics.
+
+# To summarize the main characteristics (mean, median, minimum, maximum, Q1,
+# Q3 and number of missings) of multiple variables (in this example: the first
+# 10 variables) in the data set:
+data_new %&gt;%
+    select(1:10) %&gt;%
+    summary()
+
+# To compute a certain statistic for the first 10 variables in the data set,
+# you can also use the map() function:
+
+data_new %&gt;%
+    select(1:10) %&gt;%
+    map(var)
+
+# instead of var, you can also use mean, sd, or other functions</code></pre>
 </div>
 <div id="frequency-tables-with-janitor-tabyl" class="section level2">
 <h2>Frequency tables with janitor: tabyl</h2>
 <p>The tabyl() function from the <code>janitor</code> package is a way to get frequency tables. tabyl() is tidyverse-aligned and is primarily built upon the dplyr and tidyr packages.</p>
+<pre class="r"><code># Make sure &#39;janitor&#39; in loaded into the library
+
+# Create a frequency table
+gss_cat %&gt;%
+    tabyl(race)
+
+# Create frequency tables for all variables of a data set:
+gss_cat %&gt;%
+    map(tabyl)
+
+# If the values are in alphabetical, rather than in a meaningful order, make
+# sure the variable is stored as an &#39;ordered factor&#39; (see above).
+
+# The frequency table can be made nicer using the adorn commands, for example:
+gss_cat %&gt;%
+    tabyl(marital) %&gt;%
+    adorn_totals(&quot;row&quot;) %&gt;%
+    adorn_pct_formatting()</code></pre>
 </div>
 <div id="univariate-graphs-creating-bar-charts-box-plots-and-histograms-using-ggplot" class="section level2">
 <h2>Univariate graphs: creating bar charts, box plots and histograms using ggplot</h2>
@@ -400,6 +439,51 @@ div.tocify {
 <p>The basic idea of ggplot commands is that you (1) have a data frame, pipe (%&gt;%) that into a (2) ggplot(), add a (3) geom_…() to select the type of display you want to have, and (4) use aesthetics (aes()) to select the variable(s) you will use from that data frame.</p>
 <p>There are more ‘layers’ in a ggplot, but these are the most important.</p>
 <p>For example, you can use a bar chart to visualize a categorical (= nominal) variable.</p>
+<pre class="r"><code># creating a basic bar chart with the nominal variable item 1
+gss_cat %&gt;% 
+  ggplot() +
+  geom_bar(aes(x = marital))
+
+# to create a box plot for the ratio variable tvhours in gss_cat 
+# (please note that x = and y = in the aesthetics tilt the picture)
+
+gss_cat %&gt;% 
+  ggplot() +
+  geom_boxplot(aes(y = tvhours))
+
+# to create a histogram for the ratio variable tvhours in gss_cat
+gss_cat %&gt;% 
+  ggplot() +
+  geom_histogram(aes(x = tvhours))
+
+# there are many more geom&#39;s to use, but we will focus on these in univariate analysis. But this is definitely a topic you can explore further. Think for example about changing the colors of the bars in a barchart, adding better titles or adding annotations.
+
+# Note 1: although we generally recommend using the pipe operator like this, if you start visualizing data from different objects in one plot, it may be wise to put the data inside the ggplot:
+
+ggplot(gss_cat) +
+  geom_histogram(aes(x = tvhours))
+
+# Note 2: the aesthetics are put in the geom. However, if you combine different geom&#39;s (scatter and line) displaying the same variables, it is more efficient, to but the aesthetics in the general ggplot command too:
+
+ggplot(gss_cat, aes(x = tvhours)) +
+  geom_histogram()</code></pre>
+</div>
+<div id="univariate-inferential-statistics" class="section level2">
+<h2>Univariate inferential statistics</h2>
+<p>Confidence intervals and tests for one variable can be constructed for dichotomies (proportions), nominal variables (goodness of fit) and interval/ratio variables (means testing).</p>
+<pre class="r"><code># For a proportion, use
+
+n_total &lt;- 1000 # total number of cases
+n_pos &lt;- 690 # number of positives
+prop.test(n_pos, n_total, p = 0.05, alternative = &quot;two.sided&quot;) # for confidence interval and test
+
+# For a goodness of fit test, use
+
+#...
+
+# For means testing use
+
+# ...</code></pre>
 </div>
 </div>
 <div id="examples" class="section level1 tabset">
@@ -408,15 +492,69 @@ div.tocify {
 </div>
 <div id="functions" class="section level1">
 <h1>Functions</h1>
-<p><em>No function overview yet</em></p>
+<ul>
+<li><a href="https://www.rdocumentation.org/packages/janitor/topics/adorn_totals"><code>adorn_pct_formatting()</code></a><br />
+<em>package: janitor</em><br />
+Change numeric columns to percentages in a frequency table (tabyl).</li>
+<li><a href="https://www.rdocumentation.org/packages/janitor/topics/adorn_totals"><code>adorn_totals()</code></a><br />
+<em>package: janitor</em><br />
+Add a row or column with totals to a frequency table (tabyl).</li>
+<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes"><code>aes()</code></a><br />
+<em>package: ggplot2 (tidyverse)</em><br />
+Create an aestetic map, which explains which visual properties (aesthetics) are linked (mapped) to which variables in the dataframe.</li>
+<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot"><code>ggplot()</code></a><br />
+<em>package: ggplot2 (tidyverse)</em><br />
+Initialize any type of graph.</li>
+<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_bar"><code>geom_bar()</code></a><br />
+<em>package: ggplot2 (tidyverse)</em><br />
+Create a bar chart using the initialized ggplot.</li>
+<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot"><code>geom_boxplot()</code></a><br />
+<em>package: ggplot2 (tidyverse)</em><br />
+Create a boxplot using the initialized ggplot.</li>
+<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_histogram"><code>geom_histogram()</code></a><br />
+<em>package: ggplot2 (tidyverse)</em><br />
+Create a histogram using the initialized ggplot.</li>
+<li><a href="https://www.rdocumentation.org/packages/purrr/topics/map"><code>map()</code></a><br />
+<em>package: purrr (tidyverse)</em><br />
+Apply a transformation to every variable in the dataframe.</li>
+<li><a href="https://www.rdocumentation.org/packages/base/topics/max"><code>max()</code></a><br />
+<em>package: base</em><br />
+Find the highest number from a list of numbers.</li>
+<li><a href="https://www.rdocumentation.org/packages/base/topics/mean"><code>mean()</code></a><br />
+<em>package: utils (base)</em><br />
+Find the mean of a list of numbers.</li>
+<li><a href="https://www.rdocumentation.org/packages/stats/topics/median"><code>median()</code></a><br />
+<em>package: stats (base)</em><br />
+Find the median of a list of numbers.</li>
+<li><a href="https://www.rdocumentation.org/packages/base/topics/min"><code>min()</code></a><br />
+<em>package: base</em><br />
+Find the lowest number from a list of numbers.</li>
+<li><a href="https://www.rdocumentation.org/packages/stats/topics/sd"><code>sd()</code></a><br />
+<em>package: stats (base)</em><br />
+Find the standard deviation of a list of numbers.</li>
+<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/summarise"><code>summarise()</code></a><br />
+<em>package: dplyr (tidyverse)</em><br />
+Create a new dataframe summarizing the values in another dataframe.</li>
+<li><a href="https://www.rdocumentation.org/packages/janitor/topics/tabyl"><code>tabyl()</code></a><br />
+<em>package: janitor</em><br />
+Generate a frequency table.</li>
+<li><a href="https://www.rdocumentation.org/packages/stats/topics/var"><code>var()</code></a><br />
+<em>package: stats (base)</em><br />
+Find the variation of a list of numbers.</li>
+</ul>
 </div>
 <div id="faq" class="section level1">
 <h1>FAQ</h1>
-<p><em>No Frequently Asked Questions yet</em></p>
+<div id="faq-pipe-for-plus">
+<p><em>When creating a graph, i get the message <code>Did you use %&gt;% instead of +?</code></em> When using the <code>ggplot()</code> command together with another command like <code>geom_bar()</code> or <code>geom_boxplot()</code> you don’t use the pipe (<code>%&gt;%</code>) between them, but instead you use the <code>+</code>. That is because these two commands need to be executed together, and instead of that the result of one needs to be used in the next.</p>
+</div>
 </div>
 <div id="resources" class="section level1">
 <h1>Resources</h1>
-<p><em>No resources yet</em></p>
+<ul>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization.pdf">Data visualisation cheatsheet with ggplot2</a><br />
+An overview of all the different graph types and how to make them using the <code>ggplot()</code> function.</li>
+</ul>
 </div>
 
 

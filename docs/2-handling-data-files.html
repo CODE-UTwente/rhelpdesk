@@ -357,8 +357,8 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://git.snt.utwente.nl/rhelpdesk">
-    <span class="fab fa-gitlab"></span>
+  <a href="https://github.com/CODE-UTwente/rhelpdesk/">
+    <span class="fab fa-github"></span>
      
   </a>
 </li>
@@ -387,15 +387,15 @@ div.tocify {
 <h1>Explanation</h1>
 <div id="importing-data-from-.csv-.sav-and-other-formats-to-r-data-frames" class="section level2">
 <h2>Importing data: from .csv, .sav and other formats to R data frames</h2>
-<p>To import a data set, you first need to activate the correct package (these are <code>haven</code>, <code>readr</code> or <code>readxl</code>, depending on the type of data you want to import). Next to that, you need to know the location of the data set on your computer. Suppose the location of your data file called ‘dataset2’ is: “C:/My Documents”. The data set can be loaded into the <em>global environment</em> with the following command:</p>
+<p>To import a data set, you first need to activate the correct package (these are <code>foreign</code> (for SPSS files), <code>readr</code> or <code>readxl</code> (for excel files), depending on the type of data you want to import). Next to that, you need to know the location of the data set on your computer. Suppose the location of your data file called ‘dataset2’ is: “C:/My Documents”. The data set can be loaded into the <em>global environment</em> with the following command:</p>
 <pre class="r"><code># set working directory to the correct folder and put all files to be imported
 # in that folder
-install.packages(&quot;tidyverse&quot;, &quot;haven&quot;, &quot;readr&quot;, &quot;readxl&quot;)  # you do this only once
-library(&quot;tidyverse&quot;, &quot;haven&quot;, &quot;readr&quot;, &quot;readxl&quot;)  #you only need to call packages you will actually use
+install.packages(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;readr&quot;, &quot;readxl&quot;)  # you do this only once
+library(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;readr&quot;, &quot;readxl&quot;)  #you only need to call packages you will actually use, but you need to do that every time after (re)starting R
 
 setwd(&quot;C:/My Documents&quot;)  # setting the working directory
 
-dataset2 &lt;- read_spss(&quot;dataset2.sav&quot;)  # load an spss file with the package &#39;haven&#39; 
+dataset2 &lt;- read.spss(&quot;dataset2.sav&quot;, to.data.frame = TRUE)  # load an spss file with the package &#39;foreign&#39; as data frame.
 
 # OR, if the file is a csv file ...
 
@@ -538,8 +538,8 @@ gss_cat &lt;- gss_cat %&gt;%
 gss_cat &lt;- gss_cat %&gt;%
     mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
 
-# Creating an index (a combination of item scores) and adding that index to the
-# data frame can also be done with mutate()
+# Creating an index (a combination of item scores) and adding that index to
+# the data frame can also be done with mutate()
 dataset5 &lt;- dataset5 %&gt;%
     mutate(index = item3 + item4 + item4)
 
@@ -780,11 +780,22 @@ Shows a dataframe as a table in RStudio</li>
 </div>
 <div id="faq" class="section level1">
 <h1>FAQ</h1>
-<p><em>No Frequently Asked Questions yet</em></p>
+<div id="faq-file-not-found">
+<p><strong>When trying to open a dataset I get the message <code>Error : no such file or directory</code></strong><br />
+When loading a file, R will only search for that file in one directory: The working directory. You can find out what the working directory is by using the command <code>getwd()</code>. If that is not the folder where your file is in, you need to change it. You can do that using <code>setwd()</code>. When typing the path of this directory, you can’t use the default backslash (\) that is normally used in paths. Therefore, you need to change it to either a forward slash (/) or a double backslash (\\). So if your file is in the folder “C:\Users\username\Downloads”, you type <code>setwd("C:\\Users\\username\\Downloads")</code>. If you do not know the full path of the folder, you can type <code>rstudioapi::selectDirectory()</code> in your console. This will allow you to pick a folder by hand, and will give you the full path you need to use in your command with the slashes already changed.</p>
+<p>If the file still cannot be found, check for any typo’s in the folder path or filename. When typing the filename, make sure to include the file extension. This is for example <code>.csv</code> or <code>.sav</code>. File extensions may be hidden in your file explorer, making them difficult to know. To see file extensions on Windows, open file explorer, go to the <em>View</em> tab, and under <em>Show/Hide</em> check the box <em>File name extensions</em>. On Mac, select a file, then choose <em>File &gt; Get Info</em>. Click the arrow next to <em>Name &amp; Extension</em> and deselect <em>Hide extension</em></p>
+</div>
+<div id="faq-open-sav">
+<p><strong>My computer can’t open .sav files. I don’t have the right program installed.</strong><br />
+You don’t need to open .sav files directly with your computer. You only have to import the sav files into R. You can do that using the <code>foreign</code> library and the <code>read.spss()</code> command.</p>
+</div>
 </div>
 <div id="resources" class="section level1">
 <h1>Resources</h1>
-<p><em>No resources yet</em></p>
+<ul>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf">Data transformation cheatsheet</a><br />
+An overview of all the functions you can use to find and manipulate data in your dataframe.</li>
+</ul>
 </div>
 
 

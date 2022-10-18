@@ -338,10 +338,10 @@ div.tocify {
       <a href="2-handling-data-files.html">2. Handling data files</a>
     </li>
     <li>
-      <a href="3-univariate-data-analysis-and-data-visualization.html">3. Univariate data analysis</a>
+      <a href="3-univariate-data-analysis-and-data-visualizat.html">3. Univariate data analysis</a>
     </li>
     <li>
-      <a href="4-bivariate-data-analysis-and-bivariate-data-vizualisation.html">4. Bivariate data analysis</a>
+      <a href="4-bivariate-data-analysis-and-bivariate-data-v.html">4. Bivariate data analysis</a>
     </li>
     <li>
       <a href="5-multivariate-data-analysis.html">5. Multivariate data analysis</a>
@@ -357,8 +357,8 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://git.snt.utwente.nl/rhelpdesk">
-    <span class="fab fa-gitlab"></span>
+  <a href="https://github.com/CODE-UTwente/rhelpdesk/">
+    <span class="fab fa-github"></span>
      
   </a>
 </li>
@@ -385,110 +385,103 @@ div.tocify {
 <p>On this page, you can find out how to run a factor analysis in R and how to run Classical Test Theory analyses and Item Response Theory models in R.</p>
 <div id="explanation" class="section level1">
 <h1>Explanation</h1>
-<div id="way-contingency-tables-with-tabyl" class="section level2">
-<h2>3-way contingency tables with tabyl</h2>
-<p>Use the <code>tabyl()</code> function from the <code>janitor</code> package. With several adorning functions you can adjust the table to your liking. You can force the table displaying the values ‘none’, ‘some’ and ‘many’ in the correct order, by making sure the variable is stored as an ‘ordered factor’.</p>
-<pre class="r"><code>library(janitor)
-mtcars %&gt;% 
-  tabyl(am, gear, cyl, show_na = FALSE) %&gt;% 
-  adorn_title(&quot;combined&quot;) %&gt;% #both var names in the title
-  adorn_totals(&quot;col&quot;) %&gt;% #column totals
-  adorn_totals(&quot;row&quot;) %&gt;% #row totals
-  adorn_percentages(&quot;col&quot;) %&gt;% #columnwise, rowwise (row), or total percentages (all)
-  adorn_pct_formatting(digits = 1) %&gt;%
-  adorn_ns() #show the numbers of cases</code></pre>
+<p>In this chapter, you can find out how to run a factor analysis in R and how to run Classical Test Theory analyses and Item Response Theory models in R.</p>
+<p>For psychometric analyses, we use the packages: <code>psych</code>, <code>CTT</code>, <code>Lambda4</code> and <code>mirt</code>.</p>
+<div id="factor-analysis" class="section level2">
+<h2>Factor analysis</h2>
+<pre class="r"><code>library(psych)
+
+## Before running a factor analyses, explore your data and check the
+## following:
+
+data_new %&gt;%
+    KMO()  # Kaiser-Meyer-Olkin measure
+
+data_new %&gt;%
+    cortest.bartlett()  # Barlett’s sphericity test
+
+data_new %&gt;%
+    cor()  # correlation matrix
+
+## Next, determine the number of factors.  For this, you need to run a
+## Principal Component Analysis
+
+# eigenvalues for Kiaser&#39;s criterion
+
+pca &lt;- data_new %&gt;%
+    cor() %&gt;%
+    eigen()
+
+eigenvalues &lt;- pca$values
+
+# screeplot based on principal component analysis
+
+# using a ggplot:
+tibble(component = 1:length(eigenvalues), eigenvalues) %&gt;%
+    ggplot(aes(x = component, y = eigenvalues)) + geom_line() + scale_x_continuous(breaks = 1:length(eigenvalues))
+
+# OR using:
+data_new %&gt;%
+    scree(, factors = FALSE)
+
+## to run a factor analysis with two factors:
+model_2f &lt;- factanal(data_new, factors = 2, rotation = &quot;varimax&quot;)</code></pre>
+<p>Running the previous code on a real data set, will not show you the results of the factor analysis. You need to type in <code>model_2f</code> in the R console to see the results.</p>
+<p>Please note that in the output of a factor analysis, a Chi square statistic is shown. This Chi square statistic belongs to a test for the model fit. The null hypothesis for this test is: the model that is used (in the example: a model with two factors) fits. A non-significant result is thus preferable, as we do not reject the null hypothesis then. But, large sample sizes easily give significant results. Because of that, we would like you to ignore this part of the output completely and focus on the interpretation of the factors instead.</p>
 </div>
-<div id="linear-models" class="section level2">
-<h2>Linear models</h2>
-<p>For the ordinary linear model, we use <code>lm()</code>. For a clear presentation of the regression table, we use the <code>tidy()</code> function from the <code>broom</code> package.</p>
-<pre class="r"><code>library(broom)
+<div id="classical-test-theory-analyses" class="section level2">
+<h2>Classical Test Theory analyses</h2>
+<pre class="r"><code>library(CTT)
+library(Lambda4)
 
-# multiple linear regression model (no interaction)
-# y = qsec, x1 = wt, x2 = cyl
-# data set: mtcars
+# analyze the data
+results &lt;- dataset %&gt;% 
+  as.matrix() %&gt;% 
+  itemAnalysis()
 
-model &lt;- mtcars %&gt;% 
-  lm(qsec ~ wt + cyl, data = .) 
+# show Cronbach&#39;s alpha 
+results$alpha
 
-# the regression table  
-model %&gt;% 
-  tidy()</code></pre>
-<p>For an ANOVA table, we also use the <code>tidy()</code> function.</p>
-<pre class="r"><code>model %&gt;% 
-  anova() %&gt;% 
-  tidy()</code></pre>
-<p>To obtain the R-squared, we can use the <code>summary()</code> function.</p>
-<pre class="r"><code>out &lt;- mtcars %&gt;% 
-  lm(qsec ~ wt + cyl, data = .) %&gt;% 
-  summary() 
+# show Cronbach&#39;s alpha if item removed (deleted),
+# p-values (=ItemMean), and item rest correlations (=pBis)
+results$itemReport
 
-out$r.squared
-out$adj.r.squared</code></pre>
-<p>To make plots with the residuals and/or the predicted values we can use the <code>modelr</code> package to paste residuals and predicted values to the data frame:</p>
-<pre class="r"><code>library(modelr)
-
-model &lt;- mtcars %&gt;% 
-  lm(qsec ~ wt + cyl, data = .)  
-
-mtcars %&gt;% 
-  add_predictions(model) %&gt;% 
-  add_residuals(model) %&gt;% 
-  ggplot(aes(x = pred, y = resid)) + 
-  geom_point()</code></pre>
+# Compute lambda 2
+dataset %&gt;% guttman() # lambda 3 = Cronbach&#39;s alpha</code></pre>
 </div>
-<div id="linear-mixed-models" class="section level2">
-<h2>linear mixed models</h2>
-<p>For the linear mixed model, we use the <code>lmer()</code> function from the <code>lme4</code> package. Note that the output doesn’t show <em>p</em>-values, nor residual degrees of freedom for fixed effects. This is for a good <a href="https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html">reason</a>.</p>
-<pre class="r"><code>library(lme4)
+<div id="item-response-theory-models" class="section level2">
+<h2>Item Response Theory models</h2>
+<pre class="r"><code>library(mirt)
 
-mtcars %&gt;% 
-  lmer(qsec ~ wt + (1|gear), data = .) %&gt;% 
-  tidy()
+# a 1-dimensional model with 2 parameters per item
+out2 &lt;- dataset %&gt;%
+  mirt(., model = 1, itemtype = &quot;2PL&quot;)
 
-# When we have factors as fixed variables:
-mtcars %&gt;% 
-  lmer(qsec ~ wt + factor(cyl) + (1|gear), data = .) %&gt;% 
-  anova() %&gt;% 
-  tidy()</code></pre>
-<p>If you want approximate <em>p</em>-values, you can use Satterthwaite’s degrees of freedom method, implemented in the <code>lmerTest</code> package. The same method is used in SPSS.</p>
-<p>For a residual plot, we can use similar syntax as for the linear model:</p>
-<pre class="r"><code>model &lt;- mtcars %&gt;% 
-  lmer(qsec ~ wt + (1|gear), data = .)  
+out2 # to see Akaike’s Information Criterion 
 
-mtcars %&gt;% 
-  add_predictions(model) %&gt;% 
-  add_residuals(model) %&gt;% 
-  ggplot(aes(x = pred, y = resid)) +
-  geom_point()</code></pre>
-</div>
-<div id="logistic-regression" class="section level2">
-<h2>logistic regression</h2>
-<p>For a logistic regression model, we use the <code>glm()</code> function.</p>
-<pre class="r"><code>mtcars %&gt;% 
-  glm(am ~ wt, family = binomial, data = .) %&gt;% 
-  tidy()</code></pre>
-<p>Similarly for a Poisson regression.</p>
-<pre class="r"><code>mtcars %&gt;% 
-  glm(carb ~ wt, family = poisson, data = .) %&gt;% 
-  tidy()</code></pre>
-</div>
-<div id="nonparametric-tests" class="section level2">
-<h2>Nonparametric tests</h2>
-<p>For a non-parametric test for comparing two or more groups, we use</p>
-<pre class="r"><code>airquality %&gt;% 
-  kruskal.test(Ozone ~ Month, data = .)</code></pre>
-<p>For a non-parametric test for repeated measures, we use</p>
-<pre class="r"><code>iris %&gt;% 
-  select(Sepal.Length, Petal.Length) %&gt;% 
-  as.matrix() %&gt;%
-  friedman.test()</code></pre>
-<p>For Kendall’s tau, we use</p>
-<pre class="r"><code>library(VGAM)
-kendall.tau(mtcars$mpg, mtcars$gear)</code></pre>
-<p>For Spearman’s rho, we use</p>
-<pre class="r"><code>library(Hmisc) 
+# a 1-dimensional model with 1 parameter per item
+out1 &lt;- dataset %&gt;% 
+  mirt(., model = 1, itemtype = &quot;Rasch&quot;)
 
-rcorr(mtcars$mpg, mtcars$disp, type = &quot;spearman&quot;)</code></pre>
+# to extract the estimated parameters of a model:
+par2 &lt;- out2 %&gt;% 
+  coef(, IRTpars=T, simplify=T)
+
+par2$items #to see the parameters
+
+# information plots
+out2 %&gt;% 
+  itemplot(, item = 1, type = &quot;info&quot;) #item information plot for item 1
+
+out2 %&gt;%
+  plot(, type = &quot;info&quot;)               #test information plot
+
+# assessing the item fit
+out2 %&gt;% 
+  itemfit()                           #for all items
+
+out2 %&gt;% 
+  itemfit(,empirical.plot = 6)        #plot for item 6</code></pre>
 </div>
 </div>
 <div id="examples" class="section level1 tabset">

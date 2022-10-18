@@ -9,7 +9,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Wouter Stoter" />
 
 
 <title>Instructions for Editors</title>
@@ -339,10 +338,10 @@ div.tocify {
       <a href="2-handling-data-files.html">2. Handling data files</a>
     </li>
     <li>
-      <a href="3-univariate-data-analysis-and-data-visualization.html">3. Univariate data analysis</a>
+      <a href="3-univariate-data-analysis-and-data-visualizat.html">3. Univariate data analysis</a>
     </li>
     <li>
-      <a href="4-bivariate-data-analysis-and-bivariate-data-vizualisation.html">4. Bivariate data analysis</a>
+      <a href="4-bivariate-data-analysis-and-bivariate-data-v.html">4. Bivariate data analysis</a>
     </li>
     <li>
       <a href="5-multivariate-data-analysis.html">5. Multivariate data analysis</a>
@@ -358,8 +357,8 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://git.snt.utwente.nl/rhelpdesk">
-    <span class="fab fa-gitlab"></span>
+  <a href="https://github.com/CODE-UTwente/rhelpdesk/">
+    <span class="fab fa-github"></span>
      
   </a>
 </li>
@@ -379,8 +378,6 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Instructions for Editors</h1>
-<h4 class="author">Wouter Stoter</h4>
-<h4 class="date">7/29/2021</h4>
 
 </div>
 
@@ -390,14 +387,14 @@ div.tocify {
 <h1>Changing the Website</h1>
 <div id="method-1-in-the-web-browser" class="section level2">
 <h2>Method 1: In the Web Browser</h2>
-<p>Go the the <a href="https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io">rhelpdesk.github.io GitLab Page</a> and click the button <em>Web IDE</em>. Click on the folder <em>book</em> to find the book chapters, and make the changes there you would like to make. Once you’re done making changes, press <em>Commit…</em>. You will see an overview of the changes you made. Please add a description of the changes you made under <em>Commit Message</em>. If you have the option, you can pick <em>Commit to <code>master</code> branch</em> for the change to have effect immediately. If you do not have that option or would like your changes to be checked, pick <em>Create a new branch</em>. Make sure to tick the <em>Start a new merge request</em>. This way a request will be made for your changes to be applied. Someone with more permissions can then approve your change to be applied on the website. Lastly, press the <em>Commit</em> button at the bottom. It can take several minutes for changes to take effect on the website.</p>
+<p>Go the the <a href="https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io">rhelpdesk.github.io GitLab Page</a>. When asked, please log in using your UT e-mail and password. Click the button <em>Web IDE</em>. Click on the folder <em>book</em> to find the book chapters, and make the changes there you would like to make. Once you’re done making changes, press <em>Commit…</em>. You will see an overview of the changes you made. Please add a description of the changes you made under <em>Commit Message</em>. If you have the option, you can pick <em>Commit to <code>master</code> branch</em> for the change to have effect immediately. If you do not have that option or would like your changes to be checked, pick <em>Create a new branch</em>. Make sure to tick the <em>Start a new merge request</em>. This way a request will be made for your changes to be applied. Someone with more permissions can then approve your change to be applied on the website. Lastly, press the <em>Commit</em> button at the bottom. It can take several minutes for changes to take effect on the website.</p>
 </div>
 <div id="method-2-using-r-studio" class="section level2">
 <h2>Method 2: Using R-Studio</h2>
 <div id="set-up" class="section level3">
 <h3>Set up</h3>
 <p>You need to set a few things up to be able to change the website using RStudio. This setup only has to be done once.<br />
-First, make sure git is installed. Please follow the instructions at <a href="http://r-bio.github.io/git-installation/">http://r-bio.github.io/git-installation/</a>. Once this is done, you can open RStudio, and click <em>File -&gt; New Project…</em>. Pick the <em>Version Control</em> option, and then pick <em>Git</em>. Under <em>Repository URL:</em> fill in <code>https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io.git</code> and as <em>Project directory name</em> pick <code>rhelpdesk.utwente.io</code>. Under <em>Create project as subdirectory of:</em> you can pick a directory in which you want to save all the files.</p>
+First, make sure git is installed. Please follow the instructions at <a href="http://r-bio.github.io/git-installation/">http://r-bio.github.io/git-installation/</a>. Once this is done, you can open RStudio, and click <em>File -&gt; New Project…</em>. Pick the <em>Version Control</em> option, and then pick <em>Git</em>. Under <em>Repository URL:</em> fill in <code>https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io.git</code> and as <em>Project directory name</em> pick <code>rhelpdesk.utwente.io</code>. Under <em>Create project as subdirectory of:</em> you can pick a directory in which you want to save all the files. When asked, please log in using your UT e-mail and password.</p>
 </div>
 <div id="making-changes" class="section level3">
 <h3>Making changes</h3>
@@ -449,13 +446,14 @@ document.querySelector("button#convert").onclick = function() {
         width:100%;
         height:100%;
         border:none;
+        background:white;
       }
       .user_content #mobileview {
         display:none;
         width:0;
         height:0;
       }
-      .section h2 {
+      .section h1 {
           font-size: 20px;
           color: white;
           background: #008cba;
@@ -463,7 +461,7 @@ document.querySelector("button#convert").onclick = function() {
           border-radius: 5px;
           margin: 20px 0 10px 0 !important;
       }
-      .section h3 {
+      .section h2 {
           font-size: 15px;
           border: 1px solid #008cba;
           color: #008cba;
