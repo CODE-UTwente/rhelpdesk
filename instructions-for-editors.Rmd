@@ -24,7 +24,7 @@ Once you're done making changes, press *Commit* in the *Git* tab. Tick the boxes
 These changes are now only made locally. To put these changes on the online website, press *Push*. It can take several minutes for changes to take effect on the website.
 
 # Changing the PDF
-When making changes to the website, the PDF on the website that can be found [here](https://rhelpdesk.utwente.io/Intro-R-for-RM-DS.pdf) will automatically be updated as well. No extra steps are required.
+When making changes to the website, the PDF on the website that can be found [here](https://rhelpdesk.utwente.io/Intro-R-for-RM_DS.pdf) will automatically be updated as well. No extra steps are required.
 
 # Changing the Canvas Page
 First make sure the changes you would like to make are applied to the website page. Copy the URL of the website page, paste it below, and press *Convert*
