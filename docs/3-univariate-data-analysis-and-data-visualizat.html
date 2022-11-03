@@ -472,18 +472,31 @@ ggplot(gss_cat, aes(x = tvhours)) +
 <h2>Univariate inferential statistics</h2>
 <p>Confidence intervals and tests for one variable can be constructed for dichotomies (proportions), nominal variables (goodness of fit) and interval/ratio variables (means testing).</p>
 <pre class="r"><code># For a proportion, use
-
-n_total &lt;- 1000 # total number of cases
+n_total &lt;- 1000 # total number of (valid) cases
 n_pos &lt;- 690 # number of positives
-prop.test(n_pos, n_total, p = 0.05, alternative = &quot;two.sided&quot;) # for confidence interval and test
+prop.test(n_pos, n_total, p = 0.05, alternative = &quot;two.sided&quot;) # for confidence interval and two sided test
 
 # For a goodness of fit test, use
+n_observed &lt;- c(166, 142, 80, 160)
+p_expected &lt;- c(0.25, 0.25, 0.25, 0.25) # these have to add to 1 (proportions)
+g_o_f &lt;- chisq.test(n_observed, p = p_expected)
+g_o_f
 
-#...
+# For a test of the median, use
+# assuming the data contains a vector with a difference, called data$t2_t1
+wilcox.test(data$t2_t1, alternative = &quot;two.sided&quot;)
+# this can be done using the idea of a signed rank and the linear model too.
+# assuming you constructed the signed ranks yourself, use ...
+data %&gt;% lm(signed_rank_t2_t1 ~ 1, .)
 
-# For means testing use
+# For means testing use either t.test or the lm command
+# assuming the data are stored in a data frame as data$var
+mu_1 &lt;- 100 # if you want to check whether it is different from 100
 
-# ...</code></pre>
+t.test(data$var, mu = mu_1)
+data %&gt;% 
+  lm((var - mu_1) ~ 1, .) %&gt;% 
+  summary</code></pre>
 </div>
 </div>
 <div id="examples" class="section level1 tabset">

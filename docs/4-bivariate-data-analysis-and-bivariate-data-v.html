@@ -435,6 +435,26 @@ iris %&gt;%
   geom_boxplot() + 
   facet_wrap(~ year)</code></pre>
 </div>
+<div id="descriptive-measures-and-inferential-statistics-for-associations" class="section level2">
+<h2>Descriptive measures and inferential statistics for associations</h2>
+<p>For a chi-square test, we use</p>
+<pre class="r"><code># assuming the data are in vector x and y2
+csq &lt;- chisq.test(data$x, data$y2)
+csq</code></pre>
+<p>For Kendall’s tau b, we use</p>
+<pre class="r"><code>cor.test(x = mtcars$mpg, 
+    y = mtcars$gear,
+    method = &quot;kendall&quot;)</code></pre>
+<p>For Spearman’s rho, we use</p>
+<pre class="r"><code>cor.test(x = mtcars$mpg, 
+    y = mtcars$disp,
+    method = &quot;spearman&quot;)</code></pre>
+<p>For Pearson’s r, we use</p>
+<pre class="r"><code># this not only gives a test but also a confidence interval
+cor.test(x = mtcars$mpg, 
+    y = mtcars$disp,
+    method = &quot;pearson&quot;)</code></pre>
+</div>
 </div>
 <div id="examples" class="section level1 tabset">
 <h1>Examples</h1>

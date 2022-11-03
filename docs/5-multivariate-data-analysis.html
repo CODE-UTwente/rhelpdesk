@@ -486,13 +486,6 @@ mtcars %&gt;%
   select(Sepal.Length, Petal.Length) %&gt;% 
   as.matrix() %&gt;%
   friedman.test()</code></pre>
-<p>For Kendall’s tau, we use</p>
-<pre class="r"><code>library(VGAM)
-kendall.tau(mtcars$mpg, mtcars$gear)</code></pre>
-<p>For Spearman’s rho, we use</p>
-<pre class="r"><code>library(Hmisc) 
-
-rcorr(mtcars$mpg, mtcars$disp, type = &quot;spearman&quot;)</code></pre>
 </div>
 </div>
 <div id="examples" class="section level1 tabset">
