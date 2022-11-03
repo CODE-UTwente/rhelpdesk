@@ -6,7 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-This page contains information on how to install R and RStudio, what it is used for and some basic termonogoly and commands, like installing packages.
+This page contains information on how to install R and RStudio, what it is used for and some basic terminology and commands, like installing packages.
 
 # Explanation
 ```{r child="book/chapter1.Rmd"}
