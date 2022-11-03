@@ -117,17 +117,29 @@ Confidence intervals and tests for one variable can be constructed for dichotomi
 ```{r, confidence intervals and tests for one variable, eval = F}
 
 # For a proportion, use
-
-n_total <- 1000 # total number of cases
+n_total <- 1000 # total number of (valid) cases
 n_pos <- 690 # number of positives
-prop.test(n_pos, n_total, p = 0.05, alternative = "two.sided") # for confidence interval and test
+prop.test(n_pos, n_total, p = 0.05, alternative = "two.sided") # for confidence interval and two sided test
 
 # For a goodness of fit test, use
+n_observed <- c(166, 142, 80, 160)
+p_expected <- c(0.25, 0.25, 0.25, 0.25) # these have to add to 1 (proportions)
+g_o_f <- chisq.test(n_observed, p = p_expected)
+g_o_f
 
-#...
+# For a test of the median, use
+# assuming the data contains a vector with a difference, called data$t2_t1
+wilcox.test(data$t2_t1, alternative = "two.sided")
+# this can be done using the idea of a signed rank and the linear model too.
+# assuming you constructed the signed ranks yourself, use ...
+data %>% lm(signed_rank_t2_t1 ~ 1, .)
 
-# For means testing use
+# For means testing use either t.test or the lm command
+# assuming the data are stored in a data frame as data$var
+mu_1 <- 100 # if you want to check whether it is different from 100
 
-# ...
-
+t.test(data$var, mu = mu_1)
+data %>% 
+  lm((var - mu_1) ~ 1, .) %>% 
+  summary
 ```

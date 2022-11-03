@@ -173,22 +173,3 @@ iris %>%
   friedman.test()
 
 ```
-
-For Kendall's tau, we use 
-
-```{r kendall, echo=T, eval=F, message=F}
-
-library(VGAM)
-kendall.tau(mtcars$mpg, mtcars$gear)
-
-```
-
-For Spearman's rho, we use 
-
-```{r spearman, echo=T, eval=F, message=F}
-
-library(Hmisc) 
-
-rcorr(mtcars$mpg, mtcars$disp, type = "spearman")
-
-```

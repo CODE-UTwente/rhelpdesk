@@ -3,9 +3,7 @@ title: "Psychometric analyses"
 output: html_fragment
 ---
 
-In this chapter, you can find out how to run a factor analysis in R and how to run Classical Test Theory analyses and Item Response Theory models in R.  
-
-For psychometric analyses, we use the packages: `psych`, `CTT`, `Lambda4` and `mirt`.
+In this chapter, you can find out how to run a factor analysis in R and how to run Classical Test Theory analyses and Item Response Theory models in R.  For psychometric analyses we use the packages: `psych`, `CTT`, `Lambda4` and `mirt`.
 
 ## Factor analysis
 ```{r factoranalysis, echo=T, eval=F, message=F, warning = F, tidy = TRUE}
