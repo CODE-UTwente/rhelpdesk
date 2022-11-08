@@ -73,22 +73,23 @@ mtcars %>%
   geom_point()
 
 ```
+  
+  
+## Descriptive measures and inferential statistics for associations (parametric)
 
+For Pearson's r, we use 
 
-## Faceting
+```{r pearsons r, echo=T, eval=F, message=F}
 
-For different subplots, use the layer `facet_wrap(~ )` as default. This is another way to introduce a third variable.
-
-```{r faceting, echo=T, eval=F}
-
-mpg %>% 
-  ggplot(aes(x = factor(cyl), y = hwy)) +
-  geom_boxplot() + 
-  facet_wrap(~ year)
+# this not only gives a test but also a confidence interval
+cor.test(x = mtcars$mpg, 
+    y = mtcars$disp,
+    method = "pearson")
 
 ```
   
-## Descriptive measures and inferential statistics for associations
+   
+## Inferential statistics for associations (non parametric)
 
 For a chi-square test, we use 
 
@@ -119,13 +120,11 @@ cor.test(x = mtcars$mpg,
 
 ```
 
-For Pearson's r, we use 
+For a non-parametric test for comparing the medians of two or more groups, we use
 
-```{r pearsons r, echo=T, eval=F, message=F}
+```{r kruskallwallis, echo=T, eval=F}
 
-# this not only gives a test but also a confidence interval
-cor.test(x = mtcars$mpg, 
-    y = mtcars$disp,
-    method = "pearson")
+airquality %>% 
+  kruskal.test(Ozone ~ Month, data = .)
 
 ```

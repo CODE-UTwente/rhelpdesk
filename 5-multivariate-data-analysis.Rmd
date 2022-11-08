@@ -6,7 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-This page will show you how you can analyze more variables and their relationships using R.
+This page will show you how you can analyze relationships between more than two variables using R.
 
 # Explanation
 ```{r child="book/chapter5.Rmd"}

@@ -20,8 +20,22 @@ mtcars %>%
   adorn_ns() #show the numbers of cases
 
 ```
+  
+  
+## Faceting of bivariate visualisations
 
+For different subplots, use the layer `facet_wrap(~ )` as default. This is an way to introduce a third variable in the context of data visualisations.
 
+```{r faceting, echo=T, eval=F}
+
+mpg %>% 
+  ggplot(aes(x = factor(cyl), y = hwy)) +
+  geom_boxplot() + 
+  facet_wrap(~ year)
+
+```
+  
+  
 ## Linear models
 
 For the ordinary linear model, we use `lm()`. For a clear presentation of the regression table, we use the `tidy()` function from the `broom` package. 
@@ -61,12 +75,13 @@ out <- mtcars %>%
   lm(qsec ~ wt + cyl, data = .) %>% 
   summary() 
 
+# a part of subset of the thus created object 'out' is now the (adjusted) R squared.
 out$r.squared
 out$adj.r.squared
 
 ```
 
-To make plots with the residuals and/or the predicted values we can use the `modelr` package to paste residuals and predicted values to the data frame:
+To make plots with the residuals and/or the predicted values we can use the `modelr` package to attach residuals and predicted values to the data frame:
 
 ```{r residual_plots, echo=T, eval=F}
 
@@ -85,7 +100,7 @@ mtcars %>%
 
 ## linear mixed models
 
-For the linear mixed model, we use the `lmer()` function from the `lme4` package. Note that the output doesn't show *p*-values, nor residual degrees of freedom for fixed effects. This is for a good [reason](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html). 
+For the linear mixed model, we use the `lmer()` function from the `lme4` package. Note that the output does not show *p*-values, nor residual degrees of freedom for fixed effects. This is for a good [reason](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html). 
 
 ```{r lmer, echo=T, eval=F, message=F}
 
@@ -153,15 +168,6 @@ mtcars %>%
 
 
 ## Nonparametric tests
-
-For a non-parametric test for comparing two or more groups, we use
-
-```{r kruskallwallis, echo=T, eval=F}
-
-airquality %>% 
-  kruskal.test(Ozone ~ Month, data = .)
-
-```
 
 For a non-parametric test for repeated measures, we use 
 

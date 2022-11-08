@@ -1,0 +1,129 @@
+
+
+
+<div id="way-contingency-tables-with-tabyl" class="section level2">
+<h2>3-way contingency tables with tabyl</h2>
+<p>Use the <code>tabyl()</code> function from the <code>janitor</code>
+package. With several adorning functions you can adjust the table to
+your liking. You can force the table displaying the values ‘none’,
+‘some’ and ‘many’ in the correct order, by making sure the variable is
+stored as an ‘ordered factor’.</p>
+<pre class="r"><code>library(janitor)
+mtcars %&gt;% 
+  tabyl(am, gear, cyl, show_na = FALSE) %&gt;% 
+  adorn_title(&quot;combined&quot;) %&gt;% #both var names in the title
+  adorn_totals(&quot;col&quot;) %&gt;% #column totals
+  adorn_totals(&quot;row&quot;) %&gt;% #row totals
+  adorn_percentages(&quot;col&quot;) %&gt;% #columnwise, rowwise (row), or total percentages (all)
+  adorn_pct_formatting(digits = 1) %&gt;%
+  adorn_ns() #show the numbers of cases</code></pre>
+</div>
+<div id="faceting-of-bivariate-visualisations" class="section level2">
+<h2>Faceting of bivariate visualisations</h2>
+<p>For different subplots, use the layer <code>facet_wrap(~ )</code> as
+default. This is an way to introduce a third variable in the context of
+data visualisations.</p>
+<pre class="r"><code>mpg %&gt;% 
+  ggplot(aes(x = factor(cyl), y = hwy)) +
+  geom_boxplot() + 
+  facet_wrap(~ year)</code></pre>
+</div>
+<div id="linear-models" class="section level2">
+<h2>Linear models</h2>
+<p>For the ordinary linear model, we use <code>lm()</code>. For a clear
+presentation of the regression table, we use the <code>tidy()</code>
+function from the <code>broom</code> package.</p>
+<pre class="r"><code>library(broom)
+
+# multiple linear regression model (no interaction)
+# y = qsec, x1 = wt, x2 = cyl
+# data set: mtcars
+
+model &lt;- mtcars %&gt;% 
+  lm(qsec ~ wt + cyl, data = .) 
+
+# the regression table  
+model %&gt;% 
+  tidy()</code></pre>
+<p>For an ANOVA table, we also use the <code>tidy()</code> function.</p>
+<pre class="r"><code>model %&gt;% 
+  anova() %&gt;% 
+  tidy()</code></pre>
+<p>To obtain the R-squared, we can use the <code>summary()</code>
+function.</p>
+<pre class="r"><code>out &lt;- mtcars %&gt;% 
+  lm(qsec ~ wt + cyl, data = .) %&gt;% 
+  summary() 
+
+# a part of subset of the thus created object &#39;out&#39; is now the (adjusted) R squared.
+out$r.squared
+out$adj.r.squared</code></pre>
+<p>To make plots with the residuals and/or the predicted values we can
+use the <code>modelr</code> package to attach residuals and predicted
+values to the data frame:</p>
+<pre class="r"><code>library(modelr)
+
+model &lt;- mtcars %&gt;% 
+  lm(qsec ~ wt + cyl, data = .)  
+
+mtcars %&gt;% 
+  add_predictions(model) %&gt;% 
+  add_residuals(model) %&gt;% 
+  ggplot(aes(x = pred, y = resid)) + 
+  geom_point()</code></pre>
+</div>
+<div id="linear-mixed-models" class="section level2">
+<h2>linear mixed models</h2>
+<p>For the linear mixed model, we use the <code>lmer()</code> function
+from the <code>lme4</code> package. Note that the output does not show
+<em>p</em>-values, nor residual degrees of freedom for fixed effects.
+This is for a good <a href="https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html">reason</a>.</p>
+<pre class="r"><code>library(lme4)
+
+mtcars %&gt;% 
+  lmer(qsec ~ wt + (1|gear), data = .) %&gt;% 
+  tidy()
+
+# When we have factors as fixed variables:
+mtcars %&gt;% 
+  lmer(qsec ~ wt + factor(cyl) + (1|gear), data = .) %&gt;% 
+  anova() %&gt;% 
+  tidy()</code></pre>
+<p>If you want approximate <em>p</em>-values, you can use
+Satterthwaite’s degrees of freedom method, implemented in the
+<code>lmerTest</code> package. The same method is used in SPSS.</p>
+<pre class="r"><code>library(lmerTest)
+mtcars %&gt;% 
+  lmer(qsec ~ wt + (1|gear), data = .) %&gt;% 
+  summary()</code></pre>
+<p>For a residual plot, we can use similar syntax as for the linear
+model:</p>
+<pre class="r"><code>model &lt;- mtcars %&gt;% 
+  lmer(qsec ~ wt + (1|gear), data = .)  
+
+mtcars %&gt;% 
+  add_predictions(model) %&gt;% 
+  add_residuals(model) %&gt;% 
+  ggplot(aes(x = pred, y = resid)) +
+  geom_point()</code></pre>
+</div>
+<div id="logistic-regression" class="section level2">
+<h2>logistic regression</h2>
+<p>For a logistic regression model, we use the <code>glm()</code>
+function.</p>
+<pre class="r"><code>mtcars %&gt;% 
+  glm(am ~ wt, family = binomial, data = .) %&gt;% 
+  tidy()</code></pre>
+<p>Similarly for a Poisson regression.</p>
+<pre class="r"><code>mtcars %&gt;% 
+  glm(carb ~ wt, family = poisson, data = .) %&gt;% 
+  tidy()</code></pre>
+</div>
+<div id="nonparametric-tests" class="section level2">
+<h2>Nonparametric tests</h2>
+<p>For a non-parametric test for repeated measures, we use</p>
+<pre class="r"><code>iris %&gt;% 
+  select(Sepal.Length, Petal.Length) %&gt;% 
+  as.matrix() %&gt;%
+  friedman.test()</code></pre>
+</div>
