@@ -13,7 +13,8 @@
 
 <title>Bivariate data analysis and bivariate data vizualisation</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -63,6 +64,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 
@@ -87,6 +89,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -144,11 +149,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +186,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +195,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -299,12 +301,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -312,7 +314,7 @@ div.tocify {
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -325,7 +327,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Chapters
      
     <span class="caret"></span>
@@ -377,17 +379,22 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Bivariate data analysis and bivariate data vizualisation</h1>
+<h1 class="title toc-ignore">Bivariate data analysis and bivariate data
+vizualisation</h1>
 
 </div>
 
 
-<p>This page will show you how you can analyze and visualize 2 variables and their relationships using R.</p>
+<p>This page will show you how you can analyze and visualize 2 variables
+and their relationships using R.</p>
 <div id="explanation" class="section level1">
 <h1>Explanation</h1>
-<div id="contingency-tables-a.k.a.-crosstabs-with-tabyl" class="section level2">
+<div id="contingency-tables-a.k.a.-crosstabs-with-tabyl"
+class="section level2">
 <h2>Contingency tables (a.k.a. crosstabs) with tabyl</h2>
-<p>Use the <code>tabyl()</code> function from the <code>janitor</code> package. The first line creates the table. The rest formats the table (giving it a title, adding totals etc…).</p>
+<p>Use the <code>tabyl()</code> function from the <code>janitor</code>
+package. The first line creates the table. The rest formats the table
+(giving it a title, adding totals etc…).</p>
 <pre class="r"><code>library(janitor)
 mtcars %&gt;% 
   tabyl(am, gear, show_na = FALSE) %&gt;% 
@@ -398,7 +405,8 @@ mtcars %&gt;%
   adorn_pct_formatting(digits = 1) %&gt;%
   adorn_ns() #show the numbers of cases</code></pre>
 </div>
-<div id="box-plots-for-different-groups-using-ggplot" class="section level2">
+<div id="box-plots-for-different-groups-using-ggplot"
+class="section level2">
 <h2>Box plots for different groups using ggplot</h2>
 <p>For a boxplot use <code>geom_boxplot()</code>:</p>
 <pre class="r"><code># A boxplot comparing different species is having two variables in the aesthetics
@@ -409,16 +417,22 @@ iris %&gt;%
 </div>
 <div id="scatterplots-with-ggplot" class="section level2">
 <h2>Scatterplots with ggplot</h2>
-<p>A scatter plot in the ggplot package will be done with the geom <code>geom_point()</code>. Notice that the aesthetics in the first layer now contain two variables.</p>
+<p>A scatter plot in the ggplot package will be done with the geom
+<code>geom_point()</code>. Notice that the aesthetics in the first layer
+now contain two variables.</p>
 <pre class="r"><code>mtcars %&gt;% 
   ggplot(aes(x = cyl, y = mpg)) + 
   geom_point()</code></pre>
-<p>If you want to add a linear regression line, add an extra ‘geom’ (geom_smooth).</p>
+<p>If you want to add a linear regression line, add an extra ‘geom’
+(geom_smooth).</p>
 <pre class="r"><code>mtcars %&gt;% 
   ggplot(aes(x = cyl, y = mpg)) + 
   geom_point() +
   geom_smooth(method = &quot;lm&quot;, se = F)</code></pre>
-<p>If you want to visualize different groups in the scatterplot, you can add extra variables to the aesthetics. In addition to x and y, you can use color (the “outside” color of points), fill (the “inside” color of the points), shape (of points) and size.</p>
+<p>If you want to visualize different groups in the scatterplot, you can
+add extra variables to the aesthetics. In addition to x and y, you can
+use color (the “outside” color of points), fill (the “inside” color of
+the points), shape (of points) and size.</p>
 <pre class="r"><code>mtcars %&gt;% 
   ggplot(aes(x = cyl, 
              y = mpg, 
@@ -427,20 +441,27 @@ iris %&gt;%
          ) + 
   geom_point()</code></pre>
 </div>
-<div id="faceting" class="section level2">
-<h2>Faceting</h2>
-<p>For different subplots, use the layer <code>facet_wrap(~ )</code> as default. This is another way to introduce a third variable.</p>
-<pre class="r"><code>mpg %&gt;% 
-  ggplot(aes(x = factor(cyl), y = hwy)) +
-  geom_boxplot() + 
-  facet_wrap(~ year)</code></pre>
+<div
+id="descriptive-measures-and-inferential-statistics-for-associations-parametric"
+class="section level2">
+<h2>Descriptive measures and inferential statistics for associations
+(parametric)</h2>
+<p>For Pearson’s r, we use</p>
+<pre class="r"><code># this not only gives a test but also a confidence interval
+cor.test(x = mtcars$mpg, 
+    y = mtcars$disp,
+    method = &quot;pearson&quot;)</code></pre>
 </div>
-<div id="descriptive-measures-and-inferential-statistics-for-associations" class="section level2">
-<h2>Descriptive measures and inferential statistics for associations</h2>
-<p>For a chi-square test, we use</p>
-<pre class="r"><code># assuming the data are in vector x and y2
-csq &lt;- chisq.test(data$x, data$y2)
-csq</code></pre>
+<div id="inferential-statistics-for-associations-non-parametric"
+class="section level2">
+<h2>Inferential statistics for associations (non parametric)</h2>
+<p>For Cramer’s V, we use</p>
+<pre class="r"><code># install and load the package &quot;rcompanion&quot; first, this contains the command cramerV.
+# this function works on tables, so create a table first
+
+library(&quot;rcompanion&quot;)
+my_table &lt;- table(mtcars$vs, mtcars$am)
+cramerV(my_table, ci = TRUE)</code></pre>
 <p>For Kendall’s tau b, we use</p>
 <pre class="r"><code>cor.test(x = mtcars$mpg, 
     y = mtcars$gear,
@@ -449,15 +470,18 @@ csq</code></pre>
 <pre class="r"><code>cor.test(x = mtcars$mpg, 
     y = mtcars$disp,
     method = &quot;spearman&quot;)</code></pre>
-<p>For Pearson’s r, we use</p>
-<pre class="r"><code># this not only gives a test but also a confidence interval
-cor.test(x = mtcars$mpg, 
-    y = mtcars$disp,
-    method = &quot;pearson&quot;)</code></pre>
+<p>For a chi-square test, we use</p>
+<pre class="r"><code># assuming the data are in vector x and y2
+csq &lt;- chisq.test(data$x, data$y2)
+csq</code></pre>
+<p>For a non-parametric test for comparing the medians of two or more
+groups, we use</p>
+<pre class="r"><code>airquality %&gt;% 
+  kruskal.test(Ozone ~ Month, data = .)</code></pre>
 </div>
 </div>
 <div id="examples" class="section level1 tabset">
-<h1>Examples</h1>
+<h1 class="tabset">Examples</h1>
 <p><em>No examples available yet</em></p>
 </div>
 <div id="functions" class="section level1">
@@ -511,6 +535,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')
