@@ -91,14 +91,16 @@ cor.test(x = mtcars$mpg,
    
 ## Inferential statistics for associations (non parametric)
 
-For a chi-square test, we use 
+For Cramer's V, we use
+  
+```{r cramers, echo=T, eval=F, message=F}
 
-```{r chi square, echo=T, eval=F, message=F}
+# install and load the package "rcompanion" first, this contains the command cramerV.
+# this function works on tables, so create a table first
 
-# assuming the data are in vector x and y2
-csq <- chisq.test(data$x, data$y2)
-csq
-
+library("rcompanion")
+my_table <- table(mtcars$vs, mtcars$am)
+cramerV(my_table, ci = TRUE)
 ```
 
 For Kendall's tau b, we use 
@@ -119,6 +121,17 @@ cor.test(x = mtcars$mpg,
     method = "spearman")
 
 ```
+
+For a chi-square test, we use 
+
+```{r chi square, echo=T, eval=F, message=F}
+
+# assuming the data are in vector x and y2
+csq <- chisq.test(data$x, data$y2)
+csq
+
+```
+
 
 For a non-parametric test for comparing the medians of two or more groups, we use
 
