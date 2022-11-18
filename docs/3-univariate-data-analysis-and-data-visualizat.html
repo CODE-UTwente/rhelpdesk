@@ -13,7 +13,8 @@
 
 <title>Univariate data analysis and data visualization</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -63,6 +64,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 
@@ -87,6 +89,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -144,11 +149,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +186,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +195,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -299,12 +301,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -312,7 +314,7 @@ div.tocify {
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -325,7 +327,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Chapters
      
     <span class="caret"></span>
@@ -377,27 +379,35 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Univariate data analysis and data visualization</h1>
+<h1 class="title toc-ignore">Univariate data analysis and data
+visualization</h1>
 
 </div>
 
 
-<p>This page will show you how you can analyze and visualize single variables using R.</p>
+<p>This page will show you how you can analyze and visualize single
+variables using R.</p>
 <div id="explanation" class="section level1">
 <h1>Explanation</h1>
-<p>A variable can be described with statistics like the mode, mean, median, variance and standard deviation. Also, it is interesting to visualize a variable using a plot.</p>
-<div id="summarizing-numerical-variables-mean-median-variation-and-standard-deviation" class="section level2">
-<h2>Summarizing numerical variables: mean, median, variation and standard deviation</h2>
-<p>Below you will see several examples of obtaining descriptive statistics for items in a data set called <code>data_new</code>.</p>
+<p>A variable can be described with statistics like the mode, mean,
+median, variance and standard deviation. Also, it is interesting to
+visualize a variable using a plot.</p>
+<div
+id="summarizing-numerical-variables-mean-median-variation-and-standard-deviation"
+class="section level2">
+<h2>Summarizing numerical variables: mean, median, variation and
+standard deviation</h2>
+<p>Below you will see several examples of obtaining descriptive
+statistics for items in a data set called <code>data_new</code>.</p>
 <pre class="r"><code># To summarise some main characteristics of one numerical item (called Item1):
 data_new %&gt;%
     summarise(mean = mean(Item1), sd = sd(Item1), var = var(Item1), minimum = min(Item1),
         maximum = max(Item1))
 # You can also ask for only one of the statistics.
 
-# To summarize the main characteristics (mean, median, minimum, maximum, Q1,
-# Q3 and number of missings) of multiple variables (in this example: the first
-# 10 variables) in the data set:
+# To summarize the main characteristics (mean, median, minimum, maximum, Q1, Q3
+# and number of missings) of multiple variables (in this example: the first 10
+# variables) in the data set:
 data_new %&gt;%
     select(1:10) %&gt;%
     summary()
@@ -413,7 +423,9 @@ data_new %&gt;%
 </div>
 <div id="frequency-tables-with-janitor-tabyl" class="section level2">
 <h2>Frequency tables with janitor: tabyl</h2>
-<p>The tabyl() function from the <code>janitor</code> package is a way to get frequency tables. tabyl() is tidyverse-aligned and is primarily built upon the dplyr and tidyr packages.</p>
+<p>The tabyl() function from the <code>janitor</code> package is a way
+to get frequency tables. tabyl() is tidyverse-aligned and is primarily
+built upon the dplyr and tidyr packages.</p>
 <pre class="r"><code># Make sure &#39;janitor&#39; in loaded into the library
 
 # Create a frequency table
@@ -433,12 +445,23 @@ gss_cat %&gt;%
     adorn_totals(&quot;row&quot;) %&gt;%
     adorn_pct_formatting()</code></pre>
 </div>
-<div id="univariate-graphs-creating-bar-charts-box-plots-and-histograms-using-ggplot" class="section level2">
-<h2>Univariate graphs: creating bar charts, box plots and histograms using ggplot</h2>
-<p>We will use the package <code>ggplot2</code> (part of the core tidyverse) for creating visualizations. The function <strong>ggplot</strong> is extremely flexible and there is an almost infinite number of ways to display your data.</p>
-<p>The basic idea of ggplot commands is that you (1) have a data frame, pipe (%&gt;%) that into a (2) ggplot(), add a (3) geom_…() to select the type of display you want to have, and (4) use aesthetics (aes()) to select the variable(s) you will use from that data frame.</p>
-<p>There are more ‘layers’ in a ggplot, but these are the most important.</p>
-<p>For example, you can use a bar chart to visualize a categorical (= nominal) variable.</p>
+<div
+id="univariate-graphs-creating-bar-charts-box-plots-and-histograms-using-ggplot"
+class="section level2">
+<h2>Univariate graphs: creating bar charts, box plots and histograms
+using ggplot</h2>
+<p>We will use the package <code>ggplot2</code> (part of the core
+tidyverse) for creating visualizations. The function
+<strong>ggplot</strong> is extremely flexible and there is an almost
+infinite number of ways to display your data.</p>
+<p>The basic idea of ggplot commands is that you (1) have a data frame,
+pipe (%&gt;%) that into a (2) ggplot(), add a (3) geom_…() to select the
+type of display you want to have, and (4) use aesthetics (aes()) to
+select the variable(s) you will use from that data frame.</p>
+<p>There are more ‘layers’ in a ggplot, but these are the most
+important.</p>
+<p>For example, you can use a bar chart to visualize a categorical (=
+nominal) variable.</p>
 <pre class="r"><code># creating a basic bar chart with the nominal variable item 1
 gss_cat %&gt;% 
   ggplot() +
@@ -470,11 +493,14 @@ ggplot(gss_cat, aes(x = tvhours)) +
 </div>
 <div id="univariate-inferential-statistics" class="section level2">
 <h2>Univariate inferential statistics</h2>
-<p>Confidence intervals and tests for one variable can be constructed for dichotomies (proportions), nominal variables (goodness of fit) and interval/ratio variables (means testing).</p>
+<p>Confidence intervals and tests for one variable can be constructed
+for dichotomies (proportions), nominal variables (goodness of fit) and
+interval/ratio variables (means testing).</p>
 <pre class="r"><code># For a proportion, use
 n_total &lt;- 1000 # total number of (valid) cases
 n_pos &lt;- 690 # number of positives
-prop.test(n_pos, n_total, p = 0.05, alternative = &quot;two.sided&quot;) # for confidence interval and two sided test
+prop.test(n_pos, n_total, alternative = &quot;two.sided&quot;, conf.level = 0.95) 
+# for confidence interval and two sided test
 
 # For a goodness of fit test, use
 n_observed &lt;- c(166, 142, 80, 160)
@@ -494,64 +520,83 @@ data %&gt;% lm(signed_rank_t2_t1 ~ 1, .)
 mu_1 &lt;- 100 # if you want to check whether it is different from 100
 
 t.test(data$var, mu = mu_1)
+
 data %&gt;% 
   lm((var - mu_1) ~ 1, .) %&gt;% 
   summary</code></pre>
 </div>
 </div>
 <div id="examples" class="section level1 tabset">
-<h1>Examples</h1>
+<h1 class="tabset">Examples</h1>
 <p><em>No examples available yet</em></p>
 </div>
 <div id="functions" class="section level1">
 <h1>Functions</h1>
 <ul>
-<li><a href="https://www.rdocumentation.org/packages/janitor/topics/adorn_totals"><code>adorn_pct_formatting()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/janitor/topics/adorn_totals"><code>adorn_pct_formatting()</code></a><br />
 <em>package: janitor</em><br />
 Change numeric columns to percentages in a frequency table (tabyl).</li>
-<li><a href="https://www.rdocumentation.org/packages/janitor/topics/adorn_totals"><code>adorn_totals()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/janitor/topics/adorn_totals"><code>adorn_totals()</code></a><br />
 <em>package: janitor</em><br />
 Add a row or column with totals to a frequency table (tabyl).</li>
-<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes"><code>aes()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/ggplot2/topics/aes"><code>aes()</code></a><br />
 <em>package: ggplot2 (tidyverse)</em><br />
-Create an aestetic map, which explains which visual properties (aesthetics) are linked (mapped) to which variables in the dataframe.</li>
-<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot"><code>ggplot()</code></a><br />
+Create an aestetic map, which explains which visual properties
+(aesthetics) are linked (mapped) to which variables in the
+dataframe.</li>
+<li><a
+href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot"><code>ggplot()</code></a><br />
 <em>package: ggplot2 (tidyverse)</em><br />
 Initialize any type of graph.</li>
-<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_bar"><code>geom_bar()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_bar"><code>geom_bar()</code></a><br />
 <em>package: ggplot2 (tidyverse)</em><br />
 Create a bar chart using the initialized ggplot.</li>
-<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot"><code>geom_boxplot()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_boxplot"><code>geom_boxplot()</code></a><br />
 <em>package: ggplot2 (tidyverse)</em><br />
 Create a boxplot using the initialized ggplot.</li>
-<li><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_histogram"><code>geom_histogram()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_histogram"><code>geom_histogram()</code></a><br />
 <em>package: ggplot2 (tidyverse)</em><br />
 Create a histogram using the initialized ggplot.</li>
-<li><a href="https://www.rdocumentation.org/packages/purrr/topics/map"><code>map()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/purrr/topics/map"><code>map()</code></a><br />
 <em>package: purrr (tidyverse)</em><br />
 Apply a transformation to every variable in the dataframe.</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/max"><code>max()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/max"><code>max()</code></a><br />
 <em>package: base</em><br />
 Find the highest number from a list of numbers.</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/mean"><code>mean()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/mean"><code>mean()</code></a><br />
 <em>package: utils (base)</em><br />
 Find the mean of a list of numbers.</li>
-<li><a href="https://www.rdocumentation.org/packages/stats/topics/median"><code>median()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/stats/topics/median"><code>median()</code></a><br />
 <em>package: stats (base)</em><br />
 Find the median of a list of numbers.</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/min"><code>min()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/min"><code>min()</code></a><br />
 <em>package: base</em><br />
 Find the lowest number from a list of numbers.</li>
-<li><a href="https://www.rdocumentation.org/packages/stats/topics/sd"><code>sd()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/stats/topics/sd"><code>sd()</code></a><br />
 <em>package: stats (base)</em><br />
 Find the standard deviation of a list of numbers.</li>
-<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/summarise"><code>summarise()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/dplyr/topics/summarise"><code>summarise()</code></a><br />
 <em>package: dplyr (tidyverse)</em><br />
 Create a new dataframe summarizing the values in another dataframe.</li>
-<li><a href="https://www.rdocumentation.org/packages/janitor/topics/tabyl"><code>tabyl()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/janitor/topics/tabyl"><code>tabyl()</code></a><br />
 <em>package: janitor</em><br />
 Generate a frequency table.</li>
-<li><a href="https://www.rdocumentation.org/packages/stats/topics/var"><code>var()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/stats/topics/var"><code>var()</code></a><br />
 <em>package: stats (base)</em><br />
 Find the variation of a list of numbers.</li>
 </ul>
@@ -559,14 +604,24 @@ Find the variation of a list of numbers.</li>
 <div id="faq" class="section level1">
 <h1>FAQ</h1>
 <div id="faq-pipe-for-plus">
-<p><em>When creating a graph, i get the message <code>Did you use %&gt;% instead of +?</code></em> When using the <code>ggplot()</code> command together with another command like <code>geom_bar()</code> or <code>geom_boxplot()</code> you don’t use the pipe (<code>%&gt;%</code>) between them, but instead you use the <code>+</code>. That is because these two commands need to be executed together, and instead of that the result of one needs to be used in the next.</p>
+<p><em>When creating a graph, i get the message
+<code>Did you use %&gt;% instead of +?</code></em> When using the
+<code>ggplot()</code> command together with another command like
+<code>geom_bar()</code> or <code>geom_boxplot()</code> you don’t use the
+pipe (<code>%&gt;%</code>) between them, but instead you use the
+<code>+</code>. That is because these two commands need to be executed
+together, and instead of that the result of one needs to be used in the
+next.</p>
 </div>
 </div>
 <div id="resources" class="section level1">
 <h1>Resources</h1>
 <ul>
-<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization.pdf">Data visualisation cheatsheet with ggplot2</a><br />
-An overview of all the different graph types and how to make them using the <code>ggplot()</code> function.</li>
+<li><a
+href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization.pdf">Data
+visualisation cheatsheet with ggplot2</a><br />
+An overview of all the different graph types and how to make them using
+the <code>ggplot()</code> function.</li>
 </ul>
 </div>
 
@@ -608,6 +663,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

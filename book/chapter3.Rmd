@@ -119,7 +119,8 @@ Confidence intervals and tests for one variable can be constructed for dichotomi
 # For a proportion, use
 n_total <- 1000 # total number of (valid) cases
 n_pos <- 690 # number of positives
-prop.test(n_pos, n_total, p = 0.05, alternative = "two.sided") # for confidence interval and two sided test
+prop.test(n_pos, n_total, alternative = "two.sided", conf.level = 0.95) 
+# for confidence interval and two sided test
 
 # For a goodness of fit test, use
 n_observed <- c(166, 142, 80, 160)
@@ -139,6 +140,7 @@ data %>% lm(signed_rank_t2_t1 ~ 1, .)
 mu_1 <- 100 # if you want to check whether it is different from 100
 
 t.test(data$var, mu = mu_1)
+
 data %>% 
   lm((var - mu_1) ~ 1, .) %>% 
   summary
