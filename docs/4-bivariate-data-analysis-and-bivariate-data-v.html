@@ -471,9 +471,15 @@ cramerV(my_table, ci = TRUE)</code></pre>
     y = mtcars$disp,
     method = &quot;spearman&quot;)</code></pre>
 <p>For a chi-square test, we use</p>
-<pre class="r"><code># assuming the data are in vector x and y2
+<pre class="r"><code># assuming the data are in vector x and vector y2
 csq &lt;- chisq.test(data$x, data$y2)
-csq</code></pre>
+csq
+
+# after calculating chi square by hand, 
+# you can find the associated p-value by using:
+chisq &lt;- 3.86 # put the number you find here
+df &lt;- 1 # put the degrees of freedom here
+pchisq(chisq, df, lower.tail = FALSE) # this gives the p-value</code></pre>
 <p>For a non-parametric test for comparing the medians of two or more
 groups, we use</p>
 <pre class="r"><code>airquality %&gt;% 

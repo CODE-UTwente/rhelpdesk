@@ -126,9 +126,15 @@ For a chi-square test, we use
 
 ```{r chi square, echo=T, eval=F, message=F}
 
-# assuming the data are in vector x and y2
+# assuming the data are in vector x and vector y2
 csq <- chisq.test(data$x, data$y2)
 csq
+
+# after calculating chi square by hand, 
+# you can find the associated p-value by using:
+chisq <- 3.86 # put the number you find here
+df <- 1 # put the degrees of freedom here
+pchisq(chisq, df, lower.tail = FALSE) # this gives the p-value
 
 ```
 
