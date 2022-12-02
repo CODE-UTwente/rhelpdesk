@@ -13,7 +13,8 @@
 
 <title>Handling data files</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -63,6 +64,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 
@@ -87,6 +89,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -144,11 +149,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +186,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +195,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -299,12 +301,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -312,7 +314,7 @@ div.tocify {
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -325,7 +327,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Chapters
      
     <span class="caret"></span>
@@ -382,12 +384,22 @@ div.tocify {
 </div>
 
 
-<p>This page will show you how you van import different types of datasets in R and how you can process its data.</p>
+<p>This page will show you how you van import different types of
+datasets in R and how you can process its data.</p>
 <div id="explanation" class="section level1">
 <h1>Explanation</h1>
-<div id="importing-data-from-.csv-.sav-and-other-formats-to-r-data-frames" class="section level2">
-<h2>Importing data: from .csv, .sav and other formats to R data frames</h2>
-<p>To import a data set, you first need to activate the correct package (these are <code>foreign</code> (for SPSS files), <code>readr</code> or <code>readxl</code> (for excel files), depending on the type of data you want to import). Next to that, you need to know the location of the data set on your computer. Suppose the location of your data file called ‘dataset2’ is: “C:/My Documents”. The data set can be loaded into the <em>global environment</em> with the following command:</p>
+<div
+id="importing-data-from-.csv-.sav-and-other-formats-to-r-data-frames"
+class="section level2">
+<h2>Importing data: from .csv, .sav and other formats to R data
+frames</h2>
+<p>To import a data set, you first need to activate the correct package
+(these are <code>foreign</code> (for SPSS files), <code>readr</code> or
+<code>readxl</code> (for excel files), depending on the type of data you
+want to import). Next to that, you need to know the location of the data
+set on your computer. Suppose the location of your data file called
+‘dataset2’ is: “C:/My Documents”. The data set can be loaded into the
+<em>global environment</em> with the following command:</p>
 <pre class="r"><code># set working directory to the correct folder and put all files to be imported
 # in that folder
 install.packages(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;readr&quot;, &quot;readxl&quot;)  # you do this only once
@@ -402,9 +414,15 @@ dataset2 &lt;- read.spss(&quot;dataset2.sav&quot;, to.data.frame = TRUE)  # load
 # load a csv data file, separated by comma&#39;s, with the package &#39;readr&#39;
 dataset2 &lt;- read.csv(&quot;dataset2.csv&quot;, sep = &quot;,&quot;)</code></pre>
 </div>
-<div id="working-with-labelled-data-mainly-spss-and-sav-files" class="section level2">
+<div id="working-with-labelled-data-mainly-spss-and-sav-files"
+class="section level2">
 <h2>Working with labelled data (mainly SPSS and SAV files)</h2>
-<p>Sometimes imported datasets are ‘labeled’. For example, the variable ‘gender’ is stored as a series of 1’s and 2’s and a label is added for the variable (‘gender as derived from the sampling frame’, this is called the variable label) and for the values (1 means ‘woman’ and 2 means ‘man’, the so called ‘value labels’). The labels are attributes of a data frame.</p>
+<p>Sometimes imported datasets are ‘labeled’. For example, the variable
+‘gender’ is stored as a series of 1’s and 2’s and a label is added for
+the variable (‘gender as derived from the sampling frame’, this is
+called the variable label) and for the values (1 means ‘woman’ and 2
+means ‘man’, the so called ‘value labels’). The labels are attributes of
+a data frame.</p>
 <p>To inspect the labels in a dataframe:</p>
 <pre class="r"><code># for the variable label
 data$variable %&gt;%
@@ -416,7 +434,8 @@ data$variable %&gt;%
 </div>
 <div id="creating-data-frames-from-scratch" class="section level2">
 <h2>Creating data frames from scratch</h2>
-<p>Creating your own data set can be done in many ways. We mention two:</p>
+<p>Creating your own data set can be done in many ways. We mention
+two:</p>
 <ol style="list-style-type: decimal">
 <li>typing in data:</li>
 </ol>
@@ -430,7 +449,9 @@ membership &lt;- c(&quot;T&quot;, &quot;F&quot;, &quot;T&quot;, &quot;T&quot;) %
 # merge the variables
 dataset3 &lt;- data.frame(age, gender, length, membership)</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>generating random data: If you do not have actual data, but want to show something in R, you can randomly select observations from a distribution.</li>
+<li>generating random data: If you do not have actual data, but want to
+show something in R, you can randomly select observations from a
+distribution.</li>
 </ol>
 <pre class="r"><code># creating a data frame with a random variable based on the normal
 # distribution, assumed mean of the normal distribution is 50, sd is 20, with
@@ -440,9 +461,18 @@ n &lt;- 100
 dataset4 &lt;- rnorm(n, 50, 20) %&gt;%
     as.data.frame()</code></pre>
 </div>
-<div id="view-data-frames-and-parts-of-data-frames-view-colnames-and-select" class="section level2">
-<h2>View data frames and parts of data frames: view, colnames and select</h2>
-<p>To illustrate the commands used below, we will use the data set <em>gss_cat</em> (from the tidyverse package forcats). This is a sample of data from the general social survey in the US. It contains the variables: year (year of survey, 2000–2014); age (Maximum age truncated to 89); marital (marital status); race (race); rincome (reported income); partyid (party affiliation); relig (religion); denom (denomination); tvhours (hours per day watching tv).</p>
+<div
+id="view-data-frames-and-parts-of-data-frames-view-colnames-and-select"
+class="section level2">
+<h2>View data frames and parts of data frames: view, colnames and
+select</h2>
+<p>To illustrate the commands used below, we will use the data set
+<em>gss_cat</em> (from the tidyverse package forcats). This is a sample
+of data from the general social survey in the US. It contains the
+variables: year (year of survey, 2000–2014); age (Maximum age truncated
+to 89); marital (marital status); race (race); rincome (reported
+income); partyid (party affiliation); relig (religion); denom
+(denomination); tvhours (hours per day watching tv).</p>
 <p>Suppose we have a data frame and you want to inspect it.</p>
 <pre class="r"><code># View the data from the data set dataset4 in a spreadsheet.
 gss_cat %&gt;%
@@ -474,9 +504,13 @@ gss_cat %&gt;%
     select(1:5, -3) %&gt;%
     View()</code></pre>
 </div>
-<div id="creating-subsets-of-a-data-frame-select-filter-and-the-use-the-assignment-operator--" class="section level2">
-<h2>Creating subsets of a data frame: select, filter and the use the assignment operator &lt;-</h2>
-<p>Selected variables can also be stored as a separate object in the global environment.</p>
+<div
+id="creating-subsets-of-a-data-frame-select-filter-and-the-use-the-assignment-operator--"
+class="section level2">
+<h2>Creating subsets of a data frame: select, filter and the use the
+assignment operator &lt;-</h2>
+<p>Selected variables can also be stored as a separate object in the
+global environment.</p>
 <pre class="r"><code># Make a new data frame with only the items (variables) that you want:
 gss_cat_social &lt;- gss_cat %&gt;%
     select(1:5, 7, 8)
@@ -489,16 +523,22 @@ gss_cat_2000 &lt;- gss_cat %&gt;%
 gss_cat_2002plus &lt;- gss_cat %&gt;%
     filter(year &gt;= 2002)</code></pre>
 </div>
-<div id="dealing-with-missing-data-na_if-is.na-na.rm-na.omit" class="section level2">
+<div id="dealing-with-missing-data-na_if-is.na-na.rm-na.omit"
+class="section level2">
 <h2>Dealing with missing data: na_if, is.na, na.rm, na.omit</h2>
-<p>R uses only one way of declaring a specific observation as missing: NA (Not Available). If your data set does include missings, but the missings are coded with a number (for example: 99), you need to replace these values before analyzing the data.</p>
+<p>R uses only one way of declaring a specific observation as missing:
+NA (Not Available). If your data set does include missings, but the
+missings are coded with a number (for example: 99), you need to replace
+these values before analyzing the data.</p>
 <pre class="r"><code># To change other values (here: the word &#39;Don&#39;t know)&#39; to NA, use na_if()
 
 gss_cat &lt;- gss_cat %&gt;%
   mutate(relig = na_if(relig, &quot;Don&#39;t know&quot;))
 
 # in the data set gss_cat, replace the existing variable relig (which contains contains cases with the word &#39;Don&#39;t know&#39;) with a new variable relig, in which this group is declared missing (and gets an NA).</code></pre>
-<p>There are several ways to find out how many missings are included in the data. Also, there are multiple ways to deal with these missings (pairwise deletion versus listwise deletion).</p>
+<p>There are several ways to find out how many missings are included in
+the data. Also, there are multiple ways to deal with these missings
+(pairwise deletion versus listwise deletion).</p>
 <pre class="r"><code># To see which variables in the data file called &#39;mydata&#39; have missings use:
 summary(gss_cat)
 
@@ -524,22 +564,24 @@ gss_cat_no_missings_on_relig &lt;- gss_cat %&gt;%
 
 # Please note that in R we can use the &#39;!&#39; sign, to say &#39;not&#39;.</code></pre>
 </div>
-<div id="renaming-a-variable-in-a-data-frame-rename" class="section level2">
+<div id="renaming-a-variable-in-a-data-frame-rename"
+class="section level2">
 <h2>Renaming a variable in a data frame: rename</h2>
 <pre class="r"><code># Change old name &#39;relig&#39; to the new variable name &#39;religion&#39; (new = old)
 
 gss_cat &lt;- gss_cat %&gt;% 
   rename(religion = relig)</code></pre>
 </div>
-<div id="adding-a-new-variable-to-an-existing-data-frame-mutate" class="section level2">
+<div id="adding-a-new-variable-to-an-existing-data-frame-mutate"
+class="section level2">
 <h2>Adding a new variable to an existing data frame: mutate</h2>
 <p>Adding a variable to the data set can be done with mutate().</p>
 <pre class="r"><code># Adding a standardized variable with mutate()
 gss_cat &lt;- gss_cat %&gt;%
     mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
 
-# Creating an index (a combination of item scores) and adding that index to
-# the data frame can also be done with mutate()
+# Creating an index (a combination of item scores) and adding that index to the
+# data frame can also be done with mutate()
 dataset5 &lt;- dataset5 %&gt;%
     mutate(index = item3 + item4 + item4)
 
@@ -554,9 +596,16 @@ dataset5 &lt;- dataset5 %&gt;%
     mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm = TRUE))
 # The &#39;c&#39; in this command stands for &#39;combine&#39; and is part of base R.</code></pre>
 </div>
-<div id="making-sure-variables-have-the-correct-type-from-character-to-factor-and-from-factor-to-ordered-factor" class="section level2">
-<h2>Making sure variables have the correct type: from character to factor and from factor to ordered factor</h2>
-<p>If you have a character variable with the ‘words’ ‘man’ and ‘women’ you probably want to treat this variable as a factor, not merely as a column of words. And if the factor in your data frame has three ‘values’/‘attributes’ (low, medium and high), you have to make sure this variable is stored as an ‘ordered factor’.</p>
+<div
+id="making-sure-variables-have-the-correct-type-from-character-to-factor-and-from-factor-to-ordered-factor"
+class="section level2">
+<h2>Making sure variables have the correct type: from character to
+factor and from factor to ordered factor</h2>
+<p>If you have a character variable with the ‘words’ ‘man’ and ‘women’
+you probably want to treat this variable as a factor, not merely as a
+column of words. And if the factor in your data frame has three
+‘values’/‘attributes’ (low, medium and high), you have to make sure this
+variable is stored as an ‘ordered factor’.</p>
 <pre class="r"><code># because gss_cat only has numerical variables and factors, we first change a
 # factor to a character variable
 gss_cat &lt;- gss_cat %&gt;%
@@ -573,9 +622,16 @@ gss_cat &lt;- gss_cat %&gt;%
 # In this example, we have put the brackets in a way that avoids omitting a
 # bracket (which happens a LOT!)</code></pre>
 </div>
-<div id="adding-a-new-variable-from-another-datafile-to-an-existing-data-frame-leftjoin" class="section level2">
-<h2>Adding a new variable from another datafile to an existing data frame: leftjoin</h2>
-<p>Suppose you have a data file with a large number of countries (stored as a word) over a large number of years (every ‘country x year’ is one observation). You want to add the continents of these countries to the data set. You have another data set with just the countries (stored as the same words as in the other data set) and the continents.</p>
+<div
+id="adding-a-new-variable-from-another-datafile-to-an-existing-data-frame-leftjoin"
+class="section level2">
+<h2>Adding a new variable from another datafile to an existing data
+frame: leftjoin</h2>
+<p>Suppose you have a data file with a large number of countries (stored
+as a word) over a large number of years (every ‘country x year’ is one
+observation). You want to add the continents of these countries to the
+data set. You have another data set with just the countries (stored as
+the same words as in the other data set) and the continents.</p>
 <pre class="r"><code># gapm1945to2020 is the original dataset gapmcountries is the set with
 # countries and continents Both datasets are loaded in the global environment
 # country in both data sets is called &#39;geo&#39; and both have the same values (the
@@ -584,9 +640,14 @@ gss_cat &lt;- gss_cat %&gt;%
 gapm1945joined &lt;- gapm1945to2020 %&gt;%
     left_join(gapmcountries, by = &quot;geo&quot;)</code></pre>
 </div>
-<div id="adding-new-data-observations-to-an-existing-data-file-add_row" class="section level2">
-<h2>Adding new data (observations) to an existing data file: add_row</h2>
-<p>Sometimes, you want to add data to an existing data file. For this, you can use the function <code>add_row()</code>. With <code>.before</code> and <code>.after</code>, you can specify where new cases should be added.</p>
+<div id="adding-new-data-observations-to-an-existing-data-file-add_row"
+class="section level2">
+<h2>Adding new data (observations) to an existing data file:
+add_row</h2>
+<p>Sometimes, you want to add data to an existing data file. For this,
+you can use the function <code>add_row()</code>. With
+<code>.before</code> and <code>.after</code>, you can specify where new
+cases should be added.</p>
 <pre class="r"><code># to use the add_row() function, the tidyverse packages should be installed and loaded
 # all variable names should be included in the command
 
@@ -600,11 +661,27 @@ dataset1 &lt;- dataset1 %&gt;%
 dataset1 &lt;- dataset1 %&gt;% 
    add_row(., Variable1 = 202, Variable2 = 3, Variable3 = 1, .before = 51)</code></pre>
 </div>
-<div id="recoding-and-changing-variables-in-an-existing-data-frame-recode-and-case_when" class="section level2">
-<h2>Recoding and changing variables in an existing data frame: recode and case_when</h2>
-<div id="recoding-single-values-of-a-variable-into-different-values-in-a-new-variable" class="section level3">
-<h3>Recoding single values of a variable into different values in a new variable</h3>
-<p>Sometimes you want to change the values of a variable. Usually it is best to simply make a new variable using <em>mutate</em> (see above). Let us say you have items <strong>x10</strong> and <strong>x11</strong> of type integer (meaning, only the numbers -1, 0, 1, 2 …. etc.) that are scored from 1 to 3 and you’d like to change number 3 into integers 1, and number 1 into integer 3 (reverse coding, 2 will stay 2). We then make new variables of type integer <strong>x10_R</strong> and <strong>x11_R</strong> in the following way. Note that if you use the <strong>L</strong>, your new data type will be <em>integer</em> (which saves memory). You leave them out if you want the data type to be <em>numeric</em>.</p>
+<div
+id="recoding-and-changing-variables-in-an-existing-data-frame-recode-and-case_when"
+class="section level2">
+<h2>Recoding and changing variables in an existing data frame: recode
+and case_when</h2>
+<div
+id="recoding-single-values-of-a-variable-into-different-values-in-one-new-variable"
+class="section level3">
+<h3>Recoding single values of a variable into different values in one
+new variable</h3>
+<p>Sometimes you want to change the values of a variable. Usually it is
+best to simply make a new variable using <em>mutate</em> (see above).
+Let us say you have items <strong>x10</strong> and <strong>x11</strong>
+of type integer (meaning, only the numbers -1, 0, 1, 2 …. etc.) that are
+scored from 1 to 3 and you’d like to change number 3 into integers 1,
+and number 1 into integer 3 (reverse coding, 2 will stay 2). We then
+make new variables of type integer <strong>x10_R</strong> and
+<strong>x11_R</strong> in the following way. Note that if you use the
+<strong>L</strong>, your new data type will be <em>integer</em> (which
+saves memory). You leave them out if you want the data type to be
+<em>numeric</em>.</p>
 <pre class="r"><code># keep in mind R uses in most cases (but NOT with rename, which is very
 # confusing) the &#39;OLD is now NEW&#39; order of values.
 
@@ -619,7 +696,9 @@ df_psychology &lt;- df_psychology %&gt;%
 
 data &lt;- data %&gt;%
     mutate(var1b = recode(var1a, word = &quot;newword&quot;), var2b = recode(var1b, word2 = &quot;anothernewword&quot;))</code></pre>
-<p>The code above does not seem to work for all data files. When you for example imported an SPSS data file with labels, another method should be used.</p>
+<p>The code above does not seem to work for all data files. When you for
+example imported an SPSS data file with labels, another method should be
+used.</p>
 <pre class="r"><code># for variable x3: 1 -&gt; 0, 2 -&gt; 1
 # use: value - 1
 
@@ -636,9 +715,14 @@ data_new &lt;- data_new %&gt;%
 
 # again, make sure the data are now stored as integers.</code></pre>
 </div>
-<div id="recoding-a-range-of-values-of-a-variable-into-different-values-in-a-new-variable-case_when" class="section level3">
-<h3>Recoding a range of values of a variable into different values in a new variable: case_when</h3>
-<p>When you would like to recode an entire range of values of a variable into the same different value in a different variable, <code>case_when()</code> can be used.</p>
+<div
+id="recoding-a-range-of-values-of-a-variable-into-different-values-in-a-new-variable-case_when"
+class="section level3">
+<h3>Recoding a range of values of a variable into different values in a
+new variable: case_when</h3>
+<p>When you would like to recode an entire range of values of a variable
+into the same different value in a different variable,
+<code>case_when()</code> can be used.</p>
 <pre class="r"><code># recode values of the variable &quot;old_var&quot;:
 # lower than 20 into 1, 20 - 39 into 2, 40 or higher into 3
 
@@ -651,9 +735,26 @@ dataset1 &lt;- dataset1 %&gt;%
 )</code></pre>
 </div>
 </div>
-<div id="restructuring-data-files-creating-long-and-broad-format-data-frames-using-pivot_longer-and-pivot_wider" class="section level2">
-<h2>Restructuring data files: creating long and broad format data frames using pivot_longer and pivot_wider</h2>
-<p>Sometimes data are stored in a relatively wide format (a lot of variables). For example, all the countries are rows and there is a variable ‘unemployment_2000’ and a variable ‘unemployment_2001’ etc… In order to change wide format data into long format data, in which there are three variables only: country_name, year, level of unemployment, use <code>pivot_longer()</code>.</p>
+<div id="creating-dummy-variables" class="section level2">
+<h2>Creating dummy variables</h2>
+<p>A simple way to create three dummy variables (dummy1 etc..) out of
+one nominal variable with three values is:</p>
+<pre class="r"><code>data$dummy1 &lt;- ifelse(data$nom == 1, 1, 0)
+data$dummy2 &lt;- ifelse(data$nom == 2, 1, 0)
+data$dummy3 &lt;- ifelse(data$nom == 3, 1, 0)</code></pre>
+<p>This can be used for nominal variables with more values too.</p>
+</div>
+<div
+id="restructuring-data-files-creating-long-and-broad-format-data-frames-using-pivot_longer-and-pivot_wider"
+class="section level2">
+<h2>Restructuring data files: creating long and broad format data frames
+using pivot_longer and pivot_wider</h2>
+<p>Sometimes data are stored in a relatively wide format (a lot of
+variables). For example, all the countries are rows and there is a
+variable ‘unemployment_2000’ and a variable ‘unemployment_2001’ etc… In
+order to change wide format data into long format data, in which there
+are three variables only: country_name, year, level of unemployment, use
+<code>pivot_longer()</code>.</p>
 <pre class="r"><code># To create 1 new variable containing the names of 4 variables (Sepal.Length,
 # Sepal.Width, Petal.Length, Petal.Width) and 1 variable with the scores:
 
@@ -668,7 +769,8 @@ iris %&gt;%
 billboardlong %&gt;%
     pivot_longer(cols = starts_with(&quot;wk&quot;), names_to = &quot;week&quot;, values_to = &quot;rank&quot;,
         values_drop_na = TRUE)</code></pre>
-<p>And sometimes you want to go from long format to wide format. Use <code>pivot_wider()</code>.</p>
+<p>And sometimes you want to go from long format to wide format. Use
+<code>pivot_wider()</code>.</p>
 <pre class="r"><code>#using the same example
 billboardwide %&gt;%
   pivot_wider(names_from = week, 
@@ -676,104 +778,147 @@ billboardwide %&gt;%
 </div>
 </div>
 <div id="examples" class="section level1 tabset">
-<h1>Examples</h1>
+<h1 class="tabset">Examples</h1>
 <p><em>No examples available yet</em></p>
 </div>
 <div id="functions" class="section level1">
 <h1>Functions</h1>
-<p>A short overview of the functions used in this page, which package they are in, and what they are used for, with a link to their official documentation</p>
+<p>A short overview of the functions used in this page, which package
+they are in, and what they are used for, with a link to their official
+documentation</p>
 <ul>
-<li><a href="https://www.rdocumentation.org/packages/tibble/topics/add_row"><code>add_row()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/tibble/topics/add_row"><code>add_row()</code></a><br />
 <em>package: tibble (tidyverse)</em><br />
 Add a row to an existing dataset</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/logical"><code>as.character()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/logical"><code>as.character()</code></a><br />
 <em>package: base</em><br />
-Converts the data type of a variable or object into a character (text)</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/factor"><code>as.factor()</code></a><br />
+Converts the data type of a variable or object into a character
+(text)</li>
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/factor"><code>as.factor()</code></a><br />
 <em>package: base</em><br />
-Converts the data type of a variable or object into a factor (categories)</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/integer"><code>as.integer()</code></a><br />
+Converts the data type of a variable or object into a factor
+(categories)</li>
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/integer"><code>as.integer()</code></a><br />
 <em>package: base</em><br />
-Converts the data type of a variable or object into a integer (whole numbers)</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/logical"><code>as.logical()</code></a><br />
+Converts the data type of a variable or object into a integer (whole
+numbers)</li>
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/logical"><code>as.logical()</code></a><br />
 <em>package: base</em><br />
-Converts the data type of a variable or object into a locical variable (TRUE or FALSE)</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/numeric"><code>as.numeric()</code></a><br />
+Converts the data type of a variable or object into a locical variable
+(TRUE or FALSE)</li>
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/numeric"><code>as.numeric()</code></a><br />
 <em>package: base</em><br />
-Converts the data type of a variable or object into a number (real number)</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/attr"><code>attr()</code></a><br />
+Converts the data type of a variable or object into a number (real
+number)</li>
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/attr"><code>attr()</code></a><br />
 <em>package: base</em><br />
 Get or set specific attributes of an object.</li>
-<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/case_when"><code>case_when()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/dplyr/topics/case_when"><code>case_when()</code></a><br />
 <em>package: dplyr (tidyverse)</em><br />
 Return one or an other variable based on a condition</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/row+colnames"><code>colnames()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/row+colnames"><code>colnames()</code></a><br />
 <em>package: base</em><br />
 Only get the column names of a data set</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/data.frame"><code>data.frame()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/data.frame"><code>data.frame()</code></a><br />
 <em>package: base</em><br />
 Creates a dataframe from multiple lists</li>
-<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/filter"><code>filter()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/dplyr/topics/filter"><code>filter()</code></a><br />
 <em>package: dplyr (tidyverse)</em><br />
 Get specific rows from the dataset based on certain conditions</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/getwd"><code>getwd()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/getwd"><code>getwd()</code></a><br />
 <em>package: base</em><br />
 Tells you what the current working directory is</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/NA"><code>is.na()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/NA"><code>is.na()</code></a><br />
 <em>package: base</em><br />
 Check if a value is equal to <code>NA</code></li>
-<li><a href="https://www.rdocumentation.org/packages/utils/topics/read.table"><code>read.csv()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/utils/topics/read.table"><code>read.csv()</code></a><br />
 <em>package: utils (base)</em><br />
 Lets you import a .sav file made for SPSS into R as a dataset</li>
-<li><a href="https://www.rdocumentation.org/packages/haven/topics/read_spss"><code>read_spss()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/haven/topics/read_spss"><code>read_spss()</code></a><br />
 <em>package: haven</em><br />
 </li>
-<li><a href="https://www.rdocumentation.org/packages/stats/topics/Normal"><code>rnorm()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/stats/topics/Normal"><code>rnorm()</code></a><br />
 <em>package: stats (base)</em><br />
-Creates random numbers with a normal distribution Lets you import a .sav file made for SPSS into R as a dataset</li>
-<li><a href="https://www.rdocumentation.org/packages/stats/topics/sd"><code>sd()</code></a><br />
+Creates random numbers with a normal distribution Lets you import a .sav
+file made for SPSS into R as a dataset</li>
+<li><a
+href="https://www.rdocumentation.org/packages/stats/topics/sd"><code>sd()</code></a><br />
 <em>package: stats</em><br />
 Find the standard deviation of a list of numbers.</li>
-<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/select"><code>select()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/dplyr/topics/select"><code>select()</code></a><br />
 <em>package: dplyr (tidyverse)</em><br />
 Get a specific column or columns from a dataset</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/getwd"><code>setwd()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/getwd"><code>setwd()</code></a><br />
 <em>package: base</em><br />
-Sets the working directory (the folder in which R will look for your files)</li>
-<li><a href="https://www.rdocumentation.org/packages/utils/topics/str"><code>str()</code></a><br />
+Sets the working directory (the folder in which R will look for your
+files)</li>
+<li><a
+href="https://www.rdocumentation.org/packages/utils/topics/str"><code>str()</code></a><br />
 <em>package: utils (base)</em><br />
-Get a quick overview of the types of data in your matrix and their names</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/sum"><code>sum()</code></a><br />
+Get a quick overview of the types of data in your matrix and their
+names</li>
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/sum"><code>sum()</code></a><br />
 <em>package: base</em><br />
 Find the sum of a list of numbers.</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/summary"><code>summary()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/summary"><code>summary()</code></a><br />
 <em>package: base</em><br />
-Give a summary of all variables in a dataset, giving information like minimum, maximum, mean, and frequencies</li>
-<li><a href="https://www.rdocumentation.org/packages/stats/dplyr/mutate-joins"><code>left_join()</code></a><br />
+Give a summary of all variables in a dataset, giving information like
+minimum, maximum, mean, and frequencies</li>
+<li><a
+href="https://www.rdocumentation.org/packages/stats/dplyr/mutate-joins"><code>left_join()</code></a><br />
 <em>package: dplyr (tidyverse)</em><br />
 Merge two datasets together using a variable they have in common</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/mean"><code>mean()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/mean"><code>mean()</code></a><br />
 <em>package: utils (base)</em><br />
 Find the mean of a list of numbers.</li>
-<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/mutate"><code>mutate()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/dplyr/topics/mutate"><code>mutate()</code></a><br />
 <em>package: dplyr (tidyverse)</em><br />
 Change the values of an entire column in a dataset</li>
-<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/na_if"><code>na_if()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/dplyr/topics/na_if"><code>na_if()</code></a><br />
 <em>package: dplyr (tidyverse)</em><br />
-Change a value to <code>NA</code> if it is equal to a specific value</li>
-<li><a href="https://www.rdocumentation.org/packages/tidyr/topics/pivot_longer"><code>pivot_longer()</code></a><br />
+Change a value to <code>NA</code> if it is equal to a specific
+value</li>
+<li><a
+href="https://www.rdocumentation.org/packages/tidyr/topics/pivot_longer"><code>pivot_longer()</code></a><br />
 <em>package: tidyr (tidyverse)</em><br />
 Change a dataset from short format to long format</li>
-<li><a href="https://www.rdocumentation.org/packages/tidyr/topics/pivot_wider"><code>pivot_wider()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/tidyr/topics/pivot_wider"><code>pivot_wider()</code></a><br />
 <em>package: tidyr (tidyverse)</em><br />
 Change a dataset from long format to short format</li>
-<li><a href="https://www.rdocumentation.org/packages/dplyr/topics/sd"><code>rename()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/dplyr/topics/sd"><code>rename()</code></a><br />
 <em>package: dplyr (tidyverse)</em><br />
 Changes the name of a variable in a dataset</li>
-<li><a href="https://www.rdocumentation.org/packages/base/topics/colSums"><code>rowSums()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/base/topics/colSums"><code>rowSums()</code></a><br />
 <em>package: base</em><br />
 Get the sum of the values of the rows in a dataset</li>
-<li><a href="https://www.rdocumentation.org/packages/utils/topics/View"><code>View()</code></a><br />
+<li><a
+href="https://www.rdocumentation.org/packages/utils/topics/View"><code>View()</code></a><br />
 <em>package: utils (base)</em><br />
 Shows a dataframe as a table in RStudio</li>
 </ul>
@@ -781,20 +926,49 @@ Shows a dataframe as a table in RStudio</li>
 <div id="faq" class="section level1">
 <h1>FAQ</h1>
 <div id="faq-file-not-found">
-<p><strong>When trying to open a dataset I get the message <code>Error : no such file or directory</code></strong><br />
-When loading a file, R will only search for that file in one directory: The working directory. You can find out what the working directory is by using the command <code>getwd()</code>. If that is not the folder where your file is in, you need to change it. You can do that using <code>setwd()</code>. When typing the path of this directory, you can’t use the default backslash (\) that is normally used in paths. Therefore, you need to change it to either a forward slash (/) or a double backslash (\\). So if your file is in the folder “C:\Users\username\Downloads”, you type <code>setwd("C:\\Users\\username\\Downloads")</code>. If you do not know the full path of the folder, you can type <code>rstudioapi::selectDirectory()</code> in your console. This will allow you to pick a folder by hand, and will give you the full path you need to use in your command with the slashes already changed.</p>
-<p>If the file still cannot be found, check for any typo’s in the folder path or filename. When typing the filename, make sure to include the file extension. This is for example <code>.csv</code> or <code>.sav</code>. File extensions may be hidden in your file explorer, making them difficult to know. To see file extensions on Windows, open file explorer, go to the <em>View</em> tab, and under <em>Show/Hide</em> check the box <em>File name extensions</em>. On Mac, select a file, then choose <em>File &gt; Get Info</em>. Click the arrow next to <em>Name &amp; Extension</em> and deselect <em>Hide extension</em></p>
+<p><strong>When trying to open a dataset I get the message
+<code>Error : no such file or directory</code></strong><br />
+When loading a file, R will only search for that file in one directory:
+The working directory. You can find out what the working directory is by
+using the command <code>getwd()</code>. If that is not the folder where
+your file is in, you need to change it. You can do that using
+<code>setwd()</code>. When typing the path of this directory, you can’t
+use the default backslash (\) that is normally used in paths. Therefore,
+you need to change it to either a forward slash (/) or a double
+backslash (\\). So if your file is in the folder
+“C:\Users\username\Downloads”, you type
+<code>setwd("C:\\Users\\username\\Downloads")</code>. If you do not know
+the full path of the folder, you can type
+<code>rstudioapi::selectDirectory()</code> in your console. This will
+allow you to pick a folder by hand, and will give you the full path you
+need to use in your command with the slashes already changed.</p>
+<p>If the file still cannot be found, check for any typo’s in the folder
+path or filename. When typing the filename, make sure to include the
+file extension. This is for example <code>.csv</code> or
+<code>.sav</code>. File extensions may be hidden in your file explorer,
+making them difficult to know. To see file extensions on Windows, open
+file explorer, go to the <em>View</em> tab, and under <em>Show/Hide</em>
+check the box <em>File name extensions</em>. On Mac, select a file, then
+choose <em>File &gt; Get Info</em>. Click the arrow next to <em>Name
+&amp; Extension</em> and deselect <em>Hide extension</em></p>
 </div>
 <div id="faq-open-sav">
-<p><strong>My computer can’t open .sav files. I don’t have the right program installed.</strong><br />
-You don’t need to open .sav files directly with your computer. You only have to import the sav files into R. You can do that using the <code>foreign</code> library and the <code>read.spss()</code> command.</p>
+<p><strong>My computer can’t open .sav files. I don’t have the right
+program installed.</strong><br />
+You don’t need to open .sav files directly with your computer. You only
+have to import the sav files into R. You can do that using the
+<code>foreign</code> library and the <code>read.spss()</code>
+command.</p>
 </div>
 </div>
 <div id="resources" class="section level1">
 <h1>Resources</h1>
 <ul>
-<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf">Data transformation cheatsheet</a><br />
-An overview of all the functions you can use to find and manipulate data in your dataframe.</li>
+<li><a
+href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-transformation.pdf">Data
+transformation cheatsheet</a><br />
+An overview of all the functions you can use to find and manipulate data
+in your dataframe.</li>
 </ul>
 </div>
 
@@ -836,6 +1010,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

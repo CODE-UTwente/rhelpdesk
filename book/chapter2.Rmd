@@ -262,7 +262,7 @@ dataset1 <- dataset1 %>%
 
 ## Recoding and changing variables in an existing data frame: recode and case_when
 
-### Recoding single values of a variable into different values in a new variable
+### Recoding single values of a variable into different values in one new variable
 
 Sometimes you want to change the values of a variable. Usually it is best to simply make a new variable using *mutate* (see above). Let us say you have items **x10** and **x11** of type integer (meaning, only the numbers -1, 0, 1, 2 .... etc.) that are scored from 1 to 3 and you'd like to change number 3 into integers 1, and number 1 into integer 3 (reverse coding, 2 will stay 2). We then make new variables of type integer **x10_R** and **x11_R** in the following way. Note that if you use the **L**, your new data type will be *integer* (which saves memory). You leave them out if you want the data type to be *numeric*.
 
@@ -324,6 +324,22 @@ dataset1 <- dataset1 %>%
 )
 
 ```
+
+## Creating dummy variables
+  
+A simple way to create three dummy variables (dummy1 etc..) out of one nominal variable with three values is:  
+
+```{r dummy variables, echo=T, eval=F}
+
+data$dummy1 <- ifelse(data$nom == 1, 1, 0)
+data$dummy2 <- ifelse(data$nom == 2, 1, 0)
+data$dummy3 <- ifelse(data$nom == 3, 1, 0)
+
+
+
+```
+
+This can be used for nominal variables with more values too.
 
 
 ## Restructuring data files: creating long and broad format data frames using pivot_longer and pivot_wider
