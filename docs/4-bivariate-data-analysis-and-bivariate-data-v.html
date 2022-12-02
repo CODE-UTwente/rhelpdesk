@@ -447,10 +447,20 @@ class="section level2">
 <h2>Descriptive measures and inferential statistics for associations
 (parametric)</h2>
 <p>For Pearson’s r, we use</p>
-<pre class="r"><code># this not only gives a test but also a confidence interval
-cor.test(x = mtcars$mpg, 
+<pre class="r"><code>cor.test(x = mtcars$mpg, 
     y = mtcars$disp,
     method = &quot;pearson&quot;)</code></pre>
+<p>For an independent sample t-test (a linear model with a dummy as
+independent variable), in which both groups can be assumed to have an
+equal variance, we use:</p>
+<pre class="r"><code># vs is a dummy and disp is a ratio variable in the data set mtcars
+t.test(disp ~ vs, mtcars, var.equal = TRUE) 
+# or use
+lm(disp ~ vs, mtcars) %&gt;% summary()</code></pre>
+<p>For an independent sample t-test in which both groups cannot be
+assumed to have equal variances, we use:</p>
+<pre class="r"><code># vs is a dummy and disp is a ratio variable in the data set mtcars
+t.test(disp ~ vs, mtcars, var.equal = FALSE) </code></pre>
 </div>
 <div id="inferential-statistics-for-associations-non-parametric"
 class="section level2">
