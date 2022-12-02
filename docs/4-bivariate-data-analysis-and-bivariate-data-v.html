@@ -461,6 +461,18 @@ lm(disp ~ vs, mtcars) %&gt;% summary()</code></pre>
 assumed to have equal variances, we use:</p>
 <pre class="r"><code># vs is a dummy and disp is a ratio variable in the data set mtcars
 t.test(disp ~ vs, mtcars, var.equal = FALSE) </code></pre>
+<p>Sometimes it may be wise to actually TEST whether two different
+variances of two (or more) different groups may come from the same
+population. One of the tests use for this is <em>Levene’s Test</em>. In
+R, you use the <code>leveneTest()</code> function from the
+<code>car</code> package. You define the dependent variable, here
+<em>mpg</em>, and the independent variable, here <em>am</em>.</p>
+<pre class="r"><code># library(car)
+
+mtcars %&gt;% leveneTest(mpg ~ factor( am ), 
+                      data = .)</code></pre>
+<p>When <em>Levene’s Test</em> is NOT significant, you can assume the
+groups have equal variances.</p>
 </div>
 <div id="inferential-statistics-for-associations-non-parametric"
 class="section level2">

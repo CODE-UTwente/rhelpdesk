@@ -106,8 +106,19 @@ For an independent sample t-test in which both groups cannot be assumed to have 
 t.test(disp ~ vs, mtcars, var.equal = FALSE) 
 
 ```
+ 
+Sometimes it may be wise to actually TEST whether two different variances of two (or more) different groups may come from the same population. One of the tests use for this is  *Levene's Test*. In R, you use the `leveneTest()` function from the `car` package. You define the dependent variable, here *mpg*, and the independent variable, here *am*.
+
+```{r levene, echo=T, eval=F }
+# library(car)
+
+mtcars %>% leveneTest(mpg ~ factor( am ), 
+                      data = .)
+```
+
+When *Levene's Test* is NOT significant, you can assume the groups have equal variances.
   
-  
+    
 ## Inferential statistics for associations (non parametric)
 
 For Cramer's V, we use
