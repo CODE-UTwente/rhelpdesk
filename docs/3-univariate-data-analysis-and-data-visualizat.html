@@ -523,7 +523,14 @@ t.test(data$var, mu = mu_1)
 
 data %&gt;% 
   lm((var - mu_1) ~ 1, .) %&gt;% 
-  summary</code></pre>
+  summary
+
+# For finding the p-value for a specific t-value
+# instead of using a table, use R:
+q &lt;- 1.96 # the t-value
+df &lt;- 499 # the degrees of freedom
+pt(q, df, lower.tail = FALSE)
+# NOTE: this gives the percentage on ONE side</code></pre>
 </div>
 </div>
 <div id="examples" class="section level1 tabset">
