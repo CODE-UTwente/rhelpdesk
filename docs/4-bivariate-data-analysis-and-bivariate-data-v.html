@@ -461,6 +461,19 @@ lm(disp ~ vs, mtcars) %&gt;% summary()</code></pre>
 assumed to have equal variances, we use:</p>
 <pre class="r"><code># vs is a dummy and disp is a ratio variable in the data set mtcars
 t.test(disp ~ vs, mtcars, var.equal = FALSE) </code></pre>
+<p>When studying the effect of nominal variable on a ratio variable
+(ANOVA), use:</p>
+<pre class="r"><code># spray is a nominal variable (stored as a factor) and 
+# count can be treated as a ratio variable 
+# in the data set InsectSprays
+
+oneway.test(count ~ spray, InsectSprays, var.equal = TRUE)
+
+# or use
+lm(count ~ spray, InsectSprays) %&gt;% summary()</code></pre>
+<p>For a test in which groups cannot be assumed to have equal variances,
+use:</p>
+<pre class="r"><code>oneway.test(count ~ spray, InsectSprays, var.equal = FALSE)</code></pre>
 <p>Sometimes it may be wise to actually TEST whether two different
 variances of two (or more) different groups may come from the same
 population. One of the tests use for this is <em>Levene’s Test</em>. In
