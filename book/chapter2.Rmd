@@ -335,8 +335,8 @@ data$dummy1 <- ifelse(data$nom == 1, 1, 0)
 data$dummy2 <- ifelse(data$nom == 2, 1, 0)
 data$dummy3 <- ifelse(data$nom == 3, 1, 0)
 
-
-
+# when the nominal variable is stored as words use:
+data$england <- ifelse(data$country == "england", 1, 0)
 ```
 
 This can be used for nominal variables with more values too.

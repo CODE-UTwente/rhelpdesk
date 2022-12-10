@@ -741,7 +741,10 @@ dataset1 &lt;- dataset1 %&gt;%
 one nominal variable with three values is:</p>
 <pre class="r"><code>data$dummy1 &lt;- ifelse(data$nom == 1, 1, 0)
 data$dummy2 &lt;- ifelse(data$nom == 2, 1, 0)
-data$dummy3 &lt;- ifelse(data$nom == 3, 1, 0)</code></pre>
+data$dummy3 &lt;- ifelse(data$nom == 3, 1, 0)
+
+# when the nominal variable is stored as words use:
+data$england &lt;- ifelse(data$country == &quot;england&quot;, 1, 0)</code></pre>
 <p>This can be used for nominal variables with more values too.</p>
 </div>
 <div
