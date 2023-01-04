@@ -740,34 +740,63 @@ belonging to the <em>tidyverse</em> (that are installed and loaded when
 installing and loading the <em>tidyverse</em> package).<a href="#fn6"
 class="footnote-ref" id="fnref6"><sup>6</sup></a> We will also use some
 other packages.</p>
-<p>Here is an overview of the packages you will be using:</p>
+<p>Here is an overview of the packages you will be using at BMS:</p>
 <ul>
-<li><code>ggplot2</code> to visualize your data (part of the tidyverse
-core);</li>
+<li><code>tidyverse</code> is a set of packages for the most important
+data manipulation is visualization tasks. This is a ‘meta-package’
+containing (among others):
+<ul>
+<li><code>ggplot2</code> to visualize your data;<br />
+</li>
 <li><code>dplyr</code> and <code>tidyr</code> to change data, and to
 make sure that each variable is in a column, each observation is a row
-and each value is a cell (both part of the tidyverse core);</li>
-<li><code>readr</code> to import .csv data (part of the tidyverse
-core);</li>
-<li><code>readxl</code> to import .xls and .xlsx sheets;</li>
-<li><code>foreign</code> to import SPSS, Stata, and SAS data;</li>
-<li><code>magrittr</code> to provide the pipe %&gt;% operator, used
-throughout the tidyverse. The pipe operator is, however, also contained
-in the tidyverse core. The pipe operator will be explained later;</li>
-<li><code>janitor</code> to create frequency tables and cross
-tabulations (not part of the tidyverse, but aligned);</li>
-<li><code>lme4</code> for the linear mixed model;</li>
-<li><code>psych</code> for psychometric analysis, including scale
-construction and factor analysis;</li>
-<li><code>lmerTest</code> to approximate <em>p</em>-values;</li>
+and each value is a cell;<br />
+</li>
+<li><code>readr</code> to import .csv data.</li>
+</ul></li>
+</ul>
+<p>These packages are thus loaded in the library when using the function
+library(“tidyverse”).</p>
+<p>When installing the tidyverse, some other packages are downloaded
+too, some of which we will use:</p>
+<ul>
+<li><code>readxl</code> to import .xls and .xlsx sheets;<br />
+</li>
+<li><code>haven</code> to import SPSS, Stata, and SAS data;<br />
+</li>
 <li><code>broom</code> to use a <code>tidy()</code> function, which may
-come handy when doing statistical analysis;</li>
+come handy when doing statistical analysis. This package is also part of
+<code>tidymodels</code>;<br />
+</li>
 <li><code>modelr</code> to make plots with the residuals and/or the
-predicted values (this package will soon be replaced by a new set of
-packages called ‘tidymodels’).</li>
+predicted values (this package is also part of
+<code>tidymodels</code>).</li>
+</ul>
+<p>Make sure to put such a tidyverse package in the library if you want
+to use it. Unlike the core packages, these packages are NOT
+automatically loaded when using the library(“tidyverse”) command.</p>
+<p>Finally, we will use a set of specialized packages, including:</p>
+<ul>
+<li><code>foreign</code> to import SPSS, Stata, and SAS data;<br />
+</li>
+<li><code>janitor</code> to create frequency tables and cross
+tabulations;<br />
+</li>
+<li><code>lme4</code> for the linear mixed model;<br />
+</li>
+<li><code>psych</code> for psychometric analysis, including scale
+construction and factor analysis;<br />
+</li>
+<li><code>lmerTest</code> to approximate <em>p</em>-values;<br />
+</li>
+<li><code>lmtest</code> for various diagnostic tests in the context of
+linear models (Levene’s test for example);<br />
+</li>
+<li><code>car</code>for some additional diagnostic tests in the context
+of linear model (including the vif value).</li>
 </ul>
 <p>At the beginning of a meeting or course we will tell you which
-packages to download and call.</p>
+packages to download (install.packages) and call (library).</p>
 </div>
 <div id="datasets-in-r-packages" class="section level2">
 <h2>Datasets in R-packages</h2>
@@ -984,9 +1013,7 @@ see the tidyverse style guide</a><a href="#fnref5"
 class="footnote-back">↩︎</a></p></li>
 <li id="fn6"><p>What is a bit confusing, is that the tidyverse is both a
 <em>set</em> of packages, and a ‘programming philosophy’. There are many
-more packages adhering to that tidyverse philosophy and they work well
-with the tidyverse core. When installing the ‘tidyverse’ you only
-install the core tidyverse packages.<a href="#fnref6"
+more packages adhering to that tidyverse philosophy.<a href="#fnref6"
 class="footnote-back">↩︎</a></p></li>
 <li id="fn7"><p>This is one of the pipe operators which are part of the
 <code>magrittr</code> package (which is part of tidyverse, but not part

@@ -138,7 +138,15 @@ plot(model)
 
 ```
   
-  
+After estimating the model, detecting multicollinearity can be done using the `car` library.
+
+```{r multicollinearity, echo=T, eval=F}
+
+library(car)
+vif(model)
+
+
+``` 
   
 ## linear mixed models
 

@@ -489,6 +489,10 @@ cooks.distance(model)
 
 # also, one of the plots of the model contains info about Cook&#39;s distances (and some more)
 plot(model)</code></pre>
+<p>After estimating the model, detecting multicollinearity can be done
+using the <code>car</code> library.</p>
+<pre class="r"><code>library(car)
+vif(model)</code></pre>
 </div>
 <div id="linear-mixed-models" class="section level2">
 <h2>linear mixed models</h2>
