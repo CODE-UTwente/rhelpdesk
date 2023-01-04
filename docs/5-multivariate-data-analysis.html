@@ -445,19 +445,50 @@ function.</p>
 # a part of subset of the thus created object &#39;out&#39; is now the (adjusted) R squared.
 out$r.squared
 out$adj.r.squared</code></pre>
-<p>To make plots with the residuals and/or the predicted values we can
-use the <code>modelr</code> package to attach residuals and predicted
-values to the data frame:</p>
-<pre class="r"><code>library(modelr)
+</div>
+<div id="diagnostics" class="section level2">
+<h2>Diagnostics</h2>
+<p>There are various ways to create plots with the residuals and/or the
+predicted values.</p>
+<pre class="r"><code># always create a model you want to diagnose first
 
 model &lt;- mtcars %&gt;% 
-  lm(qsec ~ wt + cyl, data = .)  
+  lm(qsec ~ wt + cyl, data = .) 
 
-mtcars %&gt;% 
+# the object &#39;model&#39; now contains the residuals and the predicted values.
+# residuals and predicted values can  be added to the data frame in two ways:
+
+# directly
+mtcars$residuals &lt;- model$residuals
+mtcars$predictions &lt;- model$fitted.values
+
+# or by using the modelr package:
+library(modelr)
+mtcars &lt;- mtcars %&gt;% 
   add_predictions(model) %&gt;% 
-  add_residuals(model) %&gt;% 
+  add_residuals(model)
+
+# after adding the residuals and the predicted values displaying residuals plots is done in the ggplot framework
+mtcars %&gt;% 
   ggplot(aes(x = pred, y = resid)) + 
   geom_point()</code></pre>
+<p>There are various ways to test for unequal variances in a model.
+These are available in various packages, including <code>car</code> and
+in <code>lmtest</code>.</p>
+<pre class="r"><code># Levene&#39;s test
+library(car)
+leveneTest(qsec ~ as.factor(cyl), mtcars)
+
+# Breusch-Pagan Test
+library(lmtest)
+# estimate the model first and then:
+bptest(model)</code></pre>
+<p>For outliers and influential cases, there are various options.</p>
+<pre class="r"><code># after estimating and storing the model, cooks distances can be studied using
+cooks.distance(model)
+
+# also, one of the plots of the model contains info about Cook&#39;s distances (and some more)
+plot(model)</code></pre>
 </div>
 <div id="linear-mixed-models" class="section level2">
 <h2>linear mixed models</h2>

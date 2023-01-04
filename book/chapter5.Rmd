@@ -81,23 +81,65 @@ out$adj.r.squared
 
 ```
 
-To make plots with the residuals and/or the predicted values we can use the `modelr` package to attach residuals and predicted values to the data frame:
+## Diagnostics
+
+There are various ways to create plots with the residuals and/or the predicted values.
 
 ```{r residual_plots, echo=T, eval=F}
-
-library(modelr)
+# always create a model you want to diagnose first
 
 model <- mtcars %>% 
-  lm(qsec ~ wt + cyl, data = .)  
+  lm(qsec ~ wt + cyl, data = .) 
 
-mtcars %>% 
+# the object 'model' now contains the residuals and the predicted values.
+# residuals and predicted values can  be added to the data frame in two ways:
+
+# directly
+mtcars$residuals <- model$residuals
+mtcars$predictions <- model$fitted.values
+
+# or by using the modelr package:
+library(modelr)
+mtcars <- mtcars %>% 
   add_predictions(model) %>% 
-  add_residuals(model) %>% 
+  add_residuals(model)
+
+# after adding the residuals and the predicted values displaying residuals plots is done in the ggplot framework
+mtcars %>% 
   ggplot(aes(x = pred, y = resid)) + 
   geom_point()
 
 ```
 
+There are various ways to test for unequal variances in a model. These are available in various packages, including `car` and in `lmtest`.
+
+```{r variance tests, echo=T, eval=F}
+
+# Levene's test
+library(car)
+leveneTest(qsec ~ as.factor(cyl), mtcars)
+
+# Breusch-Pagan Test
+library(lmtest)
+# estimate the model first and then:
+bptest(model)
+
+```
+
+For outliers and influential cases, there are various options.
+
+```{r outliers, echo=T, eval=F}
+
+# after estimating and storing the model, cooks distances can be studied using
+cooks.distance(model)
+
+# also, one of the plots of the model contains info about Cook's distances (and some more)
+plot(model)
+
+```
+  
+  
+  
 ## linear mixed models
 
 For the linear mixed model, we use the `lmer()` function from the `lme4` package. Note that the output does not show *p*-values, nor residual degrees of freedom for fixed effects. This is for a good [reason](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html). 

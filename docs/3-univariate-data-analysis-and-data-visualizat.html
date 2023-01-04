@@ -462,7 +462,7 @@ select the variable(s) you will use from that data frame.</p>
 important.</p>
 <p>For example, you can use a bar chart to visualize a categorical (=
 nominal) variable.</p>
-<pre class="r"><code># creating a basic bar chart with the nominal variable item 1
+<pre class="r"><code># creating a basic bar chart with the nominal variable marital
 gss_cat %&gt;% 
   ggplot() +
   geom_bar(aes(x = marital))
@@ -475,27 +475,34 @@ gss_cat %&gt;%
   geom_boxplot(aes(y = tvhours))
 
 # to create a histogram for the ratio variable tvhours in gss_cat
+
 gss_cat %&gt;% 
   ggplot() +
   geom_histogram(aes(x = tvhours))
 
-# there are many more geom&#39;s to use, but we will focus on these in univariate analysis. But this is definitely a topic you can explore further. Think for example about changing the colors of the bars in a barchart, adding better titles or adding annotations.
-
-# Note 1: although we generally recommend using the pipe operator like this, if you start visualizing data from different objects in one plot, it may be wise to put the data inside the ggplot:
+# Note 1: although we recommend using the pipe operator, if you start visualizing data from different objects in one plot, it may be wise to put the data inside the ggplot function:
 
 ggplot(gss_cat) +
   geom_histogram(aes(x = tvhours))
 
-# Note 2: the aesthetics are put in the geom. However, if you combine different geom&#39;s (scatter and line) displaying the same variables, it is more efficient, to but the aesthetics in the general ggplot command too:
+# Note 2: the aesthetics are often put in the geom. However, if you combine different geom&#39;s (scatter and line, for example) displaying the same variables, it is more efficient putting the aesthetics in the general ggplot function too:
 
 ggplot(gss_cat, aes(x = tvhours)) +
-  geom_histogram()</code></pre>
+  geom_histogram()
+  
+## when creating QQ plots to assess deviations from normality use:
+
+gss_cat %&gt;% 
+  ggplot(aes(sample = tvhours)) +
+  geom_qq() +
+  geom_qq_line()</code></pre>
 </div>
 <div id="univariate-inferential-statistics" class="section level2">
 <h2>Univariate inferential statistics</h2>
-<p>Confidence intervals and tests for one variable can be constructed
-for dichotomies (proportions), nominal variables (goodness of fit) and
-interval/ratio variables (means testing).</p>
+<p>Confidence intervals and tests for the proportions, medians or means
+of one variable can be constructed for dichotomies (proportions),
+nominal variables (goodness of fit) and interval/ratio variables (means
+testing).</p>
 <pre class="r"><code># For a proportion, use
 n_total &lt;- 1000 # total number of (valid) cases
 n_pos &lt;- 690 # number of positives
@@ -531,6 +538,10 @@ q &lt;- 1.96 # the t-value
 df &lt;- 499 # the degrees of freedom
 pt(q, df, lower.tail = FALSE)
 # NOTE: this gives the percentage on ONE side</code></pre>
+<p>There are many tests for normality (are data in the population
+normally distributed).</p>
+<pre class="r"><code># For the Shapiro-Wilk test use:
+shapiro.test(mtcars$residuals)</code></pre>
 </div>
 </div>
 <div id="examples" class="section level1 tabset">
