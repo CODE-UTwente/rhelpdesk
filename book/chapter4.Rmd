@@ -190,8 +190,18 @@ pchisq(chisq, df, lower.tail = FALSE) # this gives the p-value
 
 ```
 
+For a non-parametric test for comparing the medians of two groups, we use
 
-For a non-parametric test for comparing the medians of two or more groups, we use
+```{r Mann Whithney Wilcoxon, echo=T, eval=F}
+
+mtcars %>% 
+  wilcox.test(mpg ~ am, 
+              data = .,
+              exact = FALSE)
+```
+
+
+For a non-parametric test for comparing the medians of three or more groups, we use
 
 ```{r kruskallwallis, echo=T, eval=F}
 

@@ -515,7 +515,13 @@ csq
 chisq &lt;- 3.86 # put the number you find here
 df &lt;- 1 # put the degrees of freedom here
 pchisq(chisq, df, lower.tail = FALSE) # this gives the p-value</code></pre>
-<p>For a non-parametric test for comparing the medians of two or more
+<p>For a non-parametric test for comparing the medians of two groups, we
+use</p>
+<pre class="r"><code>mtcars %&gt;% 
+  wilcox.test(mpg ~ am, 
+              data = .,
+              exact = FALSE)</code></pre>
+<p>For a non-parametric test for comparing the medians of three or more
 groups, we use</p>
 <pre class="r"><code>airquality %&gt;% 
   kruskal.test(Ozone ~ Month, data = .)</code></pre>
