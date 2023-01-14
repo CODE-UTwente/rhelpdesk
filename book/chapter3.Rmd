@@ -151,12 +151,31 @@ data %>%
   lm((var - mu_1) ~ 1, .) %>% 
   summary
 
+```
+
+Sometimes you calculate a t-statistic or a chi-square statistic by hand and you want to find the associated p-value, OR you want to know which critical (t or chi-square) value is associated with a specific alpha. This replaces using 'tables'.
+
+```{r, replacing the tables, eval = F}
 # For finding the p-value for a specific t-value
-# instead of using a table, use R:
 q <- 1.96 # the t-value
 df <- 499 # the degrees of freedom
 pt(q, df, lower.tail = FALSE)
 # NOTE: this gives the percentage on ONE side
+
+# For finding the critical t-value
+p <- 0.025 # the p value (half)
+df <- 499 # the degrees of freedom
+qt(p, df, lower.tail = FALSE)
+
+chi <- 3.84 # the chi square value
+df <- 1 # the degrees of freedom
+pchisq(chi, df, lower.tail = FALSE)
+
+# finding the critical value
+p <- 0.05 # the chi square value
+df <- 1 # the degrees of freedom
+qchisq(p, df, lower.tail = FALSE)
+
 ```
 
 There are many tests for normality (are data in the population normally distributed).
