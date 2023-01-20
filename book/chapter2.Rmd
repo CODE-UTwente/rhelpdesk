@@ -177,19 +177,21 @@ gss_cat <- gss_cat %>%
 Adding a variable to the data set can be done with mutate(). 
 
 ```{r mutate, eval = F, tidy = TRUE}
-# Adding a standardized variable with mutate()
+# Adding a standardized variable
 gss_cat <- gss_cat %>%
   mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
 
-# Creating an index (a combination of item scores) and adding that index to the data frame can also be done with mutate()
+# or, for a standardized variable, simply use
+gss_cat <- gss_cat %>%
+  mutate(ztvhours = scale(tvhours))
+
+# Creating an index and adding that index to the data frame:
 dataset5 <- dataset5 %>% 
   mutate(index = item3 + item4 + item4)
 
-#OR
-
-# (assuming that item3, item4 and item5 are in columns 3, 4 and 5) use: 
-dataset5 <- dataset5 %>%
-  mutate(index = rowSums(.[3:5]))
+# Creating a logged version of an existing variable (the index in this example)
+dataset5 <- dataset5 %>% 
+  mutate(log_version_index = log(index))
 
 # If you want to sum values of a lot of columns and ignore the missings, use:
 dataset5 <- dataset5 %>%
@@ -325,7 +327,7 @@ dataset1 <- dataset1 %>%
 
 ```
 
-## Creating dummy variables
+### Creating dummy variables
   
 A simple way to create three dummy variables (dummy1 etc..) out of one nominal variable with three values is:  
 
