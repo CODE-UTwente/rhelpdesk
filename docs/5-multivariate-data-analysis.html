@@ -484,10 +484,10 @@ library(lmtest)
 # estimate the model first and then:
 bptest(model)</code></pre>
 <p>For outliers and influential cases, there are various options.</p>
-<pre class="r"><code># after estimating and storing the model, cooks distances can be studied using
-cooks.distance(model)
+<pre class="r"><code># After estimating and storing the model, cooks distances can be stored to the original data frame, by using
+data$influential_cases &lt;- cooks.distance(model)
 
-# also, one of the plots of the model contains info about Cook&#39;s distances (and some more)
+# Also, one of the plots of the model contains info about Cook&#39;s distances
 plot(model)</code></pre>
 <p>After estimating the model, detecting multicollinearity can be done
 using the <code>car</code> library.</p>
