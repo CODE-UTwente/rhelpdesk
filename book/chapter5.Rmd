@@ -131,10 +131,10 @@ For outliers and influential cases, there are various options.
 ```{r outliers, echo=T, eval=F}
 
 # After estimating and storing the model, cooks distances can be stored to the original data frame, by using
-data$influential_cases <- cooks.distance(model)
+data$influential_cases_model_1 <- cooks.distance(model_1)
 
 # Also, one of the plots of the model contains info about Cook's distances
-plot(model)
+plot(model_1)
 
 ```
   
