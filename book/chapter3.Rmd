@@ -39,7 +39,7 @@ data_new %>%
 
 ## Frequency tables with janitor: tabyl
 
-The tabyl() function from the `janitor` package is a way to get frequency tables. tabyl() is tidyverse-aligned and is primarily built upon the dplyr and tidyr packages.
+The tabyl() function from the `janitor` package allows you to create frequency tables.
 
 ```{r eval = F, tidy = TRUE}
 
@@ -53,7 +53,7 @@ gss_cat %>%
 gss_cat %>%
   map(tabyl)
 
-# If the values are in alphabetical, rather than in a meaningful order, make sure the variable is stored as an 'ordered factor' (see above).
+# If the values are in alphabetical, rather than in a meaningful order, make sure the variable is stored as an 'ordered factor' (see chapter 2).
 
 # The frequency table can be made nicer using the adorn commands, for example:
 gss_cat %>%
@@ -65,12 +65,12 @@ gss_cat %>%
 
 ## Univariate graphs: creating bar charts, box plots and histograms using ggplot
 
-We will use the package `ggplot2` (part of the core tidyverse) for creating visualizations. The function **ggplot** is extremely flexible and there is an almost infinite number of ways to display your data.
+We will use the package `ggplot2` (part of the core tidyverse) for creating visualizations. The function **ggplot** is extremely flexible.
 
 The basic idea of ggplot commands is that you 
 (1) have a data frame, pipe (%>%) that into a 
-(2) ggplot(), add a
-(3) geom_...() to select the type of display you want to have, and
+(2) ggplot(), add a  
+(3) geom_...() to select the type of display you want to have, and  
 (4) use aesthetics (aes()) to select the variable(s) you will use from that data frame.
 
 There are more 'layers' in a ggplot, but these are the most important.
@@ -118,7 +118,7 @@ gss_cat %>%
   
 ## Univariate inferential statistics
 
-Confidence intervals and tests for the proportions, medians or means of one variable can be constructed for dichotomies (proportions), nominal variables (goodness of fit) and interval/ratio variables (means testing).
+Confidence intervals and tests for proportions, medians or means of one variable can be constructed for dichotomies (proportions), nominal variables (goodness of fit) and interval/ratio variables (means testing).
 
 ```{r, confidence intervals and tests for one variable, eval = F}
 
@@ -144,16 +144,16 @@ data %>% lm(signed_rank_t2_t1 ~ 1, .)
 # For means testing use either t.test or the lm command
 # assuming the data are stored in a data frame as data$var
 mu_1 <- 100 # if you want to check whether it is different from 100
-
 t.test(data$var, mu = mu_1)
 
+# or in the linear model framework:
 data %>% 
   lm((var - mu_1) ~ 1, .) %>% 
   summary
 
 ```
 
-Sometimes you calculate a t-statistic or a chi-square statistic by hand and you want to find the associated p-value, OR you want to know which critical (t or chi-square) value is associated with a specific alpha. This replaces using 'tables'.
+Sometimes you calculate a t-statistic or a chi-square statistic by hand and you want to find the associated p-value, OR you want to know which critical (t or chi-square) value is associated with a specific alpha. These commands allow you to not use 'tables'.
 
 ```{r, replacing the tables, eval = F}
 # For finding the p-value for a specific t-value
@@ -171,14 +171,14 @@ chi <- 3.84 # the chi square value
 df <- 1 # the degrees of freedom
 pchisq(chi, df, lower.tail = FALSE)
 
-# finding the critical value
+# finding the critical value in a chi square distribution
 p <- 0.05 # the chi square value
 df <- 1 # the degrees of freedom
 qchisq(p, df, lower.tail = FALSE)
 
 ```
 
-There are many tests for normality (are data in the population normally distributed).
+There are many ways to test whether data are coming from a normally distributed population.
 
 ```{r, normality tests for one variable, eval = F}
 

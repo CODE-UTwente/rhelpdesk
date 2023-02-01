@@ -423,9 +423,8 @@ data_new %&gt;%
 </div>
 <div id="frequency-tables-with-janitor-tabyl" class="section level2">
 <h2>Frequency tables with janitor: tabyl</h2>
-<p>The tabyl() function from the <code>janitor</code> package is a way
-to get frequency tables. tabyl() is tidyverse-aligned and is primarily
-built upon the dplyr and tidyr packages.</p>
+<p>The tabyl() function from the <code>janitor</code> package allows you
+to create frequency tables.</p>
 <pre class="r"><code># Make sure &#39;janitor&#39; in loaded into the library
 
 # Create a frequency table
@@ -437,7 +436,7 @@ gss_cat %&gt;%
     map(tabyl)
 
 # If the values are in alphabetical, rather than in a meaningful order, make
-# sure the variable is stored as an &#39;ordered factor&#39; (see above).
+# sure the variable is stored as an &#39;ordered factor&#39; (see chapter 2).
 
 # The frequency table can be made nicer using the adorn commands, for example:
 gss_cat %&gt;%
@@ -452,12 +451,12 @@ class="section level2">
 using ggplot</h2>
 <p>We will use the package <code>ggplot2</code> (part of the core
 tidyverse) for creating visualizations. The function
-<strong>ggplot</strong> is extremely flexible and there is an almost
-infinite number of ways to display your data.</p>
+<strong>ggplot</strong> is extremely flexible.</p>
 <p>The basic idea of ggplot commands is that you (1) have a data frame,
-pipe (%&gt;%) that into a (2) ggplot(), add a (3) geom_…() to select the
-type of display you want to have, and (4) use aesthetics (aes()) to
-select the variable(s) you will use from that data frame.</p>
+pipe (%&gt;%) that into a (2) ggplot(), add a<br />
+(3) geom_…() to select the type of display you want to have, and<br />
+(4) use aesthetics (aes()) to select the variable(s) you will use from
+that data frame.</p>
 <p>There are more ‘layers’ in a ggplot, but these are the most
 important.</p>
 <p>For example, you can use a bar chart to visualize a categorical (=
@@ -499,9 +498,9 @@ gss_cat %&gt;%
 </div>
 <div id="univariate-inferential-statistics" class="section level2">
 <h2>Univariate inferential statistics</h2>
-<p>Confidence intervals and tests for the proportions, medians or means
-of one variable can be constructed for dichotomies (proportions),
-nominal variables (goodness of fit) and interval/ratio variables (means
+<p>Confidence intervals and tests for proportions, medians or means of
+one variable can be constructed for dichotomies (proportions), nominal
+variables (goodness of fit) and interval/ratio variables (means
 testing).</p>
 <pre class="r"><code># For a proportion, use
 n_total &lt;- 1000 # total number of (valid) cases
@@ -525,16 +524,16 @@ data %&gt;% lm(signed_rank_t2_t1 ~ 1, .)
 # For means testing use either t.test or the lm command
 # assuming the data are stored in a data frame as data$var
 mu_1 &lt;- 100 # if you want to check whether it is different from 100
-
 t.test(data$var, mu = mu_1)
 
+# or in the linear model framework:
 data %&gt;% 
   lm((var - mu_1) ~ 1, .) %&gt;% 
   summary</code></pre>
 <p>Sometimes you calculate a t-statistic or a chi-square statistic by
 hand and you want to find the associated p-value, OR you want to know
 which critical (t or chi-square) value is associated with a specific
-alpha. This replaces using ‘tables’.</p>
+alpha. These commands allow you to not use ‘tables’.</p>
 <pre class="r"><code># For finding the p-value for a specific t-value
 q &lt;- 1.96 # the t-value
 df &lt;- 499 # the degrees of freedom
@@ -550,12 +549,12 @@ chi &lt;- 3.84 # the chi square value
 df &lt;- 1 # the degrees of freedom
 pchisq(chi, df, lower.tail = FALSE)
 
-# finding the critical value
+# finding the critical value in a chi square distribution
 p &lt;- 0.05 # the chi square value
 df &lt;- 1 # the degrees of freedom
 qchisq(p, df, lower.tail = FALSE)</code></pre>
-<p>There are many tests for normality (are data in the population
-normally distributed).</p>
+<p>There are many ways to test whether data are coming from a normally
+distributed population.</p>
 <pre class="r"><code># For the Shapiro-Wilk test use:
 shapiro.test(mtcars$residuals)</code></pre>
 </div>

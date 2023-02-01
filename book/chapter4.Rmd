@@ -22,58 +22,30 @@ mtcars %>%
 ```
 
 
-## Box plots for different groups using ggplot
+## Visualizing relationships between different variables: ggplot
 
 For a boxplot use `geom_boxplot()`:
 
-```{r geomboxplot2, echo=T, eval=F}
+```{r geomboxplot2 and scatterplot, echo=T, eval=F}
 
-# A boxplot comparing different species is having two variables in the aesthetics
-
+# A boxplot comparing different species (nominal variable)
 iris %>% 
   ggplot(aes(x = Species, y = Petal.Width)) +
   geom_boxplot()
 
-``` 
-
-
-## Scatterplots with ggplot
-
-A scatter plot in the ggplot package will be done with the geom `geom_point()`. Notice that the aesthetics in the first layer now contain two variables.
-
-```{r scatter, echo=T, eval=F}
-
+# two scale variables, creating a scatterplot
 mtcars %>% 
   ggplot(aes(x = cyl, y = mpg)) + 
   geom_point()
 
-```
-
-If you want to add a linear regression line, add an extra 'geom' (geom_smooth).
-
-```{r scatter_lm, echo=T, eval=F}
-
+# adding a regression line
 mtcars %>% 
   ggplot(aes(x = cyl, y = mpg)) + 
   geom_point() +
   geom_smooth(method = "lm", se = F)
 
-```
+``` 
 
-If you want to visualize different groups in the scatterplot, you can add extra variables to the aesthetics. In addition to x and y, you can use color (the “outside” color of points), fill (the “inside” color of the points), shape (of points) and size.
-
-```{r scatter with extra layers, echo=T, eval=F}
-
-mtcars %>% 
-  ggplot(aes(x = cyl, 
-             y = mpg, 
-             color = factor(gear)
-             )
-         ) + 
-  geom_point()
-
-```
-  
   
 ## Descriptive measures and inferential statistics for associations (parametric)
 
@@ -129,11 +101,13 @@ oneway.test(count ~ spray, InsectSprays, var.equal = FALSE)
 
 ```
 
+## Testing whether variances are the same: Levene's test 
+
 Sometimes it may be wise to actually TEST whether two different variances of two (or more) different groups may come from the same population. One of the tests use for this is  *Levene's Test*. In R, you use the `leveneTest()` function from the `car` package. You define the dependent variable, here *mpg*, and the independent variable, here *am*.
 
 ```{r levene, echo=T, eval=F }
-# library(car)
 
+# library(car)
 mtcars %>% leveneTest(mpg ~ factor( am ), 
                       data = .)
 ```
@@ -141,7 +115,7 @@ mtcars %>% leveneTest(mpg ~ factor( am ),
 When *Levene's Test* is NOT significant, you can assume the groups have equal variances.
   
     
-## Inferential statistics for associations (non parametric)
+## Descriptive measures and inferential statistics for associations (non parametric)
 
 For Cramer's V, we use
   

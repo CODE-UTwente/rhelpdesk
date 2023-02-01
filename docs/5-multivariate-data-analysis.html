@@ -394,8 +394,9 @@ more than two variables using R.</p>
 package. With several adorning functions you can adjust the table to
 your liking. You can force the table displaying the values ‘none’,
 ‘some’ and ‘many’ in the correct order, by making sure the variable is
-stored as an ‘ordered factor’.</p>
+stored as an ‘ordered factor’ (see chapter 2).</p>
 <pre class="r"><code>library(janitor)
+
 mtcars %&gt;% 
   tabyl(am, gear, cyl, show_na = FALSE) %&gt;% 
   adorn_title(&quot;combined&quot;) %&gt;% #both var names in the title
@@ -405,11 +406,25 @@ mtcars %&gt;%
   adorn_pct_formatting(digits = 1) %&gt;%
   adorn_ns() #show the numbers of cases</code></pre>
 </div>
+<div id="groups-in-a-scatterplot" class="section level2">
+<h2>Groups in a scatterplot</h2>
+<p>If you want to visualize different groups in the scatterplot, you can
+add extra variables to the aesthetics of a ggplot. In addition to x and
+y, you can use color (the “outside” color of points), fill (the “inside”
+color of the points), shape (of the points) and size.</p>
+<pre class="r"><code>mtcars %&gt;% 
+  ggplot(aes(x = cyl, 
+             y = mpg, 
+             color = factor(gear)
+             )
+         ) + 
+  geom_point()</code></pre>
+</div>
 <div id="faceting-of-bivariate-visualisations" class="section level2">
 <h2>Faceting of bivariate visualisations</h2>
 <p>For different subplots, use the layer <code>facet_wrap(~ )</code> as
-default. This is an way to introduce a third variable in the context of
-data visualisations.</p>
+default. This is another way to introduce a third variable in the
+context of data visualizations.</p>
 <pre class="r"><code>mpg %&gt;% 
   ggplot(aes(x = factor(cyl), y = hwy)) +
   geom_boxplot() + 
@@ -422,32 +437,25 @@ presentation of the regression table, we use the <code>tidy()</code>
 function from the <code>broom</code> package.</p>
 <pre class="r"><code>library(broom)
 
-# multiple linear regression model (no interaction)
-# y = qsec, x1 = wt, x2 = cyl
-# data set: mtcars
-
 model &lt;- mtcars %&gt;% 
   lm(qsec ~ wt + cyl, data = .) 
 
 # the regression table  
 model %&gt;% 
-  tidy()</code></pre>
-<p>For an ANOVA table, we also use the <code>tidy()</code> function.</p>
-<pre class="r"><code>model %&gt;% 
-  anova() %&gt;% 
-  tidy()</code></pre>
-<p>To obtain the R-squared, we can use the <code>summary()</code>
-function.</p>
-<pre class="r"><code>out &lt;- mtcars %&gt;% 
-  lm(qsec ~ wt + cyl, data = .) %&gt;% 
-  summary() 
+  tidy()
 
-# a part of subset of the thus created object &#39;out&#39; is now the (adjusted) R squared.
-out$r.squared
-out$adj.r.squared</code></pre>
+# the ANOVA table
+model %&gt;% 
+  anova() %&gt;% 
+  tidy()
+
+# overall output, including R squared, is provided by
+model %&gt;% 
+  summary()</code></pre>
 </div>
-<div id="diagnostics" class="section level2">
-<h2>Diagnostics</h2>
+<div id="diagnostics-residuals-and-equal-variances-and-outliers"
+class="section level2">
+<h2>Diagnostics: residuals and equal variances and outliers</h2>
 <p>There are various ways to create plots with the residuals and/or the
 predicted values.</p>
 <pre class="r"><code># always create a model you want to diagnose first
@@ -468,18 +476,14 @@ mtcars &lt;- mtcars %&gt;%
   add_predictions(model) %&gt;% 
   add_residuals(model)
 
-# after adding the residuals and the predicted values displaying residuals plots is done in the ggplot framework
+# after adding the residuals and the predicted values displaying residuals plots is done in a ggplot
 mtcars %&gt;% 
   ggplot(aes(x = pred, y = resid)) + 
   geom_point()</code></pre>
 <p>There are various ways to test for unequal variances in a model.
 These are available in various packages, including <code>car</code> and
-in <code>lmtest</code>.</p>
-<pre class="r"><code># Levene&#39;s test
-library(car)
-leveneTest(qsec ~ as.factor(cyl), mtcars)
-
-# Breusch-Pagan Test
+in <code>lmtest</code>. Levene’s test is introduced in chapter 4.</p>
+<pre class="r"><code># Breusch-Pagan Test
 library(lmtest)
 # estimate the model first and then:
 bptest(model)</code></pre>
@@ -520,7 +524,7 @@ mtcars %&gt;%
   lmer(qsec ~ wt + (1|gear), data = .) %&gt;% 
   summary()</code></pre>
 <p>For a residual plot, we can use similar syntax as for the linear
-model:</p>
+model, using <code>modelr</code>:</p>
 <pre class="r"><code>model &lt;- mtcars %&gt;% 
   lmer(qsec ~ wt + (1|gear), data = .)  
 
@@ -542,8 +546,9 @@ function.</p>
   glm(carb ~ wt, family = poisson, data = .) %&gt;% 
   tidy()</code></pre>
 </div>
-<div id="nonparametric-tests" class="section level2">
-<h2>Nonparametric tests</h2>
+<div id="nonparametric-tests-for-repeated-measures"
+class="section level2">
+<h2>Nonparametric tests for repeated measures</h2>
 <p>For a non-parametric test for repeated measures, we use</p>
 <pre class="r"><code>iris %&gt;% 
   select(Sepal.Length, Petal.Length) %&gt;% 

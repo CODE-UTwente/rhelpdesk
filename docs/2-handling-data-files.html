@@ -388,35 +388,65 @@ div.tocify {
 datasets in R and how you can process its data.</p>
 <div id="explanation" class="section level1">
 <h1>Explanation</h1>
-<div
-id="importing-data-from-.csv-.sav-and-other-formats-to-r-data-frames"
+<div id="creating-data-frames" class="section level2">
+<h2>Creating data frames</h2>
+<p>Creating your own data set can be done in many ways. We mention
+two:</p>
+<ol style="list-style-type: decimal">
+<li>typing in data:</li>
+</ol>
+<pre class="r"><code>#creating a data frame by variable
+
+age &lt;- c(44, 30, 20, 67) %&gt;% as.integer()
+gender &lt;- c(&quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;) %&gt;% as.factor()
+length &lt;- c(1.67, 1.70, 1.80, 1.81) %&gt;% as.numeric()
+membership &lt;- c(&quot;T&quot;, &quot;F&quot;, &quot;T&quot;, &quot;T&quot;) %&gt;% as.logical()
+
+# merge the variables
+dataset_2 &lt;- data.frame(age, gender, length, membership)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>generating random data: If you do not have actual data, but want to
+show something in R, you can randomly select observations from a
+distribution.</li>
+</ol>
+<pre class="r"><code># creating a data frame with a random variable based on the normal
+# distribution, assumed mean of the normal distribution is 50, sd is 20, with
+# 100 units.
+
+n &lt;- 100
+dataset_3 &lt;- rnorm(n, 50, 20) %&gt;%
+    as.data.frame()</code></pre>
+</div>
+<div id="importing-.csv-.sav-and-.spss-file-as-data-frames-read"
 class="section level2">
-<h2>Importing data: from .csv, .sav and other formats to R data
-frames</h2>
+<h2>Importing .csv, .sav and .spss file as data frames: read</h2>
 <p>To import a data set, you first need to activate the correct package
-(these are <code>foreign</code> (for SPSS files), <code>readr</code> or
-<code>readxl</code> (for excel files), depending on the type of data you
-want to import). Next to that, you need to know the location of the data
-set on your computer. Suppose the location of your data file called
-‘dataset2’ is: “C:/My Documents”. The data set can be loaded into the
-<em>global environment</em> with the following command:</p>
+(these are <code>readr</code> (for csv files, although this is part of
+the tidyverse core and is thus installed by using
+<code>library("tidyverse")</code>), <code>foreign</code> (for SPSS
+files), or <code>readxl</code> (for excel files, also part of the
+tidyverse, but not of the core), depending on the type of data you want
+to import). Next to that, you need to know the location of the data set
+on your computer. Suppose the location of your data file called
+‘dataset_4’ is: “C:/My Documents”. The data set can be loaded into the
+<em>global environment</em> with the following commands:</p>
 <pre class="r"><code># set working directory to the correct folder and put all files to be imported
 # in that folder
-install.packages(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;readr&quot;, &quot;readxl&quot;)  # you do this only once
-library(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;readr&quot;, &quot;readxl&quot;)  #you only need to call packages you will actually use, but you need to do that every time after (re)starting R
+
+install.packages(&quot;tidyverse&quot;, &quot;foreign&quot;)  # you do this only once every few months or so
+library(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;readxl&quot;)  # you need to do that every time after (re)starting R
 
 setwd(&quot;C:/My Documents&quot;)  # setting the working directory
 
-dataset2 &lt;- read.spss(&quot;dataset2.sav&quot;, to.data.frame = TRUE)  # load an spss file with the package &#39;foreign&#39; as data frame.
-
-# OR, if the file is a csv file ...
-
 # load a csv data file, separated by comma&#39;s, with the package &#39;readr&#39;
-dataset2 &lt;- read.csv(&quot;dataset2.csv&quot;, sep = &quot;,&quot;)</code></pre>
+data &lt;- read.csv(&quot;dataset_4.csv&quot;, sep = &quot;,&quot;)
+
+# load an spss file with the packave foreign
+data &lt;- read.spss(&quot;dataset_4.sav&quot;, to.data.frame = TRUE)</code></pre>
 </div>
-<div id="working-with-labelled-data-mainly-spss-and-sav-files"
+<div id="working-with-labelled-data-mainly-spss-and-sav-files-attr"
 class="section level2">
-<h2>Working with labelled data (mainly SPSS and SAV files)</h2>
+<h2>Working with labelled data (mainly SPSS and SAV files): attr</h2>
 <p>Sometimes imported datasets are ‘labeled’. For example, the variable
 ‘gender’ is stored as a series of 1’s and 2’s and a label is added for
 the variable (‘gender as derived from the sampling frame’, this is
@@ -432,40 +462,8 @@ data$variable %&gt;%
 data$variable %&gt;%
     attr(&quot;labels&quot;)</code></pre>
 </div>
-<div id="creating-data-frames-from-scratch" class="section level2">
-<h2>Creating data frames from scratch</h2>
-<p>Creating your own data set can be done in many ways. We mention
-two:</p>
-<ol style="list-style-type: decimal">
-<li>typing in data:</li>
-</ol>
-<pre class="r"><code>#creating a data frame by variable
-
-age &lt;- c(44, 30, 20, 67) %&gt;% as.integer()
-gender &lt;- c(&quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;) %&gt;% as.factor()
-length &lt;- c(1.67, 1.70, 1.80, 1.81) %&gt;% as.numeric()
-membership &lt;- c(&quot;T&quot;, &quot;F&quot;, &quot;T&quot;, &quot;T&quot;) %&gt;% as.logical()
-
-# merge the variables
-dataset3 &lt;- data.frame(age, gender, length, membership)</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>generating random data: If you do not have actual data, but want to
-show something in R, you can randomly select observations from a
-distribution.</li>
-</ol>
-<pre class="r"><code># creating a data frame with a random variable based on the normal
-# distribution, assumed mean of the normal distribution is 50, sd is 20, with
-# 100 units.
-
-n &lt;- 100
-dataset4 &lt;- rnorm(n, 50, 20) %&gt;%
-    as.data.frame()</code></pre>
-</div>
-<div
-id="view-data-frames-and-parts-of-data-frames-view-colnames-and-select"
-class="section level2">
-<h2>View data frames and parts of data frames: view, colnames and
-select</h2>
+<div id="view-data-frames-view-str-and-colnames" class="section level2">
+<h2>View data frames: view, str and colnames</h2>
 <p>To illustrate the commands used below, we will use the data set
 <em>gss_cat</em> (from the tidyverse package forcats). This is a sample
 of data from the general social survey in the US. It contains the
@@ -476,7 +474,7 @@ income); partyid (party affiliation); relig (religion); denom
 <p>Suppose we have a data frame and you want to inspect it.</p>
 <pre class="r"><code># View the data from the data set dataset4 in a spreadsheet.
 gss_cat %&gt;%
-    View()
+    View()  # mind the capital V
 
 # Get a quick overview of the types of data in your matrix and their names
 gss_cat %&gt;%
@@ -484,34 +482,25 @@ gss_cat %&gt;%
 
 # Only get the column names of a data set
 gss_cat %&gt;%
-    colnames()
-
-# View the data of a particular column, say column 2 (the second variable in
-# the data frame)
-gss_cat %&gt;%
-    select(2)
-
-# View the data of a particular set of variables
-gss_cat %&gt;%
-    select(year, marital, race)
-
-# View the data set of a particular set of variables, in which one is left out
-gss_cat %&gt;%
-    select(1:5, -3)
-
-# View part of the data set in a spreadsheet
-gss_cat %&gt;%
-    select(1:5, -3) %&gt;%
-    View()</code></pre>
+    colnames()</code></pre>
 </div>
 <div
-id="creating-subsets-of-a-data-frame-select-filter-and-the-use-the-assignment-operator--"
+id="viewing-or-creating-subsets-of-a-data-frame-select-filter-and-the-use-the-assignment-operator--"
 class="section level2">
-<h2>Creating subsets of a data frame: select, filter and the use the
-assignment operator &lt;-</h2>
+<h2>Viewing or creating subsets of a data frame: select, filter and the
+use the assignment operator &lt;-</h2>
 <p>Selected variables can also be stored as a separate object in the
 global environment.</p>
-<pre class="r"><code># Make a new data frame with only the items (variables) that you want:
+<pre class="r"><code># Viewing a subset of the data:
+gss_cat %&gt;%
+    select(marital, age, race) %&gt;%
+    View()
+
+# Make a new data frame with only the items (variables) that you want:
+gss_cat_social &lt;- gss_cat %&gt;%
+    select(marital, age, race)
+
+# Using cuolumn number to select variables:
 gss_cat_social &lt;- gss_cat %&gt;%
     select(1:5, 7, 8)
 
@@ -522,6 +511,39 @@ gss_cat_2000 &lt;- gss_cat %&gt;%
 # Make a new data frame with observations from 2002 and later:
 gss_cat_2002plus &lt;- gss_cat %&gt;%
     filter(year &gt;= 2002)</code></pre>
+</div>
+<div id="adding-a-new-variable-to-an-existing-data-frame-mutate"
+class="section level2">
+<h2>Adding a new variable to an existing data frame: mutate</h2>
+<p>Adding a variable to the data set can be done with mutate().</p>
+<pre class="r"><code># Adding a standardized variable
+gss_cat &lt;- gss_cat %&gt;%
+    mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
+
+# or, for a standardized variable, simply use
+gss_cat &lt;- gss_cat %&gt;%
+    mutate(ztvhours = scale(tvhours))
+
+# Creating an index and adding that index to the data frame:
+dataset5 &lt;- dataset5 %&gt;%
+    mutate(index = item3 + item4 + item4)
+
+# Creating a logged version of an existing variable (the index in this example)
+dataset5 &lt;- dataset5 %&gt;%
+    mutate(log_version_index = log(index))
+
+# If you want to sum values of a lot of columns and ignore the missings, use:
+dataset5 &lt;- dataset5 %&gt;%
+    mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm = TRUE))
+# The &#39;c&#39; in this command stands for &#39;combine&#39; and is part of base R.</code></pre>
+</div>
+<div id="renaming-a-variable-in-a-data-frame-rename"
+class="section level2">
+<h2>Renaming a variable in a data frame: rename</h2>
+<pre class="r"><code># Change old name &#39;relig&#39; to the new variable name &#39;religion&#39; (new = old)
+
+gss_cat &lt;- gss_cat %&gt;% 
+  rename(religion = relig)</code></pre>
 </div>
 <div id="dealing-with-missing-data-na_if-is.na-na.rm-na.omit"
 class="section level2">
@@ -535,7 +557,7 @@ these values before analyzing the data.</p>
 gss_cat &lt;- gss_cat %&gt;%
   mutate(relig = na_if(relig, &quot;Don&#39;t know&quot;))
 
-# in the data set gss_cat, replace the existing variable relig (which contains contains cases with the word &#39;Don&#39;t know&#39;) with a new variable relig, in which this group is declared missing (and gets an NA).</code></pre>
+# This means: in the data set gss_cat, replace the existing variable relig (which contains contains cases with the word &#39;Don&#39;t know&#39;) with a new variable relig, in which this group is declared missing (and gets an NA).</code></pre>
 <p>There are several ways to find out how many missings are included in
 the data. Also, there are multiple ways to deal with these missings
 (pairwise deletion versus listwise deletion).</p>
@@ -563,39 +585,6 @@ gss_cat_no_missings_on_relig &lt;- gss_cat %&gt;%
     filter(!is.na(relig))
 
 # Please note that in R we can use the &#39;!&#39; sign, to say &#39;not&#39;.</code></pre>
-</div>
-<div id="renaming-a-variable-in-a-data-frame-rename"
-class="section level2">
-<h2>Renaming a variable in a data frame: rename</h2>
-<pre class="r"><code># Change old name &#39;relig&#39; to the new variable name &#39;religion&#39; (new = old)
-
-gss_cat &lt;- gss_cat %&gt;% 
-  rename(religion = relig)</code></pre>
-</div>
-<div id="adding-a-new-variable-to-an-existing-data-frame-mutate"
-class="section level2">
-<h2>Adding a new variable to an existing data frame: mutate</h2>
-<p>Adding a variable to the data set can be done with mutate().</p>
-<pre class="r"><code># Adding a standardized variable
-gss_cat &lt;- gss_cat %&gt;%
-    mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
-
-# or, for a standardized variable, simply use
-gss_cat &lt;- gss_cat %&gt;%
-    mutate(ztvhours = scale(tvhours))
-
-# Creating an index and adding that index to the data frame:
-dataset5 &lt;- dataset5 %&gt;%
-    mutate(index = item3 + item4 + item4)
-
-# Creating a logged version of an existing variable (the index in this example)
-dataset5 &lt;- dataset5 %&gt;%
-    mutate(log_version_index = log(index))
-
-# If you want to sum values of a lot of columns and ignore the missings, use:
-dataset5 &lt;- dataset5 %&gt;%
-    mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm = TRUE))
-# The &#39;c&#39; in this command stands for &#39;combine&#39; and is part of base R.</code></pre>
 </div>
 <div
 id="making-sure-variables-have-the-correct-type-from-character-to-factor-and-from-factor-to-ordered-factor"
@@ -641,10 +630,9 @@ the same words as in the other data set) and the continents.</p>
 gapm1945joined &lt;- gapm1945to2020 %&gt;%
     left_join(gapmcountries, by = &quot;geo&quot;)</code></pre>
 </div>
-<div id="adding-new-data-observations-to-an-existing-data-file-add_row"
+<div id="adding-observations-to-an-existing-data-file-add_row"
 class="section level2">
-<h2>Adding new data (observations) to an existing data file:
-add_row</h2>
+<h2>Adding observations to an existing data file: add_row</h2>
 <p>Sometimes, you want to add data to an existing data file. For this,
 you can use the function <code>add_row()</code>. With
 <code>.before</code> and <code>.after</code>, you can specify where new

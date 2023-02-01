@@ -3,27 +3,57 @@ title: "Handling data files"
 output: html_fragment
 ---
 
-## Importing data: from .csv, .sav and other formats to R data frames
+## Creating data frames
 
-To import a data set, you first need to activate the correct package (these are `foreign` (for SPSS files), `readr` or `readxl` (for excel files), depending on the type of data you want to import). Next to that, you need to know the location of the data set on your computer. Suppose the location of your data file called 'dataset2' is: "C:/My Documents". The data set can be loaded into the *global environment* with the following command:
+Creating your own data set can be done in many ways. We mention two: 
+
+(1) typing in data: 
+
+```{r eval = F}
+#creating a data frame by variable
+
+age <- c(44, 30, 20, 67) %>% as.integer()
+gender <- c("male", "female", "male", "female") %>% as.factor()
+length <- c(1.67, 1.70, 1.80, 1.81) %>% as.numeric()
+membership <- c("T", "F", "T", "T") %>% as.logical()
+
+# merge the variables
+dataset_2 <- data.frame(age, gender, length, membership)
+```
+
+(2) generating random data:
+If you do not have actual data, but want to show something in R, you can randomly select observations from a distribution.
 
 ```{r eval = F, tidy = TRUE}
-#set working directory to the correct folder and put all files to be imported in that folder
-install.packages("tidyverse", "foreign", "readr", "readxl") # you do this only once
-library("tidyverse", "foreign", "readr", "readxl") #you only need to call packages you will actually use, but you need to do that every time after (re)starting R
+# creating a data frame with a random variable based on the normal distribution, assumed mean of the normal distribution is 50, sd is 20, with 100 units.
 
-setwd("C:/My Documents") # setting the working directory
-
-dataset2 <- read.spss("dataset2.sav", to.data.frame = TRUE) # load an spss file with the package "foreign" as data frame.
-
-#OR, if the file is a csv file ...
-
-#load a csv data file, separated by comma's, with the package "readr"
-dataset2 <- read.csv("dataset2.csv", sep = ",")
+n <- 100
+dataset_3 <- rnorm(n, 50, 20) %>% as.data.frame()
 ```
 
 
-## Working with labelled data (mainly SPSS and SAV files)
+## Importing .csv, .sav and .spss file as data frames: read
+
+To import a data set, you first need to activate the correct package (these are `readr` (for csv files, although this is part of the tidyverse core and is thus installed by using `library("tidyverse")`), `foreign` (for SPSS files), or `readxl` (for excel files, also part of the tidyverse, but not of the core), depending on the type of data you want to import). Next to that, you need to know the location of the data set on your computer. Suppose the location of your data file called 'dataset_4' is: "C:/My Documents". The data set can be loaded into the *global environment* with the following commands:
+
+```{r eval = F, tidy = TRUE}
+#set working directory to the correct folder and put all files to be imported in that folder
+
+install.packages("tidyverse", "foreign") # you do this only once every few months or so
+library("tidyverse", "foreign", "readxl") # you need to do that every time after (re)starting R
+
+setwd("C:/My Documents") # setting the working directory
+
+# load a csv data file, separated by comma's, with the package "readr"
+data <- read.csv("dataset_4.csv", sep = ",")
+
+# load an spss file with the packave foreign
+data <- read.spss("dataset_4.sav", to.data.frame = TRUE)
+
+```
+
+
+## Working with labelled data (mainly SPSS and SAV files): attr
 
 Sometimes imported datasets are 'labeled'. For example, the variable 'gender' is stored as a series of 1's and 2's and a label is added for the variable ('gender as derived from the sampling frame', this is called the variable label) and for the values (1 means 'woman' and 2 means 'man', the so called 'value labels'). The labels are attributes of a data frame.
 
@@ -40,37 +70,7 @@ data$variable %>% attr('labels')
 ```
 
 
-## Creating data frames from scratch
-
-Creating your own data set can be done in many ways. We mention two: 
-
-(1) typing in data: 
-
-```{r eval = F}
-#creating a data frame by variable
-
-age <- c(44, 30, 20, 67) %>% as.integer()
-gender <- c("male", "female", "male", "female") %>% as.factor()
-length <- c(1.67, 1.70, 1.80, 1.81) %>% as.numeric()
-membership <- c("T", "F", "T", "T") %>% as.logical()
-
-# merge the variables
-dataset3 <- data.frame(age, gender, length, membership)
-```
-
-
-(2) generating random data:
-If you do not have actual data, but want to show something in R, you can randomly select observations from a distribution.
-
-```{r eval = F, tidy = TRUE}
-# creating a data frame with a random variable based on the normal distribution, assumed mean of the normal distribution is 50, sd is 20, with 100 units.
-
-n <- 100
-dataset4 <- rnorm(n, 50, 20) %>% as.data.frame()
-```
-
-
-## View data frames and parts of data frames: view, colnames and select
+## View data frames: view, str and colnames
 
 To illustrate the commands used below, we will use the data set *gss_cat* (from the tidyverse package forcats). This is a sample of data from the general social survey in the US. It contains the variables: year (year of survey, 2000--2014); age (Maximum age truncated to 89); marital (marital status); race (race); rincome (reported income); partyid (party affiliation); relig (religion); denom (denomination); tvhours (hours per day watching tv).
 
@@ -78,7 +78,7 @@ Suppose we have a data frame and you want to inspect it.
 
 ```{r eval = F, tidy = TRUE}
 # View the data from the data set dataset4 in a spreadsheet.
-gss_cat %>% View()
+gss_cat %>% View() # mind the capital V
 
 # Get a quick overview of the types of data in your matrix and their names
 gss_cat %>% str()
@@ -86,30 +86,24 @@ gss_cat %>% str()
 # Only get the column names of a data set 
 gss_cat %>% colnames()
 
-# View the data of a particular column, say column 2 (the second variable in the data frame)
-gss_cat %>% select(2)
-
-# View the data of a particular set of variables
-gss_cat %>% select(year, 
-         marital, 
-         race)
-
-# View the data set of a particular set of variables, in which one is left out
-gss_cat %>% select(1:5, -3)
-
-# View part of the data set in a spreadsheet
-gss_cat %>% 
-  select(1:5, -3) %>%
-  View()
 ```
 
 
-## Creating subsets of a data frame: select, filter and the use the assignment operator <-
+## Viewing or creating subsets of a data frame: select, filter and the use the assignment operator <-
 
 Selected variables can also be stored as a separate object in the global environment.
 
 ```{r eval = F, echo=T, tidy = TRUE}
+# Viewing a subset of the data:
+gss_cat %>% 
+  select(marital, age, race) %>% 
+  View()
+
 # Make a new data frame with only the items (variables) that you want:
+gss_cat_social <- gss_cat %>% 
+  select(marital, age, race)
+
+# Using cuolumn number to select variables:
 gss_cat_social <- gss_cat %>% 
   select(1:5, 7, 8)
 
@@ -120,55 +114,6 @@ gss_cat_2000 <- gss_cat %>%
 # Make a new data frame with observations from 2002 and later:
 gss_cat_2002plus <- gss_cat %>%
    filter(year >= 2002)
-
-```
-
-
-## Dealing with missing data: na_if, is.na, na.rm, na.omit
-
-R uses only one way of declaring a specific observation as missing: NA (Not Available). If your data set does include missings, but the missings are coded with a number (for example: 99), you need to replace these values before analyzing the data. 
-
-```{R dealing with missings, eval = F}
-# To change other values (here: the word 'Don't know)' to NA, use na_if()
-
-gss_cat <- gss_cat %>%
-  mutate(relig = na_if(relig, "Don't know"))
-
-# in the data set gss_cat, replace the existing variable relig (which contains contains cases with the word 'Don't know') with a new variable relig, in which this group is declared missing (and gets an NA).
-```
-
-There are several ways to find out how many missings are included in the data. Also, there are multiple ways to deal with these missings (pairwise deletion versus listwise deletion).
-
-```{R missing, eval = F, tidy = TRUE}
-# To see which variables in the data file called 'mydata' have missings use:
-summary(gss_cat)
-
-# Or use "is.na" to detect the number of missing values in a specific column (the 'religion' variable).
-gss_cat$relig %>% 
-  is.na() %>% 
-  sum() 
-
-# Pairwise deletion of cases (exclude cases that have a missing value on a variable, but keep them when working with other variables): "na.rm" 
-mean(gss_cat$tvhours, na.rm=TRUE)
-
-# Listwise deletion of cases (drop cases that have a missing value on any of the variables used): "na.omit"
-gss_cat_no_missings <- na.omit(gss_cat)
-
-# Make a new data frame only containing units without a missing value on the variable 'relig'. Please note that you now drop many cases ONLY because this variable is missing.
-gss_cat_no_missings_on_relig <- gss_cat %>%
-   filter(!is.na(relig))
-
-# Please note that in R we can use the '!' sign, to say 'not'.
-```
-
-
-## Renaming a variable in a data frame: rename
-
-```{r eval = F}
-# Change old name 'relig' to the new variable name 'religion' (new = old)
-
-gss_cat <- gss_cat %>% 
-  rename(religion = relig)
 ```
 
 
@@ -197,6 +142,54 @@ dataset5 <- dataset5 %>%
 dataset5 <- dataset5 %>%
   mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm=TRUE))
 # The "c" in this command stands for 'combine' and is part of base R.
+```
+
+  
+## Renaming a variable in a data frame: rename
+
+```{r eval = F}
+# Change old name 'relig' to the new variable name 'religion' (new = old)
+
+gss_cat <- gss_cat %>% 
+  rename(religion = relig)
+```
+
+
+## Dealing with missing data: na_if, is.na, na.rm, na.omit
+
+R uses only one way of declaring a specific observation as missing: NA (Not Available). If your data set does include missings, but the missings are coded with a number (for example: 99), you need to replace these values before analyzing the data. 
+
+```{R dealing with missings, eval = F}
+# To change other values (here: the word 'Don't know)' to NA, use na_if()
+
+gss_cat <- gss_cat %>%
+  mutate(relig = na_if(relig, "Don't know"))
+
+# This means: in the data set gss_cat, replace the existing variable relig (which contains contains cases with the word 'Don't know') with a new variable relig, in which this group is declared missing (and gets an NA).
+```
+
+There are several ways to find out how many missings are included in the data. Also, there are multiple ways to deal with these missings (pairwise deletion versus listwise deletion).
+
+```{R missing, eval = F, tidy = TRUE}
+# To see which variables in the data file called 'mydata' have missings use:
+summary(gss_cat)
+
+# Or use "is.na" to detect the number of missing values in a specific column (the 'religion' variable).
+gss_cat$relig %>% 
+  is.na() %>% 
+  sum() 
+
+# Pairwise deletion of cases (exclude cases that have a missing value on a variable, but keep them when working with other variables): "na.rm" 
+mean(gss_cat$tvhours, na.rm=TRUE)
+
+# Listwise deletion of cases (drop cases that have a missing value on any of the variables used): "na.omit"
+gss_cat_no_missings <- na.omit(gss_cat)
+
+# Make a new data frame only containing units without a missing value on the variable 'relig'. Please note that you now drop many cases ONLY because this variable is missing.
+gss_cat_no_missings_on_relig <- gss_cat %>%
+   filter(!is.na(relig))
+
+# Please note that in R we can use the '!' sign, to say 'not'.
 ```
 
 
@@ -241,10 +234,9 @@ gapm1945joined <- gapm1945to2020 %>%
 
 ```
 
-## Adding new data (observations) to an existing data file: add_row
+## Adding observations to an existing data file: add_row
 
-Sometimes, you want to add data to an existing data file. For this, you can use the function `add_row()`.
-With `.before` and `.after`, you can specify where new cases should be added.
+Sometimes, you want to add data to an existing data file. For this, you can use the function `add_row()`. With `.before` and `.after`, you can specify where new cases should be added.
 
 ```{r add_row, eval = F}
 # to use the add_row() function, the tidyverse packages should be installed and loaded

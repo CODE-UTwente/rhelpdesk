@@ -405,41 +405,25 @@ mtcars %&gt;%
   adorn_pct_formatting(digits = 1) %&gt;%
   adorn_ns() #show the numbers of cases</code></pre>
 </div>
-<div id="box-plots-for-different-groups-using-ggplot"
+<div id="visualizing-relationships-between-different-variables-ggplot"
 class="section level2">
-<h2>Box plots for different groups using ggplot</h2>
+<h2>Visualizing relationships between different variables: ggplot</h2>
 <p>For a boxplot use <code>geom_boxplot()</code>:</p>
-<pre class="r"><code># A boxplot comparing different species is having two variables in the aesthetics
-
+<pre class="r"><code># A boxplot comparing different species (nominal variable)
 iris %&gt;% 
   ggplot(aes(x = Species, y = Petal.Width)) +
-  geom_boxplot()</code></pre>
-</div>
-<div id="scatterplots-with-ggplot" class="section level2">
-<h2>Scatterplots with ggplot</h2>
-<p>A scatter plot in the ggplot package will be done with the geom
-<code>geom_point()</code>. Notice that the aesthetics in the first layer
-now contain two variables.</p>
-<pre class="r"><code>mtcars %&gt;% 
+  geom_boxplot()
+
+# two scale variables, creating a scatterplot
+mtcars %&gt;% 
   ggplot(aes(x = cyl, y = mpg)) + 
-  geom_point()</code></pre>
-<p>If you want to add a linear regression line, add an extra ‘geom’
-(geom_smooth).</p>
-<pre class="r"><code>mtcars %&gt;% 
+  geom_point()
+
+# adding a regression line
+mtcars %&gt;% 
   ggplot(aes(x = cyl, y = mpg)) + 
   geom_point() +
   geom_smooth(method = &quot;lm&quot;, se = F)</code></pre>
-<p>If you want to visualize different groups in the scatterplot, you can
-add extra variables to the aesthetics. In addition to x and y, you can
-use color (the “outside” color of points), fill (the “inside” color of
-the points), shape (of points) and size.</p>
-<pre class="r"><code>mtcars %&gt;% 
-  ggplot(aes(x = cyl, 
-             y = mpg, 
-             color = factor(gear)
-             )
-         ) + 
-  geom_point()</code></pre>
 </div>
 <div
 id="descriptive-measures-and-inferential-statistics-for-associations-parametric"
@@ -474,6 +458,10 @@ lm(count ~ spray, InsectSprays) %&gt;% summary()</code></pre>
 <p>For a test in which groups cannot be assumed to have equal variances,
 use:</p>
 <pre class="r"><code>oneway.test(count ~ spray, InsectSprays, var.equal = FALSE)</code></pre>
+</div>
+<div id="testing-whether-variances-are-the-same-levenes-test"
+class="section level2">
+<h2>Testing whether variances are the same: Levene’s test</h2>
 <p>Sometimes it may be wise to actually TEST whether two different
 variances of two (or more) different groups may come from the same
 population. One of the tests use for this is <em>Levene’s Test</em>. In
@@ -481,15 +469,16 @@ R, you use the <code>leveneTest()</code> function from the
 <code>car</code> package. You define the dependent variable, here
 <em>mpg</em>, and the independent variable, here <em>am</em>.</p>
 <pre class="r"><code># library(car)
-
 mtcars %&gt;% leveneTest(mpg ~ factor( am ), 
                       data = .)</code></pre>
 <p>When <em>Levene’s Test</em> is NOT significant, you can assume the
 groups have equal variances.</p>
 </div>
-<div id="inferential-statistics-for-associations-non-parametric"
+<div
+id="descriptive-measures-and-inferential-statistics-for-associations-non-parametric"
 class="section level2">
-<h2>Inferential statistics for associations (non parametric)</h2>
+<h2>Descriptive measures and inferential statistics for associations
+(non parametric)</h2>
 <p>For Cramer’s V, we use</p>
 <pre class="r"><code># install and load the package &quot;rcompanion&quot; first, this contains the command cramerV.
 # this function works on tables, so create a table first
