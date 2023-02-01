@@ -217,30 +217,33 @@ Since the number of packages is huge^[ [click here to see all available packages
 Here is an overview of the packages you will be using at BMS:
 
 * `tidyverse` is a set of packages for the most important data manipulation is visualization tasks. This is a 'meta-package' containing (among others):  
-  + `ggplot2` to visualize your data;  
-  + `dplyr` and `tidyr` to change data, and to make sure that each variable is in a column, each observation is a row and each value is a cell;  
+  + `ggplot2` to visualize your data;
+  + `dplyr` and `tidyr` to change data, and to make sure that each variable is in a column, each observation is a row and each value is a cell;
   + `readr` to import .csv data.
   
 These packages are thus loaded in the library when using the function `library("tidyverse")`.
   
 When installing the tidyverse, some other packages are downloaded too, some of which we will use:  
 
-* `readxl` to import .xls and .xlsx sheets;  
-* `haven` to import SPSS, Stata, and SAS data;  
-* `broom` to use a `tidy()` function, which may come handy when doing statistical analysis. This package is also part of `tidymodels`;  
+* `readxl` to import .xls and .xlsx sheets;
+* `haven` to import SPSS, Stata, and SAS data;
+* `broom` to use a `tidy()` function, which may come handy when doing statistical analysis. This package is also part of `tidymodels`;
 * `modelr` to make plots with the residuals and/or the predicted values (this package is also part of `tidymodels`).
   
 Make sure to put such a tidyverse package in the library if you want to use it. Unlike the core packages, these packages are NOT automatically loaded when using the library("tidyverse") command.  
   
 Finally, we will use a set of specialized packages, including:
-  
-* `foreign` to import SPSS, Stata, and SAS data;  
-* `janitor` to create frequency tables and cross tabulations;  
-* `lme4` for the linear mixed model;  
-* `psych` for psychometric analysis, including scale construction and factor analysis;  
-* `lmerTest` to approximate *p*-values;  
-* `lmtest` for various diagnostic tests in the context of linear models (Levene's test for example);  
-* `car`for some additional diagnostic tests in the context of linear model (including the vif value).  
+
+* `foreign` to import SPSS, Stata, and SAS data;
+* `janitor` to create frequency tables and cross tabulations;
+* `psych` for psychometric analysis, including scale construction and factor analysis;
+* `lmerTest` to approximate *p*-values;
+* `lmtest` for various diagnostic tests in the context of linear models (Levene's test for example);
+* `lme4` for the linear mixed model;
+* `car` for some additional diagnostic tests in the context of linear model (including the vif value);
+* `CTT` for classical test theory (psychometrics)
+* `Lambda4` for Collection of Internal Consistency Reliability Coefficients (psychometrics)
+* `mirt` for Item Response Theory (psychometrics).
   
 At the beginning of a meeting or course we will tell you which packages to download (install.packages) and call (library).
 
