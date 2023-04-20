@@ -80,7 +80,7 @@ model %>%
 ```
 
 
-## Diagnostics: residuals and equal variances and outliers
+## Diagnostics: residuals, equal variances, outliers and influence
 
 There are various ways to create plots with the residuals and/or the predicted values.
 
@@ -116,16 +116,23 @@ There are various ways to test for unequal variances in a model. These are avail
 
 # Breusch-Pagan Test
 library(lmtest)
+
 # estimate the model first and then:
 bptest(model)
 
 ```
 
-For outliers and influential cases, there are various options.
+For outliers and influential cases, use:
 
-```{r outliers, echo=T, eval=F}
+```{r outliers and influential cases, echo=T, eval=F}
 
-# After estimating and storing the model, cooks distances can be stored to the original data frame, by using
+# After estimating and storing a model, leverage as measured by the hat values can be stored to the original data frame, by using
+data$leverage_cases_model_1 <- hatvalues(model_1)
+
+# Also, one of the plots of the model contains info about Cook's distances
+plot(model_1)
+
+# After estimating and storing the model, influence as measured by cooks distances can be stored to the original data frame, by using
 data$influential_cases_model_1 <- cooks.distance(model_1)
 
 # Also, one of the plots of the model contains info about Cook's distances
