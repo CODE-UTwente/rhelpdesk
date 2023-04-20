@@ -453,9 +453,9 @@ model %&gt;%
 model %&gt;% 
   summary()</code></pre>
 </div>
-<div id="diagnostics-residuals-and-equal-variances-and-outliers"
+<div id="diagnostics-residuals-equal-variances-outliers-and-influence"
 class="section level2">
-<h2>Diagnostics: residuals and equal variances and outliers</h2>
+<h2>Diagnostics: residuals, equal variances, outliers and influence</h2>
 <p>There are various ways to create plots with the residuals and/or the
 predicted values.</p>
 <pre class="r"><code># always create a model you want to diagnose first
@@ -485,10 +485,17 @@ These are available in various packages, including <code>car</code> and
 in <code>lmtest</code>. Levene’s test is introduced in chapter 4.</p>
 <pre class="r"><code># Breusch-Pagan Test
 library(lmtest)
+
 # estimate the model first and then:
 bptest(model)</code></pre>
-<p>For outliers and influential cases, there are various options.</p>
-<pre class="r"><code># After estimating and storing the model, cooks distances can be stored to the original data frame, by using
+<p>For outliers and influential cases, use:</p>
+<pre class="r"><code># After estimating and storing a model, leverage as measured by the hat values can be stored to the original data frame, by using
+data$leverage_cases_model_1 &lt;- hatvalues(model_1)
+
+# Also, one of the plots of the model contains info about Cook&#39;s distances
+plot(model_1)
+
+# After estimating and storing the model, influence as measured by cooks distances can be stored to the original data frame, by using
 data$influential_cases_model_1 &lt;- cooks.distance(model_1)
 
 # Also, one of the plots of the model contains info about Cook&#39;s distances
