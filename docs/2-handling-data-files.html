@@ -361,12 +361,6 @@ div.tocify {
      
   </a>
 </li>
-<li>
-  <a href="https://canvas.utwente.nl/enroll/7C868F">
-    <span class="fas fa-globe"></span>
-     
-  </a>
-</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -407,8 +401,8 @@ show something in R, you can randomly select observations from a
 distribution.</li>
 </ol>
 <pre class="r"><code># creating a data frame with a random variable based on the normal
-# distribution, assumed mean of the normal distribution is 50, sd is 20, with
-# 100 units.
+# distribution, assumed mean of the normal distribution is 50, sd is 20,
+# with 100 units.
 
 n &lt;- 100
 dataset_3 &lt;- rnorm(n, 50, 20) %&gt;%
@@ -428,16 +422,16 @@ computer.</p>
 <p>Suppose you have two version of a data file called ‘dataset_4’ both
 located in “C:/My Documents”. The data sets can be loaded into the
 <em>global environment</em> with the following commands:</p>
-<pre class="r"><code># set working directory to the correct folder and put all files to be imported
-# in that folder
+<pre class="r"><code># set working directory to the correct folder and put all files to be
+# imported in that folder
 
 install.packages(&quot;tidyverse&quot;, &quot;foreign&quot;)  # you do this only once every few months or so
 library(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;readxl&quot;)  # you need to do that every time after (re)starting R
 
 setwd(&quot;C:/My Documents&quot;)  # setting the working directory
 
-# load a csv data file, in this case separated by comma&#39;s, with the package
-# &#39;readr&#39;
+# load a csv data file, in this case separated by comma&#39;s, with the
+# package &#39;readr&#39;
 data_1 &lt;- read.csv(&quot;dataset_4.csv&quot;, sep = &quot;,&quot;)
 
 # load an spss file with the packave foreign
@@ -529,11 +523,13 @@ gss_cat &lt;- gss_cat %&gt;%
 dataset5 &lt;- dataset5 %&gt;%
     mutate(index = item3 + item4 + item4)
 
-# Creating a logged version of an existing variable (the index in this example)
+# Creating a logged version of an existing variable (the index in this
+# example)
 dataset5 &lt;- dataset5 %&gt;%
     mutate(log_version_index = log(index))
 
-# If you want to sum values of a lot of columns and ignore the missings, use:
+# If you want to sum values of a lot of columns and ignore the missings,
+# use:
 dataset5 &lt;- dataset5 %&gt;%
     mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm = TRUE))
 # The &#39;c&#39; in this command stands for &#39;combine&#39; and is part of base R.</code></pre>
@@ -561,11 +557,12 @@ gss_cat &lt;- gss_cat %&gt;%
 <p>There are several ways to find out how many missings are included in
 the data. Also, there are multiple ways to deal with these missings
 (pairwise deletion versus listwise deletion).</p>
-<pre class="r"><code># To see which variables in the data file called &#39;mydata&#39; have missings use:
+<pre class="r"><code># To see which variables in the data file called &#39;mydata&#39; have missings
+# use:
 summary(gss_cat)
 
-# Or use &#39;is.na&#39; to detect the number of missing values in a specific column
-# (the &#39;religion&#39; variable).
+# Or use &#39;is.na&#39; to detect the number of missing values in a specific
+# column (the &#39;religion&#39; variable).
 gss_cat$relig %&gt;%
     is.na() %&gt;%
     sum()
@@ -574,13 +571,13 @@ gss_cat$relig %&gt;%
 # variable, but keep them when working with other variables): &#39;na.rm&#39;
 mean(gss_cat$tvhours, na.rm = TRUE)
 
-# Listwise deletion of cases (drop cases that have a missing value on any of
-# the variables used): &#39;na.omit&#39;
+# Listwise deletion of cases (drop cases that have a missing value on any
+# of the variables used): &#39;na.omit&#39;
 gss_cat_no_missings &lt;- na.omit(gss_cat)
 
-# Make a new data frame only containing units without a missing value on the
-# variable &#39;relig&#39;. Please note that you now drop many cases ONLY because this
-# variable is missing.
+# Make a new data frame only containing units without a missing value on
+# the variable &#39;relig&#39;. Please note that you now drop many cases ONLY
+# because this variable is missing.
 gss_cat_no_missings_on_relig &lt;- gss_cat %&gt;%
     filter(!is.na(relig))
 
@@ -596,8 +593,8 @@ you probably want to treat this variable as a factor, not merely as a
 column of words. And if the factor in your data frame has three
 ‘values’/‘attributes’ (low, medium and high), you have to make sure this
 variable is stored as an ‘ordered factor’.</p>
-<pre class="r"><code># because gss_cat only has numerical variables and factors, we first change a
-# factor to a character variable
+<pre class="r"><code># because gss_cat only has numerical variables and factors, we first
+# change a factor to a character variable
 gss_cat &lt;- gss_cat %&gt;%
     mutate(marital_char = as.character(marital))
 
@@ -609,8 +606,8 @@ gss_cat &lt;- gss_cat %&gt;%
 gss_cat &lt;- gss_cat %&gt;%
     mutate(marital_ord = factor(marital_factor, order = TRUE, levels = c(&quot;Never married&quot;,
         &quot;Married&quot;, &quot;Divorced&quot;, &quot;Separated&quot;, &quot;Widowed&quot;, &quot;No answer&quot;)))
-# In this example, we have put the brackets in a way that avoids omitting a
-# bracket (which happens a LOT!)</code></pre>
+# In this example, we have put the brackets in a way that avoids omitting
+# a bracket (which happens a LOT!)</code></pre>
 </div>
 <div
 id="adding-a-new-variable-from-another-datafile-to-an-existing-data-frame-left_join"
@@ -623,9 +620,9 @@ want to add the continents of these countries to the data set. You have
 another data set with the countries (stored as the same words as in the
 other data set) and the continents.</p>
 <pre class="r"><code># gapm1945to2020 is the original dataset gapmcountries is the set with
-# countries and continents Both datasets are loaded in the global environment
-# country in both data sets is called &#39;geo&#39; and both have the same values (the
-# same words)
+# countries and continents Both datasets are loaded in the global
+# environment country in both data sets is called &#39;geo&#39; and both have the
+# same values (the same words)
 
 gapm1945joined &lt;- gapm1945to2020 %&gt;%
     left_join(gapmcountries, by = &quot;geo&quot;)</code></pre>
@@ -678,8 +675,8 @@ df_psychology &lt;- df_psychology %&gt;%
     mutate(x10_R = recode(x10, `1` = 3L, `2` = 2L, `3` = 1L), x11_R = recode(x11,
         `1` = 3L, `2` = 2L, `3` = 1L))
 
-# it is often simpler to temporarily ignore the fact a variable is an integer,
-# and to simply add the &#39;as.integer()&#39; command later.
+# it is often simpler to temporarily ignore the fact a variable is an
+# integer, and to simply add the &#39;as.integer()&#39; command later.
 
 # It is also possible to recode character/factor variables.
 
@@ -747,8 +744,9 @@ variable ‘unemployment_2000’ and a variable ‘unemployment_2001’ etc… I
 order to change wide format data into long format data, in which there
 are three variables only: country_name, year, level of unemployment, use
 <code>pivot_longer()</code>.</p>
-<pre class="r"><code># To create 1 new variable containing the names of 4 variables (Sepal.Length,
-# Sepal.Width, Petal.Length, Petal.Width) and 1 variable with the scores:
+<pre class="r"><code># To create 1 new variable containing the names of 4 variables
+# (Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) and 1 variable
+# with the scores:
 
 iris %&gt;%
     pivot_longer(cols = c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),

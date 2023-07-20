@@ -13,7 +13,8 @@
 
 <title>Instructions for Editors</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -63,6 +64,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 
@@ -87,6 +89,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -144,11 +149,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +186,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +195,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -299,12 +301,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -312,7 +314,7 @@ div.tocify {
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -325,7 +327,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Chapters
      
     <span class="caret"></span>
@@ -351,20 +353,11 @@ div.tocify {
     </li>
   </ul>
 </li>
-<li>
-  <a href="https://canvas.utwente.nl/courses/8022/discussion_topics">Discussions</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/CODE-UTwente/rhelpdesk/">
     <span class="fab fa-github"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="https://canvas.utwente.nl/enroll/7C868F">
-    <span class="fas fa-globe"></span>
      
   </a>
 </li>
@@ -387,30 +380,77 @@ div.tocify {
 <h1>Changing the Website</h1>
 <div id="method-1-in-the-web-browser" class="section level2">
 <h2>Method 1: In the Web Browser</h2>
-<p>Go the the <a href="https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io">rhelpdesk.github.io GitLab Page</a>. When asked, please log in using your UT e-mail and password. Click the button <em>Web IDE</em>. Click on the folder <em>book</em> to find the book chapters, and make the changes there you would like to make. Once you’re done making changes, press <em>Commit…</em>. You will see an overview of the changes you made. Please add a description of the changes you made under <em>Commit Message</em>. If you have the option, you can pick <em>Commit to <code>master</code> branch</em> for the change to have effect immediately. If you do not have that option or would like your changes to be checked, pick <em>Create a new branch</em>. Make sure to tick the <em>Start a new merge request</em>. This way a request will be made for your changes to be applied. Someone with more permissions can then approve your change to be applied on the website. Lastly, press the <em>Commit</em> button at the bottom. It can take several minutes for changes to take effect on the website.</p>
+<p>Go the the <a
+href="https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io">rhelpdesk.github.io
+GitLab Page</a>. When asked, please log in using your UT e-mail and
+password. Click the button <em>Web IDE</em>. Click on the folder
+<em>book</em> to find the book chapters, and make the changes there you
+would like to make. Once you’re done making changes, press
+<em>Commit…</em>. You will see an overview of the changes you made.
+Please add a description of the changes you made under <em>Commit
+Message</em>. If you have the option, you can pick <em>Commit to
+<code>master</code> branch</em> for the change to have effect
+immediately. If you do not have that option or would like your changes
+to be checked, pick <em>Create a new branch</em>. Make sure to tick the
+<em>Start a new merge request</em>. This way a request will be made for
+your changes to be applied. Someone with more permissions can then
+approve your change to be applied on the website. Lastly, press the
+<em>Commit</em> button at the bottom. It can take several minutes for
+changes to take effect on the website.</p>
 </div>
 <div id="method-2-using-r-studio" class="section level2">
 <h2>Method 2: Using R-Studio</h2>
 <div id="set-up" class="section level3">
 <h3>Set up</h3>
-<p>You need to set a few things up to be able to change the website using RStudio. This setup only has to be done once.<br />
-First, make sure git is installed. Please follow the instructions at <a href="http://r-bio.github.io/git-installation/">http://r-bio.github.io/git-installation/</a>. Once this is done, you can open RStudio, and click <em>File -&gt; New Project…</em>. Pick the <em>Version Control</em> option, and then pick <em>Git</em>. Under <em>Repository URL:</em> fill in <code>https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io.git</code> and as <em>Project directory name</em> pick <code>rhelpdesk.utwente.io</code>. Under <em>Create project as subdirectory of:</em> you can pick a directory in which you want to save all the files. When asked, please log in using your UT e-mail and password.</p>
+<p>You need to set a few things up to be able to change the website
+using RStudio. This setup only has to be done once.<br />
+First, make sure git is installed. Please follow the instructions at <a
+href="http://r-bio.github.io/git-installation/">http://r-bio.github.io/git-installation/</a>.
+Once this is done, you can open RStudio, and click <em>File -&gt; New
+Project…</em>. Pick the <em>Version Control</em> option, and then pick
+<em>Git</em>. Under <em>Repository URL:</em> fill in
+<code>https://git.snt.utwente.nl/rhelpdesk/rhelpdesk.utwente.io.git</code>
+and as <em>Project directory name</em> pick
+<code>rhelpdesk.utwente.io</code>. Under <em>Create project as
+subdirectory of:</em> you can pick a directory in which you want to save
+all the files. When asked, please log in using your UT e-mail and
+password.</p>
 </div>
 <div id="making-changes" class="section level3">
 <h3>Making changes</h3>
-<p>To start making changes, open the <code>rhelpdesk.utwente.io.Rproj</code> file. In the window in the top-right, go to the <em>Git</em> tab. Before making changes, press <em>Pull</em>, to update all the files to their most recent versions. After that, you can navigate to the <em>book</em> folder in the <em>Files</em> tab in the window on the bottom-right, and make the changes there you would like to make, and save the files. To see how your changes would look on the website, you can press the <em>Knit</em> button to preview the specific page you were working on, or press <em>Build website</em> under the <em>Build</em> tab to preview the entire website.<br />
-Once you’re done making changes, press <em>Commit</em> in the <em>Git</em> tab. Tick the boxes in front of all the files that you have updated. Please add a description of the changes you made under <em>Commit Message</em> and press <em>Commit</em>.<br />
-These changes are now only made locally. To put these changes on the online website, press <em>Push</em>. It can take several minutes for changes to take effect on the website.</p>
+<p>To start making changes, open the
+<code>rhelpdesk.utwente.io.Rproj</code> file. In the window in the
+top-right, go to the <em>Git</em> tab. Before making changes, press
+<em>Pull</em>, to update all the files to their most recent versions.
+After that, you can navigate to the <em>book</em> folder in the
+<em>Files</em> tab in the window on the bottom-right, and make the
+changes there you would like to make, and save the files. To see how
+your changes would look on the website, you can press the <em>Knit</em>
+button to preview the specific page you were working on, or press
+<em>Build website</em> under the <em>Build</em> tab to preview the
+entire website.<br />
+Once you’re done making changes, press <em>Commit</em> in the
+<em>Git</em> tab. Tick the boxes in front of all the files that you have
+updated. Please add a description of the changes you made under
+<em>Commit Message</em> and press <em>Commit</em>.<br />
+These changes are now only made locally. To put these changes on the
+online website, press <em>Push</em>. It can take several minutes for
+changes to take effect on the website.</p>
 </div>
 </div>
 </div>
 <div id="changing-the-pdf" class="section level1">
 <h1>Changing the PDF</h1>
-<p>When making changes to the website, the PDF on the website that can be found <a href="https://rhelpdesk.utwente.io/Intro-R-for-RM_DS.pdf">here</a> will automatically be updated as well. No extra steps are required.</p>
+<p>When making changes to the website, the PDF on the website that can
+be found <a
+href="https://rhelpdesk.utwente.io/Intro-R-for-RM_DS.pdf">here</a> will
+automatically be updated as well. No extra steps are required.</p>
 </div>
 <div id="changing-the-canvas-page" class="section level1">
 <h1>Changing the Canvas Page</h1>
-<p>First make sure the changes you would like to make are applied to the website page. Copy the URL of the website page, paste it below, and press <em>Convert</em></p>
+<p>First make sure the changes you would like to make are applied to the
+website page. Copy the URL of the website page, paste it below, and
+press <em>Convert</em></p>
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js" integrity="sha512-GoORoNnxst42zE3rYPj4bNBm0Q6ZRXKNH2D9nEmNvVF/z24ywVnijAWVi/09iBiVDQVf3UlZHpzhAJIdd9BXqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-html.min.js" integrity="sha512-qyse7v2aBOxbbQxKhaDcI+XKKBDL3CPR5xsipXPUX3GwzE6lcteLkFsTS7emYQcDtTqY/nsq99FztWBXzmfFAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -580,7 +620,11 @@ editor.setOptions({
   maxLines: 10
 });
 </script>
-<p>On Canvas, go to the page you would like to edit, and press <em>Edit</em> or create a new page. In the editing window, press the <code>&lt;/&gt;</code> button, and paste the text in the box above in the field. Afterwards, press <em>Save</em> or <em>Save &amp; Publish</em>.</p>
+<p>On Canvas, go to the page you would like to edit, and press
+<em>Edit</em> or create a new page. In the editing window, press the
+<code>&lt;/&gt;</code> button, and paste the text in the box above in
+the field. Afterwards, press <em>Save</em> or <em>Save &amp;
+Publish</em>.</p>
 </div>
 
 
@@ -621,6 +665,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

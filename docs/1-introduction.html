@@ -361,12 +361,6 @@ div.tocify {
      
   </a>
 </li>
-<li>
-  <a href="https://canvas.utwente.nl/enroll/7C868F">
-    <span class="fas fa-globe"></span>
-     
-  </a>
-</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -495,8 +489,8 @@ project and to tell R you will use that directory for this specific
 project.</p>
 <pre class="r"><code>setwd(&quot;[...]&quot;)
 
-# The [...] has to be replaced by something applicable to your computer, for
-# example.
+# The [...] has to be replaced by something applicable to your computer,
+# for example.
 
 setwd(&quot;/Volumes/myname/Userdata/My Documents/Documenten/Research/2020_Local_elections&quot;)
 
@@ -557,8 +551,8 @@ n &lt;- 10
 # or to create a vector of numbers, you can write ...
 dataset_1 &lt;- c(3, 2, 1, 4, 9, 6, 7, 100)
 
-# calling this object in a script or in the console gives the contents of the
-# thus created object.
+# calling this object in a script or in the console gives the contents of
+# the thus created object.
 dataset_1</code></pre>
 <pre><code>## [1]   3   2   1   4   9   6   7 100</code></pre>
 <pre class="r"><code># this give the following output in the console:</code></pre>
@@ -566,9 +560,9 @@ dataset_1</code></pre>
 ‘do this’ statements. R has a lot of those, and users are adding more
 every day. Functions end with parentheses: “()”.<a href="#fn2"
 class="footnote-ref" id="fnref2"><sup>2</sup></a> For example:</p>
-<pre class="r"><code># The command head() means &#39;Show me the first part (the head) of a data set&#39;.
-# In this example the called data set is an object called dataset_1 (see
-# above).
+<pre class="r"><code># The command head() means &#39;Show me the first part (the head) of a data
+# set&#39;.  In this example the called data set is an object called dataset_1
+# (see above).
 
 head(dataset_1)</code></pre>
 </div>
@@ -678,7 +672,8 @@ to things you can do in RStudio. Importing your data
 commands like <code>read.csv()</code> in the script too.</p>
 <p>When writing a script, start with a title, preceded with the #
 (because it is not a command) on top, for example:</p>
-<pre class="r"><code># This script is for computing the mean maximum temperature for several days
+<pre class="r"><code># This script is for computing the mean maximum temperature for several
+# days
 
 # This vector includes the highest temperatures recorded on several days
 temperature &lt;- c(19, 17, 20, 20, 13, 13, 15, 17)
@@ -785,8 +780,8 @@ packages to download (<code>install.packages()</code>) and call
 <h2>Datasets in R-packages</h2>
 <p>Apart from a set of commands, most packages also contain data sets,
 to enable easy illustrations of what packages can do.</p>
-<pre class="r"><code># to see which datasets are available in the packages loaded in the library,
-# use:
+<pre class="r"><code># to see which datasets are available in the packages loaded in the
+# library, use:
 
 data()
 

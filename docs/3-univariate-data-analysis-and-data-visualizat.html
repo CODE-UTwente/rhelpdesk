@@ -361,12 +361,6 @@ div.tocify {
      
   </a>
 </li>
-<li>
-  <a href="https://canvas.utwente.nl/enroll/7C868F">
-    <span class="fas fa-globe"></span>
-     
-  </a>
-</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -396,21 +390,22 @@ class="section level2">
 standard deviation</h2>
 <p>Below you will see several examples of obtaining descriptive
 statistics for items in a data set called <code>data_new</code>.</p>
-<pre class="r"><code># To summarise some main characteristics of one numerical item (called Item1):
+<pre class="r"><code># To summarise some main characteristics of one numerical item (called
+# Item1):
 data_new %&gt;%
     summarise(mean = mean(Item1), sd = sd(Item1), var = var(Item1), minimum = min(Item1),
         maximum = max(Item1))
 # You can also ask for only one of the statistics.
 
-# To summarize the main characteristics (mean, median, minimum, maximum, Q1, Q3
-# and number of missings) of multiple variables (in this example: the first 10
-# variables) in the data set:
+# To summarize the main characteristics (mean, median, minimum, maximum,
+# Q1, Q3 and number of missings) of multiple variables (in this example:
+# the first 10 variables) in the data set:
 data_new %&gt;%
     select(1:10) %&gt;%
     summary()
 
-# To compute a certain statistic for the first 10 variables in the data set,
-# you can also use the map() function:
+# To compute a certain statistic for the first 10 variables in the data
+# set, you can also use the map() function:
 
 data_new %&gt;%
     select(1:10) %&gt;%
@@ -432,10 +427,11 @@ gss_cat %&gt;%
 gss_cat %&gt;%
     map(tabyl)
 
-# If the values are in alphabetical, rather than in a meaningful order, make
-# sure the variable is stored as an &#39;ordered factor&#39; (see chapter 2).
+# If the values are in alphabetical, rather than in a meaningful order,
+# make sure the variable is stored as an &#39;ordered factor&#39; (see chapter 2).
 
-# The frequency table can be made nicer using the adorn commands, for example:
+# The frequency table can be made nicer using the adorn commands, for
+# example:
 gss_cat %&gt;%
     tabyl(marital) %&gt;%
     adorn_totals(&quot;row&quot;) %&gt;%
