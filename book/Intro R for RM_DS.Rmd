@@ -1,6 +1,6 @@
 ---
 title: "Intro R for BMS Bachelor programs"
-author: "OMD staff"
+author: "CODE staff"
 date: "version `r Sys.Date()`"
 output:
   pdf_document
@@ -26,7 +26,7 @@ This document describes how bachelor students in BMS programs will use the progr
 ## How to use this document?
 
 There is no need to learn this document 'by heart'. It is mainly a reference guide. Read until "Installing R and RStudio on your laptop" once before doing anything else with R. Then install R and Rstudio. After that read the rest of "1. Introducing R and RStudio" once.
-After this make some of the assignments we created. Use the materials in this reference guide, in case you get stuck. After doing three of four R assignments, read the first chapter again, and skim through the remainder of the document.
+After this make some of the assignments we created for some of the courses. Use the materials in this reference guide, in case you get stuck. After doing three of four R assignments, read the first chapter again, and skim through the remainder of the document.
 Before you start using R in other courses, read through the document again, to re-familiarize yourself with R.
 
 \newpage

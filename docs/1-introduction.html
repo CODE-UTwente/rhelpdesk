@@ -353,9 +353,6 @@ div.tocify {
     </li>
   </ul>
 </li>
-<li>
-  <a href="https://canvas.utwente.nl/courses/8022/discussion_topics">Discussions</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -399,7 +396,7 @@ advantages compared to these programs:</p>
 <ul>
 <li>it is free, so you can also use it after you finished your
 studies;</li>
-<li>is is acollective enterprise, and researchers all over the world
+<li>is is a collective enterprise, and researchers all over the world
 write code In R, simplifying tasks, which you can use for free too;</li>
 <li>it is open-source and therefore transparent;</li>
 <li>it is extremely flexible, and data analysis and data visualization
@@ -408,8 +405,8 @@ possibilities in R are almost endless.</li>
 <p>R allows you to manage data sets, to change data in order to
 facilitate analysis, to analyze data and to visualize data. R also
 allows you to integrate data in text files, which reduces the amount of
-‘copy-pasting’ and reduces the number of mistakes made in this process,
-thus improving the reproducibility of research.</p>
+‘copy-pasting’ and thus reduces the number of mistakes made in this
+process. This improves the reproducibility of research.</p>
 </div>
 <div id="what-is-rstudio" class="section level2">
 <h2>What is RStudio?</h2>
@@ -472,7 +469,9 @@ R.</li>
 <p>A nice feature in R is the help function. If you need help on a
 function, just type a “?” in front of a function. If you type “??” in
 front of the function, you will even get help from all over the web.</p>
-<pre class="r"><code>?tidyverse
+<pre class="r"><code># For example use this:
+
+?data.frame
 ??tidyverse</code></pre>
 <p>After typing and running these commands, the answer can be found in
 the right side lower corner of the RStudio panel.</p>
@@ -526,7 +525,8 @@ cursor in the script automatically jumps to the next line.</p>
 <p>The <em>console</em> panel (at the bottom in RStudio, with the prompt
 “&gt;” ) can be used to directly type commands. For example, when using
 R as a simple calculator you can just type in the numbers in the
-console.</p>
+console. However, you are not advised using the console: do as much as
+possible via the script.</p>
 <pre class="r"><code># adding 1 + 1
 &gt; 1 + 1
 [1] 2</code></pre>
@@ -537,9 +537,10 @@ frequency table, you can store the table (the object) in the global
 environment. The object can always be called back later in the analysis.
 The global environment can be saved separately and called later,
 although for many practical purposes it is sufficient to create a global
-environment anew, by using the <em>script</em> (the set of commands and
-comments) which created that environment in the first place. The global
-environment can be found on the right upper side of RStudio.</p>
+environment anew, by using the <em>script</em> (remember: the set of
+commands and comments) which created that environment in the first
+place. The global environment can be found on the right upper side of
+RStudio.</p>
 <p>Data sets, numbers, and output can be stored as <em>objects</em> in
 the global environment, using the <em>(left) assignment operator</em>
 “&lt;-”.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
@@ -553,7 +554,7 @@ only use names like ‘data_dpes_2021’, or ‘freq_tab_001’.</p>
 # object &#39;n&#39; to &#39;10&#39;
 n &lt;- 10
 
-# or to create a simple vector of numbers, you can write ...
+# or to create a vector of numbers, you can write ...
 dataset_1 &lt;- c(3, 2, 1, 4, 9, 6, 7, 100)
 
 # calling this object in a script or in the console gives the contents of the
@@ -566,7 +567,8 @@ dataset_1</code></pre>
 every day. Functions end with parentheses: “()”.<a href="#fn2"
 class="footnote-ref" id="fnref2"><sup>2</sup></a> For example:</p>
 <pre class="r"><code># The command head() means &#39;Show me the first part (the head) of a data set&#39;.
-# In this example the called data set is an object called dataset_1.
+# In this example the called data set is an object called dataset_1 (see
+# above).
 
 head(dataset_1)</code></pre>
 </div>
@@ -577,23 +579,24 @@ rows and columns) in which the columns are variables and the rows are
 units of observation (observations). Sometimes this data frame is called
 a <em>data matrix</em>, but in the R language a data matrix is a data
 frame with only numbers, not with strings (text) or other types of
-variables. One single column (or: a variable) with numbers or with
-strings is called a <em>vector</em>.<a href="#fn3" class="footnote-ref"
+variables.<br />
+One single column (or: a variable) with numbers or with strings is
+called a <em>vector</em>.<a href="#fn3" class="footnote-ref"
 id="fnref3"><sup>3</sup></a> Sometimes objects are not just data frames,
-but combinations of data frames and something more. These objects are
-called <em>lists</em>.</p>
-<p>For reasons beyond the scope of this short introduction, some
-functions only work with data frames (even if they contain only
-numbers), not with matrices. In these cases you have to explicitly tell
-R your matrix is a data frame.</p>
+but combinations of data frames and something more, or combinations of
+different data frames. These objects are called <em>lists</em>.</p>
+<p>For reasons beyond the scope of this introduction, some functions
+only work with data frames (even if they contain only numbers), not with
+matrices. In these cases you have to explicitly tell R your matrix is a
+data frame.</p>
 <p>Variables in a data frame have a name (like ‘x’ or ‘gender’). These
 can be be called directly using the ‘$’ sign. So ‘data$gender’ refers to
 the column/variable ‘gender’ in the data frame. More generally, the ‘$’
 sign refers to a ‘component’ of an object. If you store output as an
 object to the global environment, you can call a specific element of
 that output using the ‘$’ sign.</p>
-<p>There are different types of variables in a vector/data frame. The
-most important are a variable containing:</p>
+<p>There can be different types of variables in a vector/data frame. The
+most important are variables containing:</p>
 <ul>
 <li>logical values (True or False) (used for some dummy variables);</li>
 <li>a factor consisting of a limited set of attributes (‘low’, ‘middle’
@@ -611,7 +614,7 @@ have to change them to (ordered) ‘factor’ variables).</li>
 </div>
 <div id="operators-in-r" class="section level2">
 <h2>Operators in R</h2>
-<p>The most frequently used operators used in R, beyond the well bnown -
+<p>The most frequently used operators used in R, beyond the well known -
 (Minus), + (Plus), * (Multiplication), / (Division) and &lt;- (the Left
 assignment operator), are:</p>
 <table>
@@ -664,16 +667,17 @@ assignment operator), are:</p>
 <p>Commands can all be put in the console (the one at the bottom-left of
 RStudio, starting with the “&gt;”). But since you often want to redo the
 same thing (trying and tweaking), and because you want to ask others for
-help and show them exactly what you did, we strongly urge you to store
-all commands in a <em>script</em>. Open a new script in RStudio (file
--&gt; new file -&gt; R script). This will appear in the upper-left pane.
-Type all commands in the script. This script can be stored (extension is
-.R) and is basically a .txt file. This also applies to some things you
-can do in RStudio. Importing you data can be done by using RStudio, but
-we strongly urge you to use commands like <code>read.csv()</code> in put
-these in the script too.</p>
-<p>When writing a script, start with a title, preceded with the #,
-because it is not a command, on top, for example:</p>
+help and show them exactly what you did, we urge you to store all
+commands in a <em>script</em>.</p>
+<p>Open a new script in RStudio (file -&gt; new file -&gt; R script).
+This will appear in the upper-left pane. Type all commands in the
+script. This script can be stored (extension is .R) and is basically a
+.txt file. The rule to use the script as much as possible also applies
+to things you can do in RStudio. Importing your data
+<strong>can</strong> be done by using RStudio, but we urge you to use
+commands like <code>read.csv()</code> in the script too.</p>
+<p>When writing a script, start with a title, preceded with the #
+(because it is not a command) on top, for example:</p>
 <pre class="r"><code># This script is for computing the mean maximum temperature for several days
 
 # This vector includes the highest temperatures recorded on several days
@@ -681,13 +685,8 @@ temperature &lt;- c(19, 17, 20, 20, 13, 13, 15, 17)
 
 mean(temperature)  # to compute the mean maximum temperature</code></pre>
 <p>When writing commands in the script, always put a space after a
-comma, and never before a comma, just like in regular English. Never put
-spaces inside or outside parentheses for regular function calls. Most
-infix operators (==, +, -, &lt;-, etc.) should always be surrounded by
-spaces. Use ” for quoting text. Only use ’ when the text already
-contains double quotes and no single quotes. If the arguments to a
-function don’t all fit on one line (of max 80 characters), put each
-argument on its own line and indent with two spaces.</p>
+comma, and never before a comma, just like in regular English.<a
+href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 </div>
 <div id="downloading-and-activating-r-packages" class="section level2">
 <h2>Downloading and activating R Packages</h2>
@@ -698,17 +697,15 @@ argument on its own line and indent with two spaces.</p>
 include new functions. After downloading (= installing) a package, there
 is no need to do that every time you are using R, although it may be
 wise to sometimes check for updates. After installing and opening R and
-RStudio, you can install packages using a command in either the console
-or in a script.</p>
-<pre class="r"><code># Installing the packages &#39;foreign&#39; and &#39;tidyverse&#39; (both to be introduced
-# later) is done with the following command in R:
+RStudio, you can install packages using a command in a script.</p>
+<pre class="r"><code># This script installs the packages &#39;foreign&#39; and &#39;tidyverse&#39;:
 
 install.packages(&quot;foreign&quot;, &quot;tidyverse&quot;)</code></pre>
 <p>Downloading (= installing) a package is not the same as ‘calling’
 that package for usage in R: packages are not automatically opened when
 you are using R and RStudio. And that is a good thing: packages can use
-conflicting short cuts (using functions with the same name, but with
-very different outcomes). Therefore, each time you are using a specific
+conflicting short cuts (functions with the same name, but with very
+different outcomes). Therefore, each time you are using a specific
 <em>package</em> you have to load that package into the library (aka
 ‘activate’). A <em>script</em> therefore often starts with ‘calling’ the
 relevant packages for that script.</p>
@@ -722,14 +719,14 @@ library(tidyverse)</code></pre>
 <p>A lot of statistical analyses can be done by using ‘base R’ and its
 associated functions, but for some more specialized analyses we will use
 specialized packages.</p>
-<p>Since the number of packages is huge<a href="#fn4"
-class="footnote-ref" id="fnref4"><sup>4</sup></a>, we have decided to
+<p>Since the number of packages is huge<a href="#fn5"
+class="footnote-ref" id="fnref5"><sup>5</sup></a>, we have decided to
 use only a limited number of packages at BMS. The use of R at BMS will
-be based on the <em>tidyverse</em><a href="#fn5" class="footnote-ref"
-id="fnref5"><sup>5</sup></a>. We will therefore mainly use packages
+be based on the <em>tidyverse</em><a href="#fn6" class="footnote-ref"
+id="fnref6"><sup>6</sup></a>. We will therefore mainly use packages
 belonging to the <em>tidyverse</em> (that are installed and loaded when
-installing and loading the <em>tidyverse</em> package).<a href="#fn6"
-class="footnote-ref" id="fnref6"><sup>6</sup></a> We will also use some
+installing and loading the <em>tidyverse</em> package).<a href="#fn7"
+class="footnote-ref" id="fnref7"><sup>7</sup></a> We will also use some
 other packages.</p>
 <p>Here is an overview of the packages you will be using at BMS:</p>
 <ul>
@@ -758,9 +755,10 @@ come handy when doing statistical analysis. This package is also part of
 predicted values (this package is also part of
 <code>tidymodels</code>).</li>
 </ul>
-<p>Make sure to put such a tidyverse package in the library if you want
-to use it. Unlike the core packages, these packages are NOT
-automatically loaded when using the library(“tidyverse”) command.</p>
+<p>Make sure to explicitly put such a tidyverse related package in the
+library if you want to use it. Unlike the core packages, these packages
+are NOT automatically loaded when using the library(“tidyverse”)
+command.</p>
 <p>Finally, we will use a set of specialized packages, including:</p>
 <ul>
 <li><code>foreign</code> to import SPSS, Stata, and SAS data;</li>
@@ -780,7 +778,8 @@ Reliability Coefficients (psychometrics)</li>
 <li><code>mirt</code> for Item Response Theory (psychometrics).</li>
 </ul>
 <p>At the beginning of a meeting or course we will tell you which
-packages to download (install.packages) and call (library).</p>
+packages to download (<code>install.packages()</code>) and call
+(<code>library()</code>).</p>
 </div>
 <div id="datasets-in-r-packages" class="section level2">
 <h2>Datasets in R-packages</h2>
@@ -797,46 +796,46 @@ data(package = .packages(all.available = TRUE))
 
 # sometimes it makes sense to put a data set in the Global Environment:
 
-gss_cat &lt;- gss_cat  # loaded in the package forcats, which is part of the core tidyverse (see below)</code></pre>
+gss_cat &lt;- gss_cat  # loaded in the package forcats, which is part of the core tidyverse</code></pre>
 </div>
 <div id="the-pipe-operator" class="section level2">
 <h2>The ‘pipe’ operator</h2>
 <iframe src="https://www.youtube-nocookie.com/embed/9yjhxvu-pDg?modestbranding=1&amp;rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" sandbox="allow-scripts allow-same-origin" allowfullscreen width="500" height="281">
 </iframe>
 <p>Some packages add additional operators to the set of base R
-operators. The ‘pipe’ operator is the most important one. We urge you to
-use the ‘pipe’ function as much as possible.</p>
-<p>Suppose we wanted to create a new object with some (only some)
-gss_cat data from 2000 after we imported these data as an object into R.
-In this data set all rows are observations. In this case individuals:
+operators. The ‘pipe’ operator (<code>%&gt;%</code>) is the most
+important one. We urge you to use the ‘pipe’ function as much as
+possible.</p>
+<p>Suppose we wanted to create a new object with some gss_cat data from
+2000 after we imported these data as an object into R. In this data set
 each row is an individual in a specific year. Religion and partyid are
 variables in this dataset. Suppose we want to select <em>only</em>
 <strong>data</strong> from 2000, and focus <em>only</em> on age and
-religion, and we want to store these data in a new (smaller) object
-called ‘gss_cat_small’. We could use:</p>
+religion, and we want to store these data in a smaller object called
+‘gss_cat_small’. We <strong>could</strong> use:</p>
 <pre class="r"><code>gss_cat &lt;- gss_cat  # storing the data set in the global environment
 gss_cat_small &lt;- filter(select(gss_cat, year, age, relig), year == 2000)  # filtering variables and selecting cases</code></pre>
 <p>This is called a <em>nested command</em> (with the functions ‘filter’
 and ‘select’). A nested command is often difficult to understand. Much
 simpler is:</p>
-<pre class="r"><code>gss_cat_small &lt;- gss_cat %&gt;%
+<pre class="r"><code># using a &#39;pipe&#39; to simplify commands
+gss_cat_small &lt;- gss_cat %&gt;%
   select(gss_cat, year, age, relig) %&gt;%
   filter(year == 2000)</code></pre>
-<p>This command means: you have a big data frame (gss_cat, which is an
-easily called object in the package), you select some variables from
-this data frame, and then you filter those cases (from a specific
-year).</p>
+<p>This second command will do the same thing and means: you have a big
+data frame (gss_cat, which is an easily called object in the package),
+you select some variables from this data frame, and then you filter
+those cases (from a specific year).</p>
 <p>When writing code, use the pipe <code>%&gt;%</code> operator as much
 as possible. There is special hotkey in RStudio for the pipe operator:
 Ctrl+Shift+M (Windows &amp; Linux), Cmd+Shift+M (Mac). When indenting
 after a pipe &gt;%&gt; operator, you need to use two spaces (you can
 automatically set this in RStudio’s preferences (RStudio / Preferences /
 Code/ Insert spaces for tab / tab width = 2).</p>
-<p>The rest of the document will be made available as a reference for
-what we expect you to know in various phases of your study program.
-Especially this second half of the document will be updated regularly.
-<em>We want to stick to about 20 to 25 pages.</em> Suggestions for
-improvement are welcome.</p>
+<p>This document will be made available as a reference for what we
+expect you to know in various phases of your study program. The document
+will be updated regularly. <em>We want to stick to about 20 to 25
+pages.</em> Suggestions for improvement are welcome.</p>
 <p>Please note: some commands below work without additional packages (in
 ‘base R’), however throughout the remainder of this document we assume
 you have installed the (core) tidyverse packages by using
@@ -983,24 +982,31 @@ the “&lt;-” assignment operator<a href="#fnref1"
 class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>The <code>magrittr</code> package (included in the
 <code>tidyverse</code> package) allows you to omit parentheses () on
-functions that don’t have arguments. Avoid this feature, because it may
+functions that do not have arguments. Avoid this feature, because it may
 be confusing. Be consistent in that functions always have parentheses,
-objects don’t.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+objects do not.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>A <em>vector</em> can contain numbers (1, 1.5, 3.333
 etc.), or strings (words), or factors (to be explained later), or
 integers (1,2,3,4,5), etc. A single vector cannot have
 <em>different</em> types of data.<a href="#fnref3"
 class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p> <a
+<li id="fn4"><p>In addition: never put spaces inside or outside
+parentheses for regular function calls. Most infix operators (==, +, -,
+&lt;-, etc.) should always be surrounded by spaces. Use ” for quoting
+text. Only use ’ when the text already contains double quotes and no
+single quotes. If the arguments to a function do not all fit on one line
+(of max 80 characters), put each argument on its own line and indent
+with two spaces.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p> <a
 href="https://cran.r-project.org/web/packages/available_packages_by_name.html">click
-here to see all available packages</a><a href="#fnref4"
+here to see all available packages</a><a href="#fnref5"
 class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p> <a href="https://style.tidyverse.org/">click here to
-see the tidyverse style guide</a><a href="#fnref5"
+<li id="fn6"><p> <a href="https://style.tidyverse.org/">click here to
+see the tidyverse style guide</a><a href="#fnref6"
 class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p>What is a bit confusing, is that the tidyverse is both a
+<li id="fn7"><p>What is a bit confusing, is that the tidyverse is both a
 <em>set</em> of packages, and a ‘programming philosophy’. There are many
-more packages adhering to that tidyverse philosophy.<a href="#fnref6"
+more packages adhering to that tidyverse philosophy.<a href="#fnref7"
 class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

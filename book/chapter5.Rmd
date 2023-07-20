@@ -3,7 +3,7 @@ title: "Multivariate data analysis"
 output: html_fragment
 ---
 
-## 3-way contingency tables with tabyl
+## 3-way contingency tables: tabyl
 
 Use the `tabyl()` function from the `janitor` package. With several adorning functions you can adjust the table to your liking. You can force the table displaying the values 'none', 'some' and 'many' in the correct order, by making sure the variable is stored as an 'ordered factor' (see chapter 2).
 
@@ -23,7 +23,7 @@ mtcars %>%
 ```
   
   
-## Groups in a scatterplot
+## Groups in a scatterplot and facetting: ggplot
 
 If you want to visualize different groups in the scatterplot, you can add extra variables to the aesthetics of a ggplot. In addition to x and y, you can use color (the “outside” color of points), fill (the “inside” color of the points), shape (of the points) and size.
 
@@ -39,8 +39,6 @@ mtcars %>%
 
 ```
   
-## Faceting of bivariate visualisations
-
 For different subplots, use the layer `facet_wrap(~ )` as default. This is another way to introduce a third variable in the context of data visualizations.
 
 ```{r faceting, echo=T, eval=F}
@@ -110,7 +108,7 @@ mtcars %>%
 
 ```
 
-There are various ways to test for unequal variances in a model. These are available in various packages, including `car` and in `lmtest`. Levene's test is introduced in chapter 4.
+There are various ways to test for equal variances in a model. These are available in various packages, including `car` and in `lmtest`. Levene's test is introduced in chapter 4.
 
 ```{r variance tests, echo=T, eval=F}
 

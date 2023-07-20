@@ -1,3 +1,3 @@
-# rhelpdesk.utwente.io
+# https://code-utwente.github.io/rhelpdesk
 
 R-helpdesk website

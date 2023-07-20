@@ -353,9 +353,6 @@ div.tocify {
     </li>
   </ul>
 </li>
-<li>
-  <a href="https://canvas.utwente.nl/courses/8022/discussion_topics">Discussions</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -388,8 +385,8 @@ div.tocify {
 more than two variables using R.</p>
 <div id="explanation" class="section level1">
 <h1>Explanation</h1>
-<div id="way-contingency-tables-with-tabyl" class="section level2">
-<h2>3-way contingency tables with tabyl</h2>
+<div id="way-contingency-tables-tabyl" class="section level2">
+<h2>3-way contingency tables: tabyl</h2>
 <p>Use the <code>tabyl()</code> function from the <code>janitor</code>
 package. With several adorning functions you can adjust the table to
 your liking. You can force the table displaying the values ‘none’,
@@ -406,8 +403,9 @@ mtcars %&gt;%
   adorn_pct_formatting(digits = 1) %&gt;%
   adorn_ns() #show the numbers of cases</code></pre>
 </div>
-<div id="groups-in-a-scatterplot" class="section level2">
-<h2>Groups in a scatterplot</h2>
+<div id="groups-in-a-scatterplot-and-facetting-ggplot"
+class="section level2">
+<h2>Groups in a scatterplot and facetting: ggplot</h2>
 <p>If you want to visualize different groups in the scatterplot, you can
 add extra variables to the aesthetics of a ggplot. In addition to x and
 y, you can use color (the “outside” color of points), fill (the “inside”
@@ -419,9 +417,6 @@ color of the points), shape (of the points) and size.</p>
              )
          ) + 
   geom_point()</code></pre>
-</div>
-<div id="faceting-of-bivariate-visualisations" class="section level2">
-<h2>Faceting of bivariate visualisations</h2>
 <p>For different subplots, use the layer <code>facet_wrap(~ )</code> as
 default. This is another way to introduce a third variable in the
 context of data visualizations.</p>
@@ -480,9 +475,9 @@ mtcars &lt;- mtcars %&gt;%
 mtcars %&gt;% 
   ggplot(aes(x = pred, y = resid)) + 
   geom_point()</code></pre>
-<p>There are various ways to test for unequal variances in a model.
-These are available in various packages, including <code>car</code> and
-in <code>lmtest</code>. Levene’s test is introduced in chapter 4.</p>
+<p>There are various ways to test for equal variances in a model. These
+are available in various packages, including <code>car</code> and in
+<code>lmtest</code>. Levene’s test is introduced in chapter 4.</p>
 <pre class="r"><code># Breusch-Pagan Test
 library(lmtest)
 

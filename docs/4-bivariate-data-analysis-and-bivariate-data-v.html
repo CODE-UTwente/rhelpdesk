@@ -353,9 +353,6 @@ div.tocify {
     </li>
   </ul>
 </li>
-<li>
-  <a href="https://canvas.utwente.nl/courses/8022/discussion_topics">Discussions</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -389,9 +386,9 @@ vizualisation</h1>
 and their relationships using R.</p>
 <div id="explanation" class="section level1">
 <h1>Explanation</h1>
-<div id="contingency-tables-a.k.a.-crosstabs-with-tabyl"
+<div id="contingency-tables-a.k.a.-crosstabs-tabyl"
 class="section level2">
-<h2>Contingency tables (a.k.a. crosstabs) with tabyl</h2>
+<h2>Contingency tables (a.k.a. crosstabs): tabyl</h2>
 <p>Use the <code>tabyl()</code> function from the <code>janitor</code>
 package. The first line creates the table. The rest formats the table
 (giving it a title, adding totals etc…).</p>
@@ -405,10 +402,10 @@ mtcars %&gt;%
   adorn_pct_formatting(digits = 1) %&gt;%
   adorn_ns() #show the numbers of cases</code></pre>
 </div>
-<div id="visualizing-relationships-between-different-variables-ggplot"
+<div id="visualizing-relationships-between-variables-ggplot"
 class="section level2">
-<h2>Visualizing relationships between different variables: ggplot</h2>
-<p>For a boxplot use <code>geom_boxplot()</code>:</p>
+<h2>Visualizing relationships between variables: ggplot</h2>
+<p>For a bivariate visualizations:</p>
 <pre class="r"><code># A boxplot comparing different species (nominal variable)
 iris %&gt;% 
   ggplot(aes(x = Species, y = Petal.Width)) +
@@ -426,9 +423,9 @@ mtcars %&gt;%
   geom_smooth(method = &quot;lm&quot;, se = F)</code></pre>
 </div>
 <div
-id="descriptive-measures-and-inferential-statistics-for-associations-parametric"
+id="descriptive-and-inferential-statistics-for-associations-parametric"
 class="section level2">
-<h2>Descriptive measures and inferential statistics for associations
+<h2>Descriptive and inferential statistics for associations
 (parametric)</h2>
 <p>For Pearson’s r, we use</p>
 <pre class="r"><code>cor.test(x = mtcars$mpg, 
@@ -475,10 +472,10 @@ mtcars %&gt;% leveneTest(mpg ~ factor( am ),
 groups have equal variances.</p>
 </div>
 <div
-id="descriptive-measures-and-inferential-statistics-for-associations-non-parametric"
+id="descriptive-and-inferential-statistics-for-associations-non-parametric"
 class="section level2">
-<h2>Descriptive measures and inferential statistics for associations
-(non parametric)</h2>
+<h2>Descriptive and inferential statistics for associations (non
+parametric)</h2>
 <p>For Cramer’s V, we use</p>
 <pre class="r"><code># install and load the package &quot;rcompanion&quot; first, this contains the command cramerV.
 # this function works on tables, so create a table first

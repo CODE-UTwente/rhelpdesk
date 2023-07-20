@@ -13,7 +13,8 @@
 
 <title>Psychometric analyses</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -63,6 +64,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 
@@ -87,6 +89,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -144,11 +149,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +186,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +195,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -299,12 +301,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -312,7 +314,7 @@ div.tocify {
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -325,7 +327,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Chapters
      
     <span class="caret"></span>
@@ -350,9 +352,6 @@ div.tocify {
       <a href="6-psychometric-analyses.html">6. Psychometric analyses</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="https://canvas.utwente.nl/courses/8022/discussion_topics">Discussions</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -382,16 +381,20 @@ div.tocify {
 </div>
 
 
-<p>On this page, you can find out how to run a factor analysis in R and how to run Classical Test Theory analyses and Item Response Theory models in R.</p>
+<p>On this page, you can find out how to run a factor analysis in R and
+how to run Classical Test Theory analyses and Item Response Theory
+models in R.</p>
 <div id="explanation" class="section level1">
 <h1>Explanation</h1>
-<p>In this chapter, you can find out how to run a factor analysis in R and how to run Classical Test Theory analyses and Item Response Theory models in R. For psychometric analyses we use the packages: <code>psych</code>, <code>CTT</code>, <code>Lambda4</code> and <code>mirt</code>.</p>
+<p>This chapter is about factor analysis, Classical Test Theory and Item
+Response Theory models in R. For psychometric analyses we use the
+packages: <code>psych</code>, <code>CTT</code>, <code>Lambda4</code> and
+<code>mirt</code>.</p>
 <div id="factor-analysis" class="section level2">
 <h2>Factor analysis</h2>
 <pre class="r"><code>library(psych)
 
-## Before running a factor analyses, explore your data and check the
-## following:
+## Before running a factor analyses, explore your data and check the following:
 
 data_new %&gt;%
     KMO()  # Kaiser-Meyer-Olkin measure
@@ -419,14 +422,23 @@ eigenvalues &lt;- pca$values
 tibble(component = 1:length(eigenvalues), eigenvalues) %&gt;%
     ggplot(aes(x = component, y = eigenvalues)) + geom_line() + scale_x_continuous(breaks = 1:length(eigenvalues))
 
-# OR using:
+# OR use:
 data_new %&gt;%
     scree(, factors = FALSE)
 
 ## to run a factor analysis with two factors:
 model_2f &lt;- factanal(data_new, factors = 2, rotation = &quot;varimax&quot;)</code></pre>
-<p>Running the previous code on a real data set, will not show you the results of the factor analysis. You need to type in <code>model_2f</code> in the R console to see the results.</p>
-<p>Please note that in the output of a factor analysis, a Chi square statistic is shown. This Chi square statistic belongs to a test for the model fit. The null hypothesis for this test is: the model that is used (in the example: a model with two factors) fits. A non-significant result is thus preferable, as we do not reject the null hypothesis then. But, large sample sizes easily give significant results. Because of that, we would like you to ignore this part of the output completely and focus on the interpretation of the factors instead.</p>
+<p>Running the previous code on a real data set, will not show you the
+results of the factor analysis. You need to type in
+<code>model_2f</code> in the R console to see the results.</p>
+<p>Please note that in the output of a factor analysis, a Chi square
+statistic is shown. This Chi square statistic belongs to a test for the
+model fit. The null hypothesis for this test is: the model that is used
+(in the example: a model with two factors) fits. A non-significant
+result is thus preferable, as we do not reject the null hypothesis then.
+But, large sample sizes easily give significant results. Because of
+that, we would like you to ignore this part of the output completely and
+focus on the interpretation of the factors instead.</p>
 </div>
 <div id="classical-test-theory-analyses" class="section level2">
 <h2>Classical Test Theory analyses</h2>
@@ -484,7 +496,7 @@ out2 %&gt;%
 </div>
 </div>
 <div id="examples" class="section level1 tabset">
-<h1>Examples</h1>
+<h1 class="tabset">Examples</h1>
 <p><em>No examples available yet</em></p>
 </div>
 <div id="functions" class="section level1">
@@ -538,6 +550,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

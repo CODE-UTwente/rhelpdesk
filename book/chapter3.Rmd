@@ -37,7 +37,7 @@ data_new %>%
 ```
 
 
-## Frequency tables with janitor: tabyl
+## Frequency tables: tabyl
 
 The tabyl() function from the `janitor` package allows you to create frequency tables.
 
@@ -63,12 +63,12 @@ gss_cat %>%
 
 ```
 
-## Univariate graphs: creating bar charts, box plots and histograms using ggplot
+## Univariate graphs: bar charts, box plots and histograms
 
-We will use the package `ggplot2` (part of the core tidyverse) for creating visualizations. The function **ggplot** is extremely flexible.
+We will use the package `ggplot2` (part of the core tidyverse) for creating visualizations. The function `ggplot()` is extremely flexible.
 
 The basic idea of ggplot commands is that you 
-(1) have a data frame, pipe (%>%) that into a 
+(1) have a data frame, pipe (`%>%`) that into a 
 (2) ggplot(), add a  
 (3) geom_...() to select the type of display you want to have, and  
 (4) use aesthetics (aes()) to select the variable(s) you will use from that data frame.
@@ -178,7 +178,7 @@ qchisq(p, df, lower.tail = FALSE)
 
 ```
 
-There are many ways to test whether data are coming from a normally distributed population.
+Testing whether data are coming from a normally distributed population.
 
 ```{r, normality tests for one variable, eval = F}
 

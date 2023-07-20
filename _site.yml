@@ -22,8 +22,6 @@ navbar:
         href: "5-multivariate-data-analysis.html"
       - text: "6. Psychometric analyses"
         href: "6-psychometric-analyses.html"
-    - text: "Discussions"
-      href: https://canvas.utwente.nl/courses/8022/discussion_topics
   right:
     - icon: fab fa-github
       href: https://github.com/CODE-UTwente/rhelpdesk/

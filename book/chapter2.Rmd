@@ -32,9 +32,11 @@ dataset_3 <- rnorm(n, 50, 20) %>% as.data.frame()
 ```
 
 
-## Importing .csv, .sav and .spss file as data frames: read
+## Importing .csv, .sav and .spss files as data frames: read
 
-To import a data set, you first need to activate the correct package (these are `readr` (for csv files, although this is part of the tidyverse core and is thus installed by using `library("tidyverse")`), `foreign` (for SPSS files), or `readxl` (for excel files, also part of the tidyverse, but not of the core), depending on the type of data you want to import). Next to that, you need to know the location of the data set on your computer. Suppose the location of your data file called 'dataset_4' is: "C:/My Documents". The data set can be loaded into the *global environment* with the following commands:
+To import a data set, you first need to activate the correct package. These pacakges are `readr` (for csv files, although this is part of the tidyverse core and is thus installed when using `library("tidyverse")`), `foreign` (for SPSS files), and `readxl` (for excel files, also part of the tidyverse, but not of the core, so it needs to be called separately). Next to that, you need to know the location of the data set on your computer.  
+  
+Suppose you have two version of a data file called 'dataset_4' both located in "C:/My Documents". The data sets can be loaded into the *global environment* with the following commands:
 
 ```{r eval = F, tidy = TRUE}
 #set working directory to the correct folder and put all files to be imported in that folder
@@ -44,27 +46,27 @@ library("tidyverse", "foreign", "readxl") # you need to do that every time after
 
 setwd("C:/My Documents") # setting the working directory
 
-# load a csv data file, separated by comma's, with the package "readr"
-data <- read.csv("dataset_4.csv", sep = ",")
+# load a csv data file, in this case separated by comma's, with the package "readr"
+data_1 <- read.csv("dataset_4.csv", sep = ",")
 
 # load an spss file with the packave foreign
-data <- read.spss("dataset_4.sav", to.data.frame = TRUE)
+data_2 <- read.spss("dataset_4.sav", to.data.frame = TRUE)
 
 ```
 
 
 ## Working with labelled data (mainly SPSS and SAV files): attr
 
-Sometimes imported datasets are 'labeled'. For example, the variable 'gender' is stored as a series of 1's and 2's and a label is added for the variable ('gender as derived from the sampling frame', this is called the variable label) and for the values (1 means 'woman' and 2 means 'man', the so called 'value labels'). The labels are attributes of a data frame.
+Sometimes imported datasets are 'labeled'. For example, the variable 'gender' is stored as a series of 1's and 2's and a label is added for the variable ('gender as derived from the sampling frame') and for the values (1 means 'woman' and 2 means 'man'). The labels are attributes of a data frame.
 
 To inspect the labels in a dataframe:
 
 ```{r eval = F, tidy = TRUE}
 
-# for the variable label
+# finding the variable label
 data$variable %>% attr('label')
 
-# for the value labels
+# finding the value labels
 data$variable %>% attr('labels')
 
 ```
@@ -72,8 +74,8 @@ data$variable %>% attr('labels')
 
 ## View data frames: view, str and colnames
 
-To illustrate the commands used below, we will use the data set *gss_cat* (from the tidyverse package forcats). This is a sample of data from the general social survey in the US. It contains the variables: year (year of survey, 2000--2014); age (Maximum age truncated to 89); marital (marital status); race (race); rincome (reported income); partyid (party affiliation); relig (religion); denom (denomination); tvhours (hours per day watching tv).
-
+To illustrate the commands used below, we will use the data set *gss_cat* (from the tidyverse package forcats). This is a sample of data from the general social survey in the US. It contains the variables: year (year of survey, 2000--2014); age (Maximum age truncated to 89); marital (marital status); race (race); rincome (reported income); partyid (party affiliation); relig (religion); denom (denomination); tvhours (hours per day watching tv).  
+  
 Suppose we have a data frame and you want to inspect it. 
 
 ```{r eval = F, tidy = TRUE}
@@ -89,9 +91,9 @@ gss_cat %>% colnames()
 ```
 
 
-## Viewing or creating subsets of a data frame: select, filter and the use the assignment operator <-
+## Subsets of a data frame: select, filter and the use the assignment operator <-
 
-Selected variables can also be stored as a separate object in the global environment.
+
 
 ```{r eval = F, echo=T, tidy = TRUE}
 # Viewing a subset of the data:
@@ -99,11 +101,19 @@ gss_cat %>%
   select(marital, age, race) %>% 
   View()
 
+gss_cat_2000 <- gss_cat %>%
+   filter(year == 2000) %>% 
+   View()
+```
+
+Selected variables can also be stored as a separate object in the global environment.
+
+```{r eval = F, echo=T, tidy = TRUE}
 # Make a new data frame with only the items (variables) that you want:
 gss_cat_social <- gss_cat %>% 
   select(marital, age, race)
 
-# Using cuolumn number to select variables:
+# Using column number to select variables:
 gss_cat_social <- gss_cat %>% 
   select(1:5, 7, 8)
 
@@ -126,7 +136,7 @@ Adding a variable to the data set can be done with mutate().
 gss_cat <- gss_cat %>%
   mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
 
-# or, for a standardized variable, simply use
+# or, for a standardized variable, use
 gss_cat <- gss_cat %>%
   mutate(ztvhours = scale(tvhours))
 
@@ -148,7 +158,7 @@ dataset5 <- dataset5 %>%
 ## Renaming a variable in a data frame: rename
 
 ```{r eval = F}
-# Change old name 'relig' to the new variable name 'religion' (new = old)
+# Change the old name 'relig' to the new variable name 'religion' (new = old)
 
 gss_cat <- gss_cat %>% 
   rename(religion = relig)
@@ -157,15 +167,14 @@ gss_cat <- gss_cat %>%
 
 ## Dealing with missing data: na_if, is.na, na.rm, na.omit
 
-R uses only one way of declaring a specific observation as missing: NA (Not Available). If your data set does include missings, but the missings are coded with a number (for example: 99), you need to replace these values before analyzing the data. 
+R uses only one way of declaring a specific observation as missing: NA (Not Available). If your data set  includes missings, but the missings are coded with a number (for example: 99), you need to replace these values before analyzing the data. 
 
 ```{R dealing with missings, eval = F}
 # To change other values (here: the word 'Don't know)' to NA, use na_if()
 
 gss_cat <- gss_cat %>%
   mutate(relig = na_if(relig, "Don't know"))
-
-# This means: in the data set gss_cat, replace the existing variable relig (which contains contains cases with the word 'Don't know') with a new variable relig, in which this group is declared missing (and gets an NA).
+# This means: in the data set gss_cat, change the existing variable relig (which contains contains cases with the word 'Don't know') and declares these units missing (NA).
 ```
 
 There are several ways to find out how many missings are included in the data. Also, there are multiple ways to deal with these missings (pairwise deletion versus listwise deletion).
@@ -193,7 +202,7 @@ gss_cat_no_missings_on_relig <- gss_cat %>%
 ```
 
 
-## Making sure variables have the correct type: from character to factor and from factor to ordered factor
+## Changing the type of variable: from character to factor and from factor to ordered factor
 
 If you have a character variable with the 'words' 'man' and 'women' you probably want to treat this variable as a factor, not merely as a column of words. And if the factor in your data frame has three 'values'/'attributes' (low, medium and high), you have to make sure this variable is stored as an 'ordered factor'.
 
@@ -219,9 +228,9 @@ gss_cat <- gss_cat %>%
 ```
 
 
-## Adding a new variable from another datafile to an existing data frame: leftjoin
+## Adding a new variable from another datafile to an existing data frame: left_join
 
-Suppose you have a data file with a large number of countries (stored as a word) over a large number of years (every 'country x year' is one observation). You want to add the continents of these countries to the data set. You have another data set with just the countries (stored as the same words as in the other data set) and the continents.
+Suppose you have a data file with a large number of countries over a large number of years (every 'country x year' is one observation). You want to add the continents of these countries to the data set. You have another data set with the countries (stored as the same words as in the other data set) and the continents.
   
 ```{r leftjoin, eval = F, tidy = TRUE}
 # gapm1945to2020 is the original dataset
@@ -234,7 +243,7 @@ gapm1945joined <- gapm1945to2020 %>%
 
 ```
 
-## Adding observations to an existing data file: add_row
+## Adding observations to a data file: add_row
 
 Sometimes, you want to add data to an existing data file. For this, you can use the function `add_row()`. With `.before` and `.after`, you can specify where new cases should be added.
 
@@ -336,7 +345,7 @@ data$england <- ifelse(data$country == "england", 1, 0)
 This can be used for nominal variables with more values too.
 
 
-## Restructuring data files: creating long and broad format data frames using pivot_longer and pivot_wider
+## Creating longer or broader data frames using pivot_longer and pivot_wider
 
 Sometimes data are stored in a relatively wide format (a lot of variables). For example, all the countries are rows and there is a variable 'unemployment_2000' and a variable 'unemployment_2001' etc... In order to change wide format data into long format data, in which there are three variables only: country_name, year, level of unemployment, use `pivot_longer()`.
 

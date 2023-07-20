@@ -3,7 +3,7 @@ title: "Bivariate data analysis and bivariate data vizualisation"
 output: html_fragment
 ---
 
-## Contingency tables (a.k.a. crosstabs) with tabyl
+## Contingency tables (a.k.a. crosstabs): tabyl
 
 Use the `tabyl()` function from the `janitor` package. The first line creates the table. The rest formats the table (giving it a title, adding totals etc...).
 
@@ -22,9 +22,9 @@ mtcars %>%
 ```
 
 
-## Visualizing relationships between different variables: ggplot
+## Visualizing relationships between variables: ggplot
 
-For a boxplot use `geom_boxplot()`:
+For a bivariate visualizations:
 
 ```{r geomboxplot2 and scatterplot, echo=T, eval=F}
 
@@ -47,7 +47,7 @@ mtcars %>%
 ``` 
 
   
-## Descriptive measures and inferential statistics for associations (parametric)
+## Descriptive and inferential statistics for associations (parametric)
 
 For Pearson's r, we use 
 
@@ -115,7 +115,7 @@ mtcars %>% leveneTest(mpg ~ factor( am ),
 When *Levene's Test* is NOT significant, you can assume the groups have equal variances.
   
     
-## Descriptive measures and inferential statistics for associations (non parametric)
+## Descriptive and inferential statistics for associations (non parametric)
 
 For Cramer's V, we use
   

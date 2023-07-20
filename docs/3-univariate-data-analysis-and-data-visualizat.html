@@ -353,9 +353,6 @@ div.tocify {
     </li>
   </ul>
 </li>
-<li>
-  <a href="https://canvas.utwente.nl/courses/8022/discussion_topics">Discussions</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -421,8 +418,8 @@ data_new %&gt;%
 
 # instead of var, you can also use mean, sd, or other functions</code></pre>
 </div>
-<div id="frequency-tables-with-janitor-tabyl" class="section level2">
-<h2>Frequency tables with janitor: tabyl</h2>
+<div id="frequency-tables-tabyl" class="section level2">
+<h2>Frequency tables: tabyl</h2>
 <p>The tabyl() function from the <code>janitor</code> package allows you
 to create frequency tables.</p>
 <pre class="r"><code># Make sure &#39;janitor&#39; in loaded into the library
@@ -444,16 +441,14 @@ gss_cat %&gt;%
     adorn_totals(&quot;row&quot;) %&gt;%
     adorn_pct_formatting()</code></pre>
 </div>
-<div
-id="univariate-graphs-creating-bar-charts-box-plots-and-histograms-using-ggplot"
+<div id="univariate-graphs-bar-charts-box-plots-and-histograms"
 class="section level2">
-<h2>Univariate graphs: creating bar charts, box plots and histograms
-using ggplot</h2>
+<h2>Univariate graphs: bar charts, box plots and histograms</h2>
 <p>We will use the package <code>ggplot2</code> (part of the core
 tidyverse) for creating visualizations. The function
-<strong>ggplot</strong> is extremely flexible.</p>
+<code>ggplot()</code> is extremely flexible.</p>
 <p>The basic idea of ggplot commands is that you (1) have a data frame,
-pipe (%&gt;%) that into a (2) ggplot(), add a<br />
+pipe (<code>%&gt;%</code>) that into a (2) ggplot(), add a<br />
 (3) geom_…() to select the type of display you want to have, and<br />
 (4) use aesthetics (aes()) to select the variable(s) you will use from
 that data frame.</p>
@@ -553,8 +548,8 @@ pchisq(chi, df, lower.tail = FALSE)
 p &lt;- 0.05 # the chi square value
 df &lt;- 1 # the degrees of freedom
 qchisq(p, df, lower.tail = FALSE)</code></pre>
-<p>There are many ways to test whether data are coming from a normally
-distributed population.</p>
+<p>Testing whether data are coming from a normally distributed
+population.</p>
 <pre class="r"><code># For the Shapiro-Wilk test use:
 shapiro.test(mtcars$residuals)</code></pre>
 </div>

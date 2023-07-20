@@ -5,7 +5,7 @@ output:
     toc: false
 ---
 
-The documents of the R-Helpdesk website document how bachelor students in BMS programs will use R in the courses for Research Methods and Statistics (and beyond). There is no need to learn everything in the RHelpdesk documents 'by heart'. It is mainly a reference guide. The document will be updated when the staff discovers problems in the way students deal with R. 
+The documents of the R-Helpdesk website outline how bachelor students in BMS programs will use R in the courses for Research Methods and Statistics (and beyond). There is no need to learn everything in the RHelpdesk documents 'by heart'. It is mainly a reference guide. The document will be updated when the staff discovers problems in the way students deal with R. 
 
 
 ## How to use this website?
