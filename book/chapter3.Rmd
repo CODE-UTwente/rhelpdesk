@@ -81,31 +81,28 @@ For example, you can use a bar chart to visualize a categorical (= nominal) vari
 
 # creating a basic bar chart with the nominal variable marital
 gss_cat %>% 
-  ggplot() +
-  geom_bar(aes(x = marital))
+  ggplot(aes(x = marital)) +
+  geom_bar()
 
 # to create a box plot for the ratio variable tvhours in gss_cat 
 # (please note that x = and y = in the aesthetics tilt the picture)
 
 gss_cat %>% 
-  ggplot() +
-  geom_boxplot(aes(y = tvhours))
+  ggplot(aes(y = tvhours)) +
+  geom_boxplot()
 
 # to create a histogram for the ratio variable tvhours in gss_cat
+
+gss_cat %>% 
+  ggplot(aes(x = tvhours)) +
+  geom_histogram()
+
+# The aesthetics are often put in ggplot command itself. This is efficient if you combine different geom's (scatter and line, for example) displaying the same variables. Sometimes it makes sense to put the aes() in the geom_ itself.
 
 gss_cat %>% 
   ggplot() +
   geom_histogram(aes(x = tvhours))
 
-# Note 1: although we recommend using the pipe operator, if you start visualizing data from different objects in one plot, it may be wise to put the data inside the ggplot function:
-
-ggplot(gss_cat) +
-  geom_histogram(aes(x = tvhours))
-
-# Note 2: the aesthetics are often put in the geom. However, if you combine different geom's (scatter and line, for example) displaying the same variables, it is more efficient putting the aesthetics in the general ggplot function too:
-
-ggplot(gss_cat, aes(x = tvhours)) +
-  geom_histogram()
   
 ## when creating QQ plots to assess deviations from normality use:
 
