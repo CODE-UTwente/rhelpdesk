@@ -45,7 +45,7 @@ The tabyl() function from the `janitor` package allows you to create frequency t
 
 # Make sure 'janitor' in loaded into the library
 
-# Create a frequency table
+# Create one frequency table
 gss_cat %>%
   tabyl(race)
 
@@ -65,47 +65,40 @@ gss_cat %>%
 
 ## Univariate graphs: bar charts, box plots and histograms
 
-We will use the package `ggplot2` (part of the core tidyverse) for creating visualizations. The function `ggplot()` is extremely flexible.
+We will use the package `ggplot2` (part of the core tidyverse) for creating visualizations. The function `ggplot()` is extremely flexible. Below we present some basics only.
 
-The basic idea of ggplot commands is that you 
-(1) have a data frame, pipe (`%>%`) that into a 
+The basic idea of ggplot commands is that you  
+(1) have a data frame, pipe (`%>%`) that into a  
 (2) ggplot(), add a  
-(3) geom_...() to select the type of display you want to have, and  
-(4) use aesthetics (aes()) to select the variable(s) you will use from that data frame.
-
+(3) geom_...() to select the type of display you want to have (a bar chart, histogram or a scatterplot), and  
+(4) use aesthetics (aes()) to select the variable(s) you will use from that data frame.  
+  
 There are more 'layers' in a ggplot, but these are the most important.
-
-For example, you can use a bar chart to visualize a categorical (= nominal) variable. 
 
 ```{r, creating barcharts, boxplots and histograms, eval = F}
 
-# creating a basic bar chart with the nominal variable marital
+# creating a bar chart using the dataset gss_cat with the nominal variable marital
 gss_cat %>% 
   ggplot(aes(x = marital)) +
   geom_bar()
 
-# to create a box plot for the ratio variable tvhours in gss_cat 
+# to create a box plot for the ratio variable tvhours in the dataset gss_cat 
 # (please note that x = and y = in the aesthetics tilt the picture)
-
 gss_cat %>% 
   ggplot(aes(y = tvhours)) +
   geom_boxplot()
 
 # to create a histogram for the ratio variable tvhours in gss_cat
-
 gss_cat %>% 
   ggplot(aes(x = tvhours)) +
   geom_histogram()
 
-# The aesthetics are often put in ggplot command itself. This is efficient if you combine different geom's (scatter and line, for example) displaying the same variables. Sometimes it makes sense to put the aes() in the geom_ itself.
-
+# The aesthetics are often put in ggplot command itself. This is efficient if you combine different geom's (scatter and line, for example) displaying the same variables. Sometimes it makes sense to put the aes() in the geom_ .
 gss_cat %>% 
   ggplot() +
   geom_histogram(aes(x = tvhours))
 
-  
 ## when creating QQ plots to assess deviations from normality use:
-
 gss_cat %>% 
   ggplot(aes(sample = tvhours)) +
   geom_qq() +
