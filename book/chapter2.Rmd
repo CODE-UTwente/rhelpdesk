@@ -93,8 +93,6 @@ gss_cat %>% colnames()
 
 ## Subsets of a data frame: select, filter and the assignment operator <-
 
-
-
 ```{r eval = F, echo=T, tidy = TRUE}
 # Viewing a subset of the data:
 gss_cat %>% 
@@ -138,7 +136,7 @@ gss_cat <- gss_cat %>%
 
 # Or use the function `scale()` to get the same standardized variable
 gss_cat <- gss_cat %>%
-  mutate(ztvhours2 = (scale(tvhours))
+  mutate(ztvhours2 = scale(tvhours))
          
 
 # Creating an index and adding that index to the data frame

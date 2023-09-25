@@ -513,25 +513,25 @@ class="section level2">
 <p>Adding a variable to the data set can be done with mutate().</p>
 <pre class="r"><code># Adding a standardized variable (a z-score) to a data frame
 gss_cat &lt;- gss_cat %&gt;%
-  mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
+    mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
 
 # Or use the function `scale()` to get the same standardized variable
 gss_cat &lt;- gss_cat %&gt;%
-  mutate(ztvhours2 = (scale(tvhours))
-         
+    mutate(ztvhours2 = scale(tvhours))
+
 
 # Creating an index and adding that index to the data frame
-dataset5 &lt;- dataset5 %&gt;% 
-  mutate(index = item3 + item4 + item4)
+dataset5 &lt;- dataset5 %&gt;%
+    mutate(index = item3 + item4 + item4)
 
 # Creating a logged version of an existing variable (the index in this example)
-dataset5 &lt;- dataset5 %&gt;% 
-  mutate(log_version_index = log(index))
+dataset5 &lt;- dataset5 %&gt;%
+    mutate(log_version_index = log(index))
 
 # If you want to sum values of a lot of columns and ignore the missings, use
 dataset5 &lt;- dataset5 %&gt;%
-  mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm=TRUE))
-# The &quot;c&quot; in this command stands for &#39;combine&#39; and is part of base R.</code></pre>
+    mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm = TRUE))
+# The &#39;c&#39; in this command stands for &#39;combine&#39; and is part of base R.</code></pre>
 </div>
 <div id="renaming-a-variable-in-a-data-frame-rename"
 class="section level2">
