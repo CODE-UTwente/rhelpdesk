@@ -91,7 +91,7 @@ gss_cat %>% colnames()
 ```
 
 
-## Subsets of a data frame: select, filter and the use the assignment operator <-
+## Subsets of a data frame: select, filter and the assignment operator <-
 
 
 
@@ -132,15 +132,16 @@ gss_cat_2002plus <- gss_cat %>%
 Adding a variable to the data set can be done with mutate(). 
 
 ```{r mutate, eval = F, tidy = TRUE}
-# Adding a standardized variable
+# Adding a standardized variable (a z-score) to a data frame
 gss_cat <- gss_cat %>%
   mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
 
-# or, for a standardized variable, use
+# Or use the function `scale()` to get the same standardized variable
 gss_cat <- gss_cat %>%
-  mutate(ztvhours = scale(tvhours))
+  mutate(ztvhours2 = (scale(tvhours))
+         
 
-# Creating an index and adding that index to the data frame:
+# Creating an index and adding that index to the data frame
 dataset5 <- dataset5 %>% 
   mutate(index = item3 + item4 + item4)
 
@@ -148,7 +149,7 @@ dataset5 <- dataset5 %>%
 dataset5 <- dataset5 %>% 
   mutate(log_version_index = log(index))
 
-# If you want to sum values of a lot of columns and ignore the missings, use:
+# If you want to sum values of a lot of columns and ignore the missings, use
 dataset5 <- dataset5 %>%
   mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm=TRUE))
 # The "c" in this command stands for 'combine' and is part of base R.
