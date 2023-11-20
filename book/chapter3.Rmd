@@ -115,7 +115,7 @@ Confidence intervals and tests for proportions, medians or means of one variable
 # For a proportion, use
 n_total <- 1000 # total number of (valid) cases
 n_pos <- 690 # number of positives
-prop.test(n_pos, n_total, alternative = "two.sided", conf.level = 0.95) 
+binom.test(n_pos, n_total, alternative = "two.sided", conf.level = 0.95) 
 # for confidence interval and two sided test
 
 # For a goodness of fit test, use
