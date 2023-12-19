@@ -18,9 +18,6 @@ jobs:
           install.packages("tidyverse")
           install.packages('formatR', repos = 'http://cran.rstudio.com', dependencies = TRUE)
         shell: Rscript {0}
-
-      - name: Render Book
-        run: Rscript -e 'rmarkdown::render("book/Intro R for RM_DS.Rmd", "pdf_document")'
       - name: Render Site
         run: Rscript -e 'rmarkdown::render_site(encoding = "UTF-8")'
       - name: Commit results
