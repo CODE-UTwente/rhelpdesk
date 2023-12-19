@@ -20,6 +20,10 @@ jobs:
         shell: Rscript {0}
       - name: Render Site
         run: Rscript -e 'rmarkdown::render_site(encoding = "UTF-8")'
+      - name: install PDFlatex
+        uses: Closoco/pdflatex-action@v1.1.0
+      - name: Render PDF
+        run: Rscript -e 'rmarkdown::render("book/Intro R for RM_DS.Rmd", "pdf_document")'
       - name: Commit results
         run: |
           git add -A
