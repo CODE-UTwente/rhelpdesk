@@ -1,7 +1,7 @@
 # From https://www.etiennebacher.com/posts/2021-03-19-use-github-actions-with-r-markdown-and-distill/
 on:
   push:
-    branches: master
+    branches: main
 
 name: Render & Deploy Site
 
