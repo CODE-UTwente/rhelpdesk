@@ -112,7 +112,7 @@ Confidence intervals and tests for proportions, medians or means of one variable
 
 ```{r, confidence intervals and tests for one variable, eval = F}
 
-# For a proportion, use
+# For a proportion test, use
 n_total <- 1000 # total number of (valid) cases
 n_pos <- 690 # number of positives
 binom.test(n_pos, n_total, alternative = "two.sided", conf.level = 0.95) 
@@ -149,7 +149,7 @@ Sometimes you calculate a t-statistic or a chi-square statistic by hand and you 
 # For finding the p-value for a specific t-value
 q <- 1.96 # the t-value
 df <- 499 # the degrees of freedom
-pt(q, df, lower.tail = FALSE)
+pt(q, df, lower.tail = FALSE) # use this when t is positive
 # NOTE: this gives the percentage on ONE side
 
 # For finding the critical t-value
