@@ -132,14 +132,20 @@ wilcox.test(data$t2_t1, alternative = "two.sided")
 data %>% lm(signed_rank_t2_t1 ~ 1, .)
 
 # For means testing use either t.test or the lm command
-# assuming the data are stored in a data frame as data$var
+# assuming the data of this variable are stored in a data frame as data$var
 mu_1 <- 100 # if you want to check whether it is different from 100
 t.test(data$var, mu = mu_1)
 
 # or in the linear model framework:
-data %>% 
-  lm((var - mu_1) ~ 1, .) %>% 
-  summary
+model <- data %>% 
+  lm((var - mu_1) ~ 1, .)
+
+summary(model) # gives a summary of that estimated model
+
+# when stored as an lm model, you can find the confidence interval by using:
+predict.lm(model, 
+           as.data.frame(1), 
+           interval="confidence")
 
 ```
 
