@@ -13,7 +13,7 @@
 
 <title>Univariate data analysis and data visualization</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -391,25 +391,24 @@ standard deviation</h2>
 <p>Below you will see several examples of obtaining descriptive
 statistics for items in a data set called <code>data_new</code>.</p>
 <pre class="r"><code># To summarise some main characteristics of one numerical item (called Item1):
-data_new %&gt;% 
-  summarise(mean = mean(Item1),
-            sd = sd(Item1),
-            var = var(Item1),
-            minimum = min(Item1),
-            maximum = max(Item1)
-            )
+data_new %&gt;%
+    summarise(mean = mean(Item1), sd = sd(Item1), var = var(Item1), minimum = min(Item1),
+        maximum = max(Item1))
 # You can also ask for only one of the statistics.
 
-# To summarize the main characteristics (mean, median, minimum, maximum, Q1, Q3 and number of missings) of multiple variables (in this example: the first 10 variables) in the data set:
-data_new %&gt;% 
-  select(1:10) %&gt;%
-  summary()           
+# To summarize the main characteristics (mean, median, minimum, maximum, Q1, Q3
+# and number of missings) of multiple variables (in this example: the first 10
+# variables) in the data set:
+data_new %&gt;%
+    select(1:10) %&gt;%
+    summary()
 
-# To compute a certain statistic for the first 10 variables in the data set, you can also use the map() function:
+# To compute a certain statistic for the first 10 variables in the data set,
+# you can also use the map() function:
 
 data_new %&gt;%
-  select(1:10) %&gt;%
-  map(var)
+    select(1:10) %&gt;%
+    map(var)
 
 # instead of var, you can also use mean, sd, or other functions</code></pre>
 </div>
@@ -421,19 +420,20 @@ to create frequency tables.</p>
 
 # Create one frequency table
 gss_cat %&gt;%
-  tabyl(race)
+    tabyl(race)
 
 # Create frequency tables for all variables of a data set:
 gss_cat %&gt;%
-  map(tabyl)
+    map(tabyl)
 
-# If the values are in alphabetical, rather than in a meaningful order, make sure the variable is stored as an &#39;ordered factor&#39; (see chapter 2).
+# If the values are in alphabetical, rather than in a meaningful order, make
+# sure the variable is stored as an &#39;ordered factor&#39; (see chapter 2).
 
 # The frequency table can be made nicer using the adorn commands, for example:
 gss_cat %&gt;%
-  tabyl(marital) %&gt;%
-  adorn_totals(&quot;row&quot;) %&gt;%
-  adorn_pct_formatting()</code></pre>
+    tabyl(marital) %&gt;%
+    adorn_totals(&quot;row&quot;) %&gt;%
+    adorn_pct_formatting()</code></pre>
 </div>
 <div id="univariate-graphs-bar-charts-box-plots-and-histograms"
 class="section level2">
