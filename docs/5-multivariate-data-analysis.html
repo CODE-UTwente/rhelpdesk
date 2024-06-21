@@ -13,7 +13,7 @@
 
 <title>Multivariate data analysis</title>
 
-<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -534,9 +534,15 @@ mtcars %&gt;%
 <h2>logistic regression</h2>
 <p>For a logistic regression model, we use the <code>glm()</code>
 function.</p>
-<pre class="r"><code>mtcars %&gt;% 
-  glm(am ~ wt, family = binomial, data = .) %&gt;% 
-  tidy()</code></pre>
+<pre class="r"><code>model_lr &lt;- mtcars %&gt;% 
+  glm(am ~ wt, family = binomial, data = .) 
+broom::tidy(model_lr)
+summary(model_lr)
+
+# when you want to find out the probabilities for units with scores 2, 3 and 5 on the wt variable:
+wt &lt;- c(0, 18, 72) # make sure &quot;x&quot; is the same name as the independent variable in the data set
+new_data &lt;- as.data.frame(wt) 
+predict(model_lr, new_data, type=&quot;response&quot;)</code></pre>
 <p>Similarly for a Poisson regression.</p>
 <pre class="r"><code>mtcars %&gt;% 
   glm(carb ~ wt, family = poisson, data = .) %&gt;% 

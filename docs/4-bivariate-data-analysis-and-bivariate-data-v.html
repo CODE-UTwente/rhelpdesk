@@ -13,7 +13,7 @@
 
 <title>Bivariate data analysis and bivariate data vizualisation</title>
 
-<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -431,9 +431,11 @@ equal variance, we use:</p>
 <pre class="r"><code># vs is a dummy and disp is a ratio variable in the data set mtcars
 t.test(disp ~ vs, mtcars, var.equal = TRUE) 
 # or use
-lm(disp ~ vs, mtcars) %&gt;% summary()</code></pre>
-<p>For an independent sample t-test in which both groups cannot be
-assumed to have equal variances, we use:</p>
+lm(disp ~ vs, mtcars) %&gt;% summary()
+
+# for logistic regression see chapter 5.</code></pre>
+<p>For an independent sample t-test in which the residuals in both
+groups cannot be assumed to have equal variances, we use:</p>
 <pre class="r"><code># vs is a dummy and disp is a ratio variable in the data set mtcars
 t.test(disp ~ vs, mtcars, var.equal = FALSE) </code></pre>
 <p>When studying the effect of nominal variable on a ratio variable
@@ -446,8 +448,8 @@ oneway.test(count ~ spray, InsectSprays, var.equal = TRUE)
 
 # or use
 lm(count ~ spray, InsectSprays) %&gt;% summary()</code></pre>
-<p>For a test in which groups cannot be assumed to have equal variances,
-use:</p>
+<p>For a test in which the residuals in the groups cannot be assumed to
+have equal variances, use:</p>
 <pre class="r"><code>oneway.test(count ~ spray, InsectSprays, var.equal = FALSE)</code></pre>
 </div>
 <div id="testing-whether-variances-are-the-same-levenes-test"

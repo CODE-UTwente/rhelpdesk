@@ -199,9 +199,15 @@ For a logistic regression model, we use the `glm()` function.
 
 ```{r logistic, echo=T, eval=F}
 
-mtcars %>% 
-  glm(am ~ wt, family = binomial, data = .) %>% 
-  tidy()
+model_lr <- mtcars %>% 
+  glm(am ~ wt, family = binomial, data = .) 
+broom::tidy(model_lr)
+summary(model_lr)
+
+# when you want to find out the probabilities for units with scores 2, 3 and 5 on the wt variable:
+wt <- c(0, 18, 72) # make sure "x" is the same name as the independent variable in the data set
+new_data <- as.data.frame(wt) 
+predict(model_lr, new_data, type="response")
 
 ```
 
