@@ -118,13 +118,13 @@ n_pos <- 690 # number of positives
 binom.test(n_pos, n_total, alternative = "two.sided", conf.level = 0.95) 
 # for confidence interval and two sided test
 
-# For a goodness of fit test, use
+# For a goodness of fit test (only a test), use
 n_observed <- c(166, 142, 80, 160)
 p_expected <- c(0.25, 0.25, 0.25, 0.25) # these have to add to 1 (proportions)
 g_o_f <- chisq.test(n_observed, p = p_expected)
 g_o_f
 
-# For a test of the median, use
+# For a test of the median (there is no confidence interval here), use
 # assuming the data contains a vector with a difference, called data$t2_t1
 wilcox.test(data$t2_t1, alternative = "two.sided")
 # this can be done using the idea of a signed rank and the linear model too.
@@ -132,8 +132,12 @@ wilcox.test(data$t2_t1, alternative = "two.sided")
 data %>% lm(signed_rank_t2_t1 ~ 1, .)
 
 # For means testing use either t.test or the lm command
+
 # assuming the data of this variable are stored in a data frame as data$var
+
 mu_1 <- 100 # if you want to check whether it is different from 100
+
+# using the somewhat old fashioned t-test
 t.test(data$var, mu = mu_1)
 
 # or in the linear model framework:
@@ -142,11 +146,15 @@ model <- data %>%
 
 summary(model) # gives a summary of that estimated model
 
-# when stored as an lm model, you can find the confidence interval by using:
+# when stored as an lm model, the confidence interval can be found by using:
 predict.lm(model, 
            as.data.frame(1), 
            interval="confidence")
 
+# the confidence interval in the lm() framework can then be found by using
+predict.lm(model, 
+           as.data.frame(1), 
+           interval="confidence")
 ```
 
 Sometimes you calculate a t-statistic or a chi-square statistic by hand and you want to find the associated p-value, OR you want to know which critical (t or chi-square) value is associated with a specific alpha. These commands allow you to not use 'tables'.

@@ -13,7 +13,7 @@
 
 <title>Univariate data analysis and data visualization</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -391,24 +391,25 @@ standard deviation</h2>
 <p>Below you will see several examples of obtaining descriptive
 statistics for items in a data set called <code>data_new</code>.</p>
 <pre class="r"><code># To summarise some main characteristics of one numerical item (called Item1):
-data_new %&gt;%
-    summarise(mean = mean(Item1), sd = sd(Item1), var = var(Item1), minimum = min(Item1),
-        maximum = max(Item1))
+data_new %&gt;% 
+  summarise(mean = mean(Item1),
+            sd = sd(Item1),
+            var = var(Item1),
+            minimum = min(Item1),
+            maximum = max(Item1)
+            )
 # You can also ask for only one of the statistics.
 
-# To summarize the main characteristics (mean, median, minimum, maximum, Q1, Q3
-# and number of missings) of multiple variables (in this example: the first 10
-# variables) in the data set:
-data_new %&gt;%
-    select(1:10) %&gt;%
-    summary()
+# To summarize the main characteristics (mean, median, minimum, maximum, Q1, Q3 and number of missings) of multiple variables (in this example: the first 10 variables) in the data set:
+data_new %&gt;% 
+  select(1:10) %&gt;%
+  summary()           
 
-# To compute a certain statistic for the first 10 variables in the data set,
-# you can also use the map() function:
+# To compute a certain statistic for the first 10 variables in the data set, you can also use the map() function:
 
 data_new %&gt;%
-    select(1:10) %&gt;%
-    map(var)
+  select(1:10) %&gt;%
+  map(var)
 
 # instead of var, you can also use mean, sd, or other functions</code></pre>
 </div>
@@ -420,20 +421,19 @@ to create frequency tables.</p>
 
 # Create one frequency table
 gss_cat %&gt;%
-    tabyl(race)
+  tabyl(race)
 
 # Create frequency tables for all variables of a data set:
 gss_cat %&gt;%
-    map(tabyl)
+  map(tabyl)
 
-# If the values are in alphabetical, rather than in a meaningful order, make
-# sure the variable is stored as an &#39;ordered factor&#39; (see chapter 2).
+# If the values are in alphabetical, rather than in a meaningful order, make sure the variable is stored as an &#39;ordered factor&#39; (see chapter 2).
 
 # The frequency table can be made nicer using the adorn commands, for example:
 gss_cat %&gt;%
-    tabyl(marital) %&gt;%
-    adorn_totals(&quot;row&quot;) %&gt;%
-    adorn_pct_formatting()</code></pre>
+  tabyl(marital) %&gt;%
+  adorn_totals(&quot;row&quot;) %&gt;%
+  adorn_pct_formatting()</code></pre>
 </div>
 <div id="univariate-graphs-bar-charts-box-plots-and-histograms"
 class="section level2">
@@ -484,19 +484,19 @@ gss_cat %&gt;%
 one variable can be constructed for dichotomies (proportions), nominal
 variables (goodness of fit) and interval/ratio variables (means
 testing).</p>
-<pre class="r"><code># For a proportion, use
+<pre class="r"><code># For a proportion test, use
 n_total &lt;- 1000 # total number of (valid) cases
 n_pos &lt;- 690 # number of positives
 binom.test(n_pos, n_total, alternative = &quot;two.sided&quot;, conf.level = 0.95) 
 # for confidence interval and two sided test
 
-# For a goodness of fit test, use
+# For a goodness of fit test (only a test), use
 n_observed &lt;- c(166, 142, 80, 160)
 p_expected &lt;- c(0.25, 0.25, 0.25, 0.25) # these have to add to 1 (proportions)
 g_o_f &lt;- chisq.test(n_observed, p = p_expected)
 g_o_f
 
-# For a test of the median, use
+# For a test of the median (there is no confidence interval here), use
 # assuming the data contains a vector with a difference, called data$t2_t1
 wilcox.test(data$t2_t1, alternative = &quot;two.sided&quot;)
 # this can be done using the idea of a signed rank and the linear model too.
@@ -504,14 +504,29 @@ wilcox.test(data$t2_t1, alternative = &quot;two.sided&quot;)
 data %&gt;% lm(signed_rank_t2_t1 ~ 1, .)
 
 # For means testing use either t.test or the lm command
-# assuming the data are stored in a data frame as data$var
+
+# assuming the data of this variable are stored in a data frame as data$var
+
 mu_1 &lt;- 100 # if you want to check whether it is different from 100
+
+# using the somewhat old fashioned t-test
 t.test(data$var, mu = mu_1)
 
 # or in the linear model framework:
-data %&gt;% 
-  lm((var - mu_1) ~ 1, .) %&gt;% 
-  summary</code></pre>
+model &lt;- data %&gt;% 
+  lm((var - mu_1) ~ 1, .)
+
+summary(model) # gives a summary of that estimated model
+
+# when stored as an lm model, the confidence interval can be found by using:
+predict.lm(model, 
+           as.data.frame(1), 
+           interval=&quot;confidence&quot;)
+
+# the confidence interval in the lm() framework can then be found by using
+predict.lm(model, 
+           as.data.frame(1), 
+           interval=&quot;confidence&quot;)</code></pre>
 <p>Sometimes you calculate a t-statistic or a chi-square statistic by
 hand and you want to find the associated p-value, OR you want to know
 which critical (t or chi-square) value is associated with a specific
@@ -519,7 +534,7 @@ alpha. These commands allow you to not use ‘tables’.</p>
 <pre class="r"><code># For finding the p-value for a specific t-value
 q &lt;- 1.96 # the t-value
 df &lt;- 499 # the degrees of freedom
-pt(q, df, lower.tail = FALSE)
+pt(q, df, lower.tail = FALSE) # use this when t is positive
 # NOTE: this gives the percentage on ONE side
 
 # For finding the critical t-value

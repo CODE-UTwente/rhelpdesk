@@ -68,9 +68,11 @@ t.test(disp ~ vs, mtcars, var.equal = TRUE)
 # or use
 lm(disp ~ vs, mtcars) %>% summary()
 
+# for logistic regression see chapter 5.
+
 ```
 
-For an independent sample t-test in which both groups cannot be assumed to have equal variances, we use: 
+For an independent sample t-test in which the residuals in both groups cannot be assumed to have equal variances, we use: 
 
 ```{r Welch, echo=T, eval=F, message=F}
 
@@ -93,7 +95,7 @@ lm(count ~ spray, InsectSprays) %>% summary()
 
 ```
 
-For a test in which groups cannot be assumed to have equal variances, use: 
+For a test in which the residuals in the groups cannot be assumed to have equal variances, use: 
 
 ```{r Welch ANOVA, echo=T, eval=F, message=F}
 
