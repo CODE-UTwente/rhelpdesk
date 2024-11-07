@@ -400,10 +400,13 @@ dataset_2 &lt;- data.frame(age, gender, length, membership)</code></pre>
 show something in R, you can randomly select observations from a
 distribution.</li>
 </ol>
-<pre class="r"><code># creating a data frame with a random variable based on the normal distribution, assumed mean of the normal distribution is 50, sd is 20, with 100 units.
+<pre class="r"><code># creating a data frame with a random variable based on the normal
+# distribution, assumed mean of the normal distribution is 50, sd is 20, with
+# 100 units.
 
 n &lt;- 100
-dataset_3 &lt;- rnorm(n, 50, 20) %&gt;% as.data.frame()</code></pre>
+dataset_3 &lt;- rnorm(n, 50, 20) %&gt;%
+    as.data.frame()</code></pre>
 </div>
 <div id="importing-.csv-.sav-and-.spss-files-as-data-frames-read"
 class="section level2">
@@ -419,14 +422,16 @@ computer.</p>
 <p>Suppose you have two version of a data file called ‘dataset_4’ both
 located in “C:/My Documents”. The data sets can be loaded into the
 <em>global environment</em> with the following commands:</p>
-<pre class="r"><code>#set working directory to the correct folder and put all files to be imported in that folder
+<pre class="r"><code># set working directory to the correct folder and put all files to be imported
+# in that folder
 
-install.packages(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;haven&quot;) # you do this only once every few months or so
-library(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;readxl&quot;, &quot;haven&quot;) # you need to do that every time after (re)starting R
+install.packages(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;haven&quot;)  # you do this only once every few months or so
+library(&quot;tidyverse&quot;, &quot;foreign&quot;, &quot;readxl&quot;, &quot;haven&quot;)  # you need to do that every time after (re)starting R
 
-setwd(&quot;C:/My Documents&quot;) # setting the working directory
+setwd(&quot;C:/My Documents&quot;)  # setting the working directory
 
-# load a csv data file, in this case separated by comma&#39;s, with the package &quot;readr&quot; or with standard tidyverse
+# load a csv data file, in this case separated by comma&#39;s, with the package
+# &#39;readr&#39; or with standard tidyverse
 data_1a &lt;- read.csv(&quot;dataset_4.csv&quot;, sep = &quot;,&quot;)
 data_1b &lt;- read_csv(&quot;dataset_4.csv&quot;)
 
@@ -446,10 +451,12 @@ values (1 means ‘woman’ and 2 means ‘man’). The labels are attributes of
 a data frame.</p>
 <p>To inspect the labels in a dataframe:</p>
 <pre class="r"><code># finding the variable label
-data$variable %&gt;% attr(&#39;label&#39;)
+data$variable %&gt;%
+    attr(&quot;label&quot;)
 
 # finding the value labels
-data$variable %&gt;% attr(&#39;labels&#39;)</code></pre>
+data$variable %&gt;%
+    attr(&quot;labels&quot;)</code></pre>
 </div>
 <div id="view-data-frames-view-str-and-colnames" class="section level2">
 <h2>View data frames: view, str and colnames</h2>
@@ -462,13 +469,16 @@ income); partyid (party affiliation); relig (religion); denom
 (denomination); tvhours (hours per day watching tv).</p>
 <p>Suppose we have a data frame and you want to inspect it.</p>
 <pre class="r"><code># View the data from the data set dataset4 in a spreadsheet.
-gss_cat %&gt;% View() # mind the capital V
+gss_cat %&gt;%
+    View()  # mind the capital V
 
 # Get a quick overview of the types of data in your matrix and their names
-gss_cat %&gt;% str()
+gss_cat %&gt;%
+    str()
 
-# Only get the column names of a data set 
-gss_cat %&gt;% colnames()</code></pre>
+# Only get the column names of a data set
+gss_cat %&gt;%
+    colnames()</code></pre>
 </div>
 <div
 id="subsets-of-a-data-frame-select-filter-and-the-assignment-operator--"
@@ -476,30 +486,30 @@ class="section level2">
 <h2>Subsets of a data frame: select, filter and the assignment operator
 &lt;-</h2>
 <pre class="r"><code># Viewing a subset of the data:
-gss_cat %&gt;% 
-  select(marital, age, race) %&gt;% 
-  View()
+gss_cat %&gt;%
+    select(marital, age, race) %&gt;%
+    View()
 
 gss_cat_2000 &lt;- gss_cat %&gt;%
-   filter(year == 2000) %&gt;% 
-   View()</code></pre>
+    filter(year == 2000) %&gt;%
+    View()</code></pre>
 <p>Selected variables can also be stored as a separate object in the
 global environment.</p>
 <pre class="r"><code># Make a new data frame with only the items (variables) that you want:
-gss_cat_social &lt;- gss_cat %&gt;% 
-  select(marital, age, race)
+gss_cat_social &lt;- gss_cat %&gt;%
+    select(marital, age, race)
 
 # Using column number to select variables:
-gss_cat_social &lt;- gss_cat %&gt;% 
-  select(1:5, 7, 8)
+gss_cat_social &lt;- gss_cat %&gt;%
+    select(1:5, 7, 8)
 
 # Make a new data frame with only observations from 2000:
 gss_cat_2000 &lt;- gss_cat %&gt;%
-   filter(year == 2000)
+    filter(year == 2000)
 
 # Make a new data frame with observations from 2002 and later:
 gss_cat_2002plus &lt;- gss_cat %&gt;%
-   filter(year &gt;= 2002)</code></pre>
+    filter(year &gt;= 2002)</code></pre>
 </div>
 <div id="adding-a-new-variable-to-an-existing-data-frame-mutate"
 class="section level2">
@@ -507,25 +517,25 @@ class="section level2">
 <p>Adding a variable to the data set can be done with mutate().</p>
 <pre class="r"><code># Adding a standardized variable (a z-score) to a data frame
 gss_cat &lt;- gss_cat %&gt;%
-  mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
+    mutate(ztvhours = (tvhours - mean(tvhours))/sd(tvhours))
 
 # Or use the function `scale()` to get the same standardized variable
 gss_cat &lt;- gss_cat %&gt;%
-  mutate(ztvhours2 = scale(tvhours))
-         
+    mutate(ztvhours2 = scale(tvhours))
+
 
 # Creating an index and adding that index to the data frame
-dataset5 &lt;- dataset5 %&gt;% 
-  mutate(index = item3 + item4 + item4)
+dataset5 &lt;- dataset5 %&gt;%
+    mutate(index = item3 + item4 + item4)
 
 # Creating a logged version of an existing variable (the index in this example)
-dataset5 &lt;- dataset5 %&gt;% 
-  mutate(log_version_index = log(index))
+dataset5 &lt;- dataset5 %&gt;%
+    mutate(log_version_index = log(index))
 
 # If you want to sum values of a lot of columns and ignore the missings, use
 dataset5 &lt;- dataset5 %&gt;%
-  mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm=TRUE))
-# The &quot;c&quot; in this command stands for &#39;combine&#39; and is part of base R.</code></pre>
+    mutate(sum = rowSums(.[c(1:4, 7:20, 22)], na.rm = TRUE))
+# The &#39;c&#39; in this command stands for &#39;combine&#39; and is part of base R.</code></pre>
 </div>
 <div id="renaming-a-variable-in-a-data-frame-rename"
 class="section level2">
@@ -553,20 +563,25 @@ the data. Also, there are multiple ways to deal with these missings
 <pre class="r"><code># To see which variables in the data file called &#39;mydata&#39; have missings use:
 summary(gss_cat)
 
-# Or use &quot;is.na&quot; to detect the number of missing values in a specific column (the &#39;religion&#39; variable).
-gss_cat$relig %&gt;% 
-  is.na() %&gt;% 
-  sum() 
+# Or use &#39;is.na&#39; to detect the number of missing values in a specific column
+# (the &#39;religion&#39; variable).
+gss_cat$relig %&gt;%
+    is.na() %&gt;%
+    sum()
 
-# Pairwise deletion of cases (exclude cases that have a missing value on a variable, but keep them when working with other variables): &quot;na.rm&quot; 
-mean(gss_cat$tvhours, na.rm=TRUE)
+# Pairwise deletion of cases (exclude cases that have a missing value on a
+# variable, but keep them when working with other variables): &#39;na.rm&#39;
+mean(gss_cat$tvhours, na.rm = TRUE)
 
-# Listwise deletion of cases (drop cases that have a missing value on any of the variables used): &quot;na.omit&quot;
+# Listwise deletion of cases (drop cases that have a missing value on any of
+# the variables used): &#39;na.omit&#39;
 gss_cat_no_missings &lt;- na.omit(gss_cat)
 
-# Make a new data frame only containing units without a missing value on the variable &#39;relig&#39;. Please note that you now drop many cases ONLY because this variable is missing.
+# Make a new data frame only containing units without a missing value on the
+# variable &#39;relig&#39;. Please note that you now drop many cases ONLY because this
+# variable is missing.
 gss_cat_no_missings_on_relig &lt;- gss_cat %&gt;%
-   filter(!is.na(relig))
+    filter(!is.na(relig))
 
 # Please note that in R we can use the &#39;!&#39; sign, to say &#39;not&#39;.</code></pre>
 </div>
@@ -580,23 +595,21 @@ you probably want to treat this variable as a factor, not merely as a
 column of words. And if the factor in your data frame has three
 ‘values’/‘attributes’ (low, medium and high), you have to make sure this
 variable is stored as an ‘ordered factor’.</p>
-<pre class="r"><code># because gss_cat only has numerical variables and factors, we first change a factor to a character variable
-gss_cat &lt;- gss_cat %&gt;% 
-  mutate(marital_char = as.character(marital))
+<pre class="r"><code># because gss_cat only has numerical variables and factors, we first change a
+# factor to a character variable
+gss_cat &lt;- gss_cat %&gt;%
+    mutate(marital_char = as.character(marital))
 
 # changing text back to factor
-gss_cat &lt;- gss_cat %&gt;% 
-  mutate(marital_factor = as.factor(marital_char))
+gss_cat &lt;- gss_cat %&gt;%
+    mutate(marital_factor = as.factor(marital_char))
 
 # changing factor to ordered factor
-gss_cat &lt;- gss_cat %&gt;% 
-  mutate(marital_ord = 
-           factor(marital_factor, 
-                  order = TRUE,
-                  levels = c(&quot;Never married&quot;, &quot;Married&quot;, &quot;Divorced&quot;, &quot;Separated&quot;, &quot;Widowed&quot;, &quot;No answer&quot;)
-                  )
-         )
-# In this example, we have put the brackets in a way that avoids omitting a bracket (which happens a LOT!)</code></pre>
+gss_cat &lt;- gss_cat %&gt;%
+    mutate(marital_ord = factor(marital_factor, order = TRUE, levels = c(&quot;Never married&quot;,
+        &quot;Married&quot;, &quot;Divorced&quot;, &quot;Separated&quot;, &quot;Widowed&quot;, &quot;No answer&quot;)))
+# In this example, we have put the brackets in a way that avoids omitting a
+# bracket (which happens a LOT!)</code></pre>
 </div>
 <div
 id="adding-a-new-variable-from-another-datafile-to-an-existing-data-frame-left_join"
@@ -608,13 +621,13 @@ large number of years (every ‘country x year’ is one observation). You
 want to add the continents of these countries to the data set. You have
 another data set with the countries (stored as the same words as in the
 other data set) and the continents.</p>
-<pre class="r"><code># gapm1945to2020 is the original dataset
-# gapmcountries is the set with countries and continents
-# Both datasets are loaded in the global environment
-# country in both data sets is called &quot;geo&quot; and both have the same values (the same words)
+<pre class="r"><code># gapm1945to2020 is the original dataset gapmcountries is the set with
+# countries and continents Both datasets are loaded in the global environment
+# country in both data sets is called &#39;geo&#39; and both have the same values (the
+# same words)
 
 gapm1945joined &lt;- gapm1945to2020 %&gt;%
-  left_join(gapmcountries, by = &quot;geo&quot;)</code></pre>
+    left_join(gapmcountries, by = &quot;geo&quot;)</code></pre>
 </div>
 <div id="adding-observations-to-a-data-file-add_row"
 class="section level2">
@@ -657,20 +670,20 @@ make new variables of type integer <strong>x10_R</strong> and
 <strong>L</strong>, your new data type will be <em>integer</em> (which
 saves memory). You leave them out if you want the data type to be
 <em>numeric</em>.</p>
-<pre class="r"><code># keep in mind R uses in most cases (but NOT with rename, which is very confusing) the &quot;OLD is now NEW&quot; order of values.
+<pre class="r"><code># keep in mind R uses in most cases (but NOT with rename, which is very
+# confusing) the &#39;OLD is now NEW&#39; order of values.
 
-df_psychology &lt;- df_psychology %&gt;% 
-  mutate(
-    x10_R = recode(x10, `1` = 3L, `2` = 2L, `3` = 1L),
-    x11_R = recode(x11, `1` = 3L, `2` = 2L, `3` = 1L)
-  )
+df_psychology &lt;- df_psychology %&gt;%
+    mutate(x10_R = recode(x10, `1` = 3L, `2` = 2L, `3` = 1L), x11_R = recode(x11,
+        `1` = 3L, `2` = 2L, `3` = 1L))
 
-# it is often simpler to temporarily ignore the fact a variable is an integer, and to simply add the &#39;as.integer()&#39; command later.
+# it is often simpler to temporarily ignore the fact a variable is an integer,
+# and to simply add the &#39;as.integer()&#39; command later.
 
 # It is also possible to recode character/factor variables.
 
-data &lt;- data %&gt;% mutate(var1b = recode(var1a, &quot;word&quot; = &quot;newword&quot;),
-                        var2b = recode(var1b, &quot;word2&quot; = &quot;anothernewword&quot;))</code></pre>
+data &lt;- data %&gt;%
+    mutate(var1b = recode(var1a, word = &quot;newword&quot;), var2b = recode(var1b, word2 = &quot;anothernewword&quot;))</code></pre>
 <p>The code above does not seem to work for all data files. When you for
 example imported an SPSS data file with labels, another method should be
 used.</p>
@@ -733,23 +746,20 @@ variable ‘unemployment_2000’ and a variable ‘unemployment_2001’ etc… I
 order to change wide format data into long format data, in which there
 are three variables only: country_name, year, level of unemployment, use
 <code>pivot_longer()</code>.</p>
-<pre class="r"><code># To create 1 new variable containing the names of 4 variables (Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) and 1 variable with the scores:
+<pre class="r"><code># To create 1 new variable containing the names of 4 variables (Sepal.Length,
+# Sepal.Width, Petal.Length, Petal.Width) and 1 variable with the scores:
 
-iris %&gt;% 
-  pivot_longer(cols = c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width), 
-               names_to = &quot;variable&quot;,
-               values_to = &quot;score&quot;,
-               values_drop_na = TRUE)
+iris %&gt;%
+    pivot_longer(cols = c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
+        names_to = &quot;variable&quot;, values_to = &quot;score&quot;, values_drop_na = TRUE)
 
-# If you want to restructure variables beginning with the same name (for example variables for each week, starting with &quot;wk&quot;), you can use starts_with() 
+# If you want to restructure variables beginning with the same name (for
+# example variables for each week, starting with &#39;wk&#39;), you can use
+# starts_with()
 
-billboardlong %&gt;% 
-  pivot_longer(
-    cols = starts_with(&quot;wk&quot;), 
-    names_to = &quot;week&quot;, 
-    values_to = &quot;rank&quot;,
-    values_drop_na = TRUE
-  )</code></pre>
+billboardlong %&gt;%
+    pivot_longer(cols = starts_with(&quot;wk&quot;), names_to = &quot;week&quot;, values_to = &quot;rank&quot;,
+        values_drop_na = TRUE)</code></pre>
 <p>And sometimes you want to go from long format to wide format. Use
 <code>pivot_wider()</code>.</p>
 <pre class="r"><code>#using the same example
