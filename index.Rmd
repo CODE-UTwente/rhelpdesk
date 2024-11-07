@@ -5,15 +5,17 @@ output:
     toc: false
 ---
 
-The documents of the R-Helpdesk website outline how bachelor students in BMS programs will use R in the courses for Research Methods and Statistics (and beyond). There is no need to learn everything in the RHelpdesk documents 'by heart'. It is mainly a reference guide. The document will be updated when the staff discovers problems in the way students deal with R. 
+The R-Helpdesk website outline how bachelor students in BMS programs will use R in the courses for Research Methods and Statistics (and beyond). There is no need to learn everything on this website 'by heart'. It is mainly a reference guide. The document will be updated when the staff discovers problems in the way students deal with R. 
 
 
 ## How to use this website?
 
-Read until "Installing R and RStudio on your laptop" once before doing anything else with R. Then install R and Rstudio. After that read the rest of "Chapter 1. Introducing R and RStudio".
-After this make some of the assignments we created. Use the materials in this reference guide, in case you get stuck. After doing three or four R assignments, read the first chapter again, and skim through the remainder of the website.
-Before you start using R in other courses, read through everything again, to re-familiarize yourself with R.
+Chapters can be found using the buttons on top of this page. Read until "Installing R and RStudio on your laptop" on the page "1. Introduction" before doing anything else with R. Then install R and Rstudio. After that read the rest of "1. Introduction". After this make some of the assignments we created. Use the materials in this reference guide, in case you get stuck. After doing three or four R assignments, read the first chapter again, and skim through the remainder of the website. Before you start using R in other courses, read through everything again, to re-familiarize yourself with R.
 
 ## Download
+<<<<<<< HEAD
 Do you rather work offline? Download this website as a PDF. However, the online version is definitely up to date, while the pdf-version may be somewhat outdated:  
+=======
+Do you rather work offline? Just download this website as a PDF. However, the online version is definitely up to date, while the pdf-version may be somewhat outdated:  
+>>>>>>> e791b74c15e0834644815640313fbfd0c7db0a1d
 <a href="Intro-R-for-RM_DS.pdf" class="btn btn-primary"><i class="fas fa-download"></i> Download</a>

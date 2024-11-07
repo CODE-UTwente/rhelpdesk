@@ -41,16 +41,20 @@ Suppose you have two version of a data file called 'dataset_4' both located in "
 ```{r eval = F, tidy = TRUE}
 #set working directory to the correct folder and put all files to be imported in that folder
 
-install.packages("tidyverse", "foreign") # you do this only once every few months or so
-library("tidyverse", "foreign", "readxl") # you need to do that every time after (re)starting R
+install.packages("tidyverse", "foreign", "haven") # you do this only once every few months or so
+library("tidyverse", "foreign", "readxl", "haven") # you need to do that every time after (re)starting R
 
 setwd("C:/My Documents") # setting the working directory
 
-# load a csv data file, in this case separated by comma's, with the package "readr"
-data_1 <- read.csv("dataset_4.csv", sep = ",")
+# load a csv data file, in this case separated by comma's, with the package "readr" or with standard tidyverse
+data_1a <- read.csv("dataset_4.csv", sep = ",")
+data_1b <- read_csv("dataset_4.csv")
 
-# load an spss file with the packave foreign
+# load an spss file with the package foreign
 data_2 <- read.spss("dataset_4.sav", to.data.frame = TRUE)
+
+# load an spss file with the package haven
+data_3 <- read_spss("dataset_4.sav")
 
 ```
 
