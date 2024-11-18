@@ -135,10 +135,11 @@ data %>% lm(signed_rank_t2_t1 ~ 1, .)
 
 # assuming the data of this variable are stored in a data frame as data$var
 
-mu_1 <- 100 # if you want to check whether it is different from 100
+mu_1 <- 100 # if you want to check whether it is different from 100. When omitted, you test mu_1 = 0.
 
 # using the somewhat old fashioned t-test
-t.test(data$var, mu = mu_1)
+t.test(data$var, 
+       mu = mu_1)
 
 # or in the linear model framework:
 model <- data %>% 
